@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">BookIt</string>
+    <string name="guest_button">guest</string>
+    <string name="hello_message_textview">Hello, Guest.</string>
+    <string name="search_button">search</string>
+    <string name="bookings_button">bookings</string>
+    <string name="explore_button">explore</string>
+    <string name="courses_button">courses</string>
 </resources>
