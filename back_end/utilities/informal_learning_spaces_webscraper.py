@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import re
+import time
 
 url = "https://learningspaces.ubc.ca/find-space/informal-learning-spaces"
 
@@ -17,6 +18,7 @@ ils_data = {}
 
 building_data = []
 unique_building_codes = []
+address_list = []
 
 for panel in panels:
 
@@ -57,6 +59,7 @@ for panel in panels:
     })
     
     if building_code not in unique_building_codes:
+        address_list.append(address)
         unique_building_codes.append(building_code)
         building_object = {
             "building_code" : building_code,
@@ -65,7 +68,63 @@ for panel in panels:
         }
         building_data.append(building_object)
 
-print(ils_data)
+# print(ils_data)
+
+# from https://www.geoapify.com/tutorial/geocoding-python
+
+api_key = "0d15897763d64011921f58f48effb6d9"
+
+# With Batch Geocoding, you create a geocoding job by sending addresses and then, after some time, get geocoding results by job id
+# You may require a few attempts to get results. Here is a timeout between the attempts - 1 sec. Increase the timeout for larger jobs.
+timeout = 1
+
+# Limit the number of attempts
+maxAttempt = 10
+
+def getLocations(locations):
+    url = "https://api.geoapify.com/v1/batch/geocode/search?apiKey=" + api_key
+    response = requests.post(url, json = locations)
+    result = response.json()
+
+    # The API returns the status code 202 to indicate that the job was accepted and pending
+    status = response.status_code
+    if (status != 202):
+        print('Failed to create a job. Check if the input data is correct.')
+        return
+    jobId = result['id']
+    getResultsUrl = url + '&id=' + jobId
+
+    time.sleep(timeout)
+    result = getLocationJobs(getResultsUrl, 0)
+    latitude_list = [entry.get('lat') for entry in result]
+    longitude_list = [entry.get('lon') for entry in result]
+    if (result):
+        for i in range(len(building_data)):
+            building_data[i]["lat"] = latitude_list[i]
+            building_data[i]["lon"] = longitude_list[i]
+        # print(len(latitude_list))
+        # print(len(longitude_list))
+        print('You can also get results by the URL - ' + getResultsUrl)
+    else:
+        print('You exceeded the maximal number of attempts. Try to get results later. You can do this in a browser by the URL - ' + getResultsUrl)
+
+def getLocationJobs(url, attemptCount):
+    response = requests.get(url)
+    result = response.json()
+    status = response.status_code
+    if (status == 200):
+        print('The job is succeeded. Here are the results:')
+        return result
+    elif (attemptCount >= maxAttempt):
+        return
+    elif (status == 202):
+        print('The job is pending...')
+        time.sleep(timeout)
+        return getLocationJobs(url, attemptCount + 1)
+
+getLocations(address_list)
+
+# print(len(building_data))
 
 # save the data as JSON
 with open("informal_learning_spaces_data.json", "w") as json_file:
