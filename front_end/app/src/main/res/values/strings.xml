@@ -7,4 +7,10 @@
     <string name="explore_button">explore</string>
     <string name="courses_button">courses</string>
     <string name="title_activity_explore">ExploreActivity</string>
+    <string name="ils_button">informal learning spaces</string>
+    <string name="study_rooms_button">study rooms</string>
+    <string name="lecture_halls_button">lecture halls</string>
+    <string name="building_name_textview">Dynamic Building</string>
+    <string name="building_code_textview">Dynamic Building Code</string>
+    <string name="type_textview">Dynamic Type</string>
 </resources>
