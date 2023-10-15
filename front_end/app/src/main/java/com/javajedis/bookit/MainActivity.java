@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
     TextView helloMessageTextView;
     private String clientName;
+
+    private Button exploreButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -41,6 +45,18 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
             updateHelloMessage(account);
         }
+
+        exploreButton = findViewById(R.id.explore_button);
+        exploreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Trying to open map of UBC");
+
+                Intent mapsIntent = new Intent(MainActivity.this, ExploreActivity.class);
+                startActivity(mapsIntent);
+            }
+        });
+
     }
 
     private void updateHelloMessage(GoogleSignInAccount account) {
