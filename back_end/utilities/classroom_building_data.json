@@ -1,0 +1,248 @@
+[
+    {
+        "building_code": "AERL",
+        "building_name": "Aquatic Ecosystems Research Laboratory",
+        "address": "2202 Main Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "ALRD",
+        "building_name": "Allard Hall",
+        "address": "1822 East Mall, Vancouver, BC V6T 1Z1",
+        "hours": "Mon to Thurs: 7:30AM - 9:00PM, Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun: 10:00AM - 6:00PM, Holidays: Refer to the Law Library hours"
+    },
+    {
+        "building_code": "ANGU",
+        "building_name": "Henry Angus",
+        "address": "2053 Main Mall, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Sun: 7:00AM - 9:00PM, Holidays: Closed"
+    },
+    {
+        "building_code": "ANSO",
+        "building_name": "Anthropology and Sociology",
+        "address": "6303 North West Marine Drive, Vancouver BC, V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "AUDX",
+        "building_name": "Auditorium Annex",
+        "address": "1924 West Mall, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "BIOL",
+        "building_name": "Biological Sciences",
+        "address": "6270 University Boulevard, Vancouver BC, V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "BUCH",
+        "building_name": "Buchanan",
+        "address": "1866 Main Mall, Vancouver BC V6T 1Z1",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "CEME",
+        "building_name": "Civil and Mechanical Engineering",
+        "address": "6250 Applied Science Lane, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "CHBE",
+        "building_name": "Chemical and Biological Engineering Building",
+        "address": "2360 East Mall, Vancouver, BC V6T 1Z3",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "CHEM",
+        "building_name": "Chemistry",
+        "address": "2036 Main Mall, Vancouver, BC V6T 1Z1",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "CIRS",
+        "building_name": "Centre for Interactive Research on Sustainability",
+        "address": "2260 West Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "DMP",
+        "building_name": "Hugh Dempster Pavilion",
+        "address": "6245 Agronomy Road, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "EOS",
+        "building_name": "Earth and Ocean Sciences",
+        "address": "6339 Stores Road, Vancouver BC, V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "ESB",
+        "building_name": "Earth Sciences Building",
+        "address": "2207 Main Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "FNH",
+        "building_name": "Food, Nutrition and Health",
+        "address": "2205 East Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "FORW",
+        "building_name": "Frank Forward",
+        "address": "6350 Stores Road, Vancouver BC, V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "FRDM",
+        "building_name": "Friedman Building",
+        "address": "Mon to Fri: 7:30AM - 5:00PM\nSat/Sun/Holidays: Closed",
+        "hours": "After-hours access is by UBCcard via the entrances indicated above."
+    },
+    {
+        "building_code": "FSC",
+        "building_name": "Forest Sciences Centre",
+        "address": "2424 Main Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "GEOG",
+        "building_name": "Geography",
+        "address": "1984 West Mall, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "HEBB",
+        "building_name": "Hebb",
+        "address": "2045 East Mall, Vancouver, BC V6T 1Z1",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "HENN",
+        "building_name": "Hennings",
+        "address": "6224 Agricultural Road, Vancouver, BC V6T 1Z1",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "IBLC",
+        "building_name": "Irving K Barber Learning Centre",
+        "address": "1961 East Mall, Vancouver, BC V6T 1Z1",
+        "hours": "Mon to Sun/Holidays: 6:00AM - 11:00PM"
+    },
+    {
+        "building_code": "IONA",
+        "building_name": "Iona Building",
+        "address": "6000 Iona Drive, Vancouver BC, V6T 1L4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM*, * Open 7:30AM - 5:30PM until Monday, Sept 19 2022., Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "IRC",
+        "building_name": "P.A. Woodward Instructional Resources Centre",
+        "address": "2194 Health Sciences Mall, Vancouver BC, V6T 1Z3",
+        "hours": "Mon to Thurs: 7:30AM - 10:00PM, Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun: 12:00PM - 6:00PM, Holidays: Refer to the Woodward Library hours"
+    },
+    {
+        "building_code": "LASR",
+        "building_name": "Frederic Lasserre",
+        "address": "6333 Memorial Road, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "LIFE",
+        "building_name": "UBC Life Building",
+        "address": "6138 Student Union Blvd, Vancouver, BC V6T 1Z3",
+        "hours": "Mon to Fri: 7:00AM - 10:00PM, Sat/Sun: 8:00AM - 8:00PM, Holidays: Closed"
+    },
+    {
+        "building_code": "LSK",
+        "building_name": "Leonard S. Klinck",
+        "address": "6356 Agricultural Road, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "MATH",
+        "building_name": "Mathematics",
+        "address": "1984 Mathematics Road, Vancouver BC, V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "MATX",
+        "building_name": "Mathematics Annex",
+        "address": "1986 Mathematics Road, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "MCLD",
+        "building_name": "MacLeod",
+        "address": "2356 Main Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "MCML",
+        "building_name": "MacMillan",
+        "address": "2357 Main Mall, Vancouver BC, V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "ORCH",
+        "building_name": "Orchard Commons",
+        "address": "6363 Agronomy Rd, Vancouver, BC V6T 1Z4",
+        "hours": "The entrance to the classroom block of Orchard Commons is indicated on the map above."
+    },
+    {
+        "building_code": "OSB1",
+        "building_name": "Robert F. Osborne Centre",
+        "address": "6108 Thunderbird Boulevard, Vancouver, BC V6T 1Z3",
+        "hours": "Winter Session"
+    },
+    {
+        "building_code": "PHRM",
+        "building_name": "Pharmaceutical Sciences Building",
+        "address": "2405 Wesbrook Mall, Vancouver, BC V6T 1Z3",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "PCN",
+        "building_name": "Ponderosa Commons North: Oak/Cedar House",
+        "address": "6445 University Boulevard, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 10:00PM, Sat/Sun: 7:30AM - 8:00PM, Holidays: Closed"
+    },
+    {
+        "building_code": "SCRF",
+        "building_name": "Neville Scarfe",
+        "address": "2125 Main Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun: 12:00PM - 6:00PM, Holidays: Refer to the Education Library hours"
+    },
+    {
+        "building_code": "SOWK",
+        "building_name": "Jack Bell Building for the School of Social Work",
+        "address": "2080 West Mall, Vancouver BC, V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "SPPH",
+        "building_name": "School of Population and Public Health",
+        "address": "2206 East Mall, Vancouver, BC V6T 1Z8",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "SWNG",
+        "building_name": "West Mall Swing Space",
+        "address": "2175 West Mall, Vancouver, BC V6T 1Z4",
+        "hours": "Mon to Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "UCEN",
+        "building_name": "The Leon and Thea Koerner University Centre",
+        "address": "6331 Crescent Road, Vancouver, BC V6T 1Z2",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    },
+    {
+        "building_code": "WESB",
+        "building_name": "Wesbrook",
+        "address": "6174 University Boulevard, Vancouver, BC V6T 1Z3",
+        "hours": "Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed"
+    }
+]

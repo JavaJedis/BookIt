@@ -48,7 +48,8 @@ url_list = [
 
 base_url = "https://learningspaces.ubc.ca/buildings/"
 
-building_data = {}
+building_classroom_data = {}
+building_data = []
 
 for url in url_list:
     target_url = f"{base_url}{url}"
@@ -106,14 +107,26 @@ for url in url_list:
             if i < len(classrooms):
                 classrooms[i]["classroom_image_url"] = img_url
 
-        building_data[building_code_without_brackets] = {
+        building_classroom_data[building_code_without_brackets] = {
             # "address": building_address,
             # "hours": building_hours,
             # "top_view": top_view_img_url,
             "classrooms": classrooms
         }
 
-print(building_data)
+        building_object = {
+            "building_code" : building_code_without_brackets,
+            "building_name" : only_building_name,
+            "address" : building_address,
+            "hours" : building_hours
+        }
 
-with open("cr_info.json", "w") as json_file:
+        building_data.append(building_object)
+
+print(building_classroom_data)
+
+with open("classroom_data.json", "w") as json_file:
+    json.dump(building_classroom_data, json_file, indent=4)
+
+with open("classroom_building_data.json", "w") as json_file:
     json.dump(building_data, json_file, indent=4)

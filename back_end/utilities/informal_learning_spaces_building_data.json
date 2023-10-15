@@ -1,0 +1,167 @@
+[
+    {
+        "building_code": "ALSC",
+        "building_name": "Abdul Ladha Science Student Centre (ALSC) - Various Informal Learning Spaces",
+        "address": "2055 East Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "ALRD",
+        "building_name": "Allard Hall  (ALRD) - 1st Floor",
+        "address": "1822 East Mall, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "NEST",
+        "building_name": "AMS Student Nest (NEST) - Various Informal Learning Spaces",
+        "address": "6133 University Blvd, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "BRCK",
+        "building_name": "Brock Hall (BRCK) - Centre for Accessibility Hallway ",
+        "address": "1874 East Mall, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "BUCH",
+        "building_name": "Buchanan (BUCH) - 2nd Floor Lounge ",
+        "address": "1866 Main Mall, Vancouver BC V6T 1Z1"
+    },
+    {
+        "building_code": "CIRS",
+        "building_name": "Centre for Interactive Research on Sustainability (CIRS) - Concourse",
+        "address": "2260 West Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "CHBE",
+        "building_name": "Chemical and Biological Engineering Building (CHBE) - Atrium",
+        "address": "2360 East Mall, Vancouver, BC V6T 1Z3"
+    },
+    {
+        "building_code": "CEME",
+        "building_name": "Civil and Mechanical Engineering (CEME) - Various Informal Learning Spaces",
+        "address": "6250 Applied Science Lane, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "ESB",
+        "building_name": "Earth Sciences Building (ESB) - Concourse",
+        "address": "2207 Main Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "ESC",
+        "building_name": "Engineering Student Centre (ESC) - Various Informal Learning Spaces",
+        "address": "2335 Engineering Road, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "FNH",
+        "building_name": "Food, Nutrition and Health (FNH) - 3rd Floor ",
+        "address": "2205 East Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "FSC",
+        "building_name": "Forest Sciences Centre (FSC) - MacMillan Bloedel Atrium",
+        "address": "2424 Main Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "KAIS",
+        "building_name": "Fred Kaiser (KAIS) - Concourse",
+        "address": "2332 Main Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "LASR",
+        "building_name": "Frederic Lasserre (LASR) - Cube",
+        "address": "6333 Memorial Road, Vancouver, BC V6T 1Z2"
+    },
+    {
+        "building_code": "HEBB",
+        "building_name": "Hebb (HEBB) - Concourse",
+        "address": "2045 East Mall, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "HENN",
+        "building_name": "Hennings (HENN) - 2nd Floor Hallways",
+        "address": "6224 Agricultural Road, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "ANGU",
+        "building_name": "Henry Angus (ANGU) - Bruce R. Birmingham Undergraduate Centre ",
+        "address": "2053 Main Mall, Vancouver, BC V6T 1Z2"
+    },
+    {
+        "building_code": "ICICS/CS",
+        "building_name": "Institute for Computing (ICICS/CS) (ICCS) - 2nd Floor Atrium",
+        "address": "2366 Main Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "IONA",
+        "building_name": "Iona Building (IONA) - Study Lounge",
+        "address": "6000 Iona Drive, Vancouver BC, V6T 1L4"
+    },
+    {
+        "building_code": "LSC",
+        "building_name": "Life Sciences Centre (LSC) - East Atrium",
+        "address": "2350 Health Sciences Mall, Vancouver, BC V6T 1Z3"
+    },
+    {
+        "building_code": "MCML",
+        "building_name": "MacMillan (MCML) - Agora Caf",
+        "address": "2357 Main Mall, Vancouver BC, V6T 1Z4"
+    },
+    {
+        "building_code": "MATX",
+        "building_name": "Mathematics Annex (MATX) - 2nd Floor Study Tables",
+        "address": "1986 Mathematics Road, Vancouver, BC V6T 1Z2"
+    },
+    {
+        "building_code": "SCRF",
+        "building_name": "Neville Scarfe (SCRF) - Hallway Informal Learning Space ",
+        "address": "2125 Main Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "ORCH",
+        "building_name": "Orchard Commons (ORCH) - 3rd Floor High Tech Study Nook",
+        "address": "6363 Agronomy Rd, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "IRC",
+        "building_name": "P.A. Woodward Instructional Resources Centre (IRC) - Concourse",
+        "address": "2194 Health Sciences Mall, Vancouver BC, V6T 1Z3"
+    },
+    {
+        "building_code": "PHRM",
+        "building_name": "Pharmaceutical Sciences Building (PHRM) - 3rd Floor Study Lounge ",
+        "address": "2405 Wesbrook Mall, Vancouver, BC V6T 1Z3"
+    },
+    {
+        "building_code": "PCN",
+        "building_name": "Ponderosa Commons North: Oak/Cedar House (PCN) - Alcove Lounge",
+        "address": "6445 University Boulevard, Vancouver, BC V6T 1Z2"
+    },
+    {
+        "building_code": "PCW",
+        "building_name": "Ponderosa Commons West: Arbutus/Maple House (PCW) - Mercante Caf",
+        "address": "2075 Lower Mall, Vancouver BC, V6T 1Z4"
+    },
+    {
+        "building_code": "UCEN",
+        "building_name": "The Leon and Thea Koerner University Centre (UCEN) - Study Lounge",
+        "address": "6331 Crescent Road, Vancouver, BC V6T 1Z2"
+    },
+    {
+        "building_code": "AQUA",
+        "building_name": "UBC Aquatic Centre (AQUA) - Various Informal Learning Spaces",
+        "address": "6080 Student Union Blvd, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "MGYM",
+        "building_name": "War Memorial Gymnasium (MGYM) - Atrium",
+        "address": "6081 University Blvd, Vancouver, BC V6T 1Z1"
+    },
+    {
+        "building_code": "EDC",
+        "building_name": "Wayne and William White Engineering Design Centre (EDC) - Various Informal Learning Spaces",
+        "address": "2345 East Mall, Vancouver, BC V6T 1Z4"
+    },
+    {
+        "building_code": "SWNG",
+        "building_name": "West Mall Swing Space (SWNG) - 1st Floor Concourse ",
+        "address": "2175 West Mall, Vancouver, BC V6T 1Z4"
+    }
+]
