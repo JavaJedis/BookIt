@@ -1,0 +1,1 @@
+['{"section_code": "AANB 500 003", "section_term": "1-2", "section_days": "Tue Thu", "section_start_time": "10:00", "section_end_time": "13:00", "section_building": "Horticulture Building", "section_room": "107"}']
