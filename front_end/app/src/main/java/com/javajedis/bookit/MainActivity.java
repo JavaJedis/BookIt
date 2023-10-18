@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private String clientName;
 
     private Button exploreButton;
+    private Button searchButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -53,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Trying to open map of UBC");
 
                 Intent mapsIntent = new Intent(MainActivity.this, ExploreActivity.class);
+                startActivity(mapsIntent);
+            }
+        });
+
+        searchButton = findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Trying to SearchActivity");
+
+                Intent mapsIntent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(mapsIntent);
             }
         });
