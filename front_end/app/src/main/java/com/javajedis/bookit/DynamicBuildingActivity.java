@@ -28,17 +28,5 @@ public class DynamicBuildingActivity extends AppCompatActivity {
 
         type = findViewById(R.id.type_textView);
         type.setText(getIntent().getStringExtra("type"));
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("building_code", buildingCode.getText().toString());
-            jsonObject.put("building_name", buildingName.getText().toString());
-            jsonObject.put("type", type.getText().toString());
-        } catch (JSONException e) {
-            Log.d("DynamicBuildingActivity", "Error making JSON Object");
-        }
-
-        String jsonString = jsonObject.toString();
-        System.out.println(jsonString);
     }
 }
