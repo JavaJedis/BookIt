@@ -46,4 +46,5 @@ dependencies {
     implementation ("com.squareup.okhttp3:okhttp:3.14.9")
     implementation ("com.google.code.gson:gson:2.8.9")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }

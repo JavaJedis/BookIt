@@ -62,7 +62,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
             @Override
             public void onClick(View view) {
                 Log.d("ExploreActivity", "Setting locations of ILS buildings");
-                String getUrl = "https://bookit.henrydhc.me/all_ils_buildings";
+                String getUrl = "https://bookit.henrydhc.me/ils/building_all";
                 getLocations(getUrl);
 //                    setLocations(ILS_BUILDINGS);
             }
@@ -105,7 +105,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         String type = "";
         float c = 0;
         if (Objects.equals(buildings, ILSBuildings)) {
-            type = "ILS";
+            type = "ils";
             c = BitmapDescriptorFactory.HUE_MAGENTA;
         } else if (Objects.equals(buildings, CLASSROOM_BUILDINGS)) {
             type = "classroom";
@@ -180,9 +180,16 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
                         // parse
+//                        JSONObject responseObject = new JSONObject(jsonResponse);
+//                        JSONArray data = responseObject.getJSONArray("buildings");
                         JSONObject responseObject = new JSONObject(jsonResponse);
-                        JSONArray data = responseObject.getJSONArray("data");
+//                        JSONArray jsonArray = new JSONArray(jsonResponse);
+                        JSONArray jsonArray = responseObject.getJSONArray("data");
+                        // Assuming "buildings" is always present in the first object
+                        JSONObject firstObject = jsonArray.getJSONObject(0);
+                        JSONArray data = firstObject.getJSONArray("buildings");
 
                         // format
                         ILSBuildings = data.toString();

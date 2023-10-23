@@ -29,24 +29,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        Intent intent = getIntent();
-        boolean continueAsGuest = intent.getBooleanExtra("continueAsGuest", false);
-        if (account == null && !continueAsGuest) {
-            // the user has not signed in, prompt user to do so
-            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(loginIntent);
-        }
-        if (account != null) {
-            updateHelloMessage(account);
-        }
-
         exploreButton = findViewById(R.id.explore_button);
         exploreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +50,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(searchIntent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        Intent intent = getIntent();
+        boolean continueAsGuest = intent.getBooleanExtra("continueAsGuest", false);
+        if (account == null && !continueAsGuest) {
+            // the user has not signed in, prompt user to do so
+            Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
+        }
+        if (account != null) {
+            updateHelloMessage(account);
+        }
+
+//        exploreButton = findViewById(R.id.explore_button);
+//        exploreButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, "Trying to open map of UBC");
+//
+//                Intent mapsIntent = new Intent(MainActivity.this, ExploreActivity.class);
+//                startActivity(mapsIntent);
+//            }
+//        });
+//
+//        searchButton = findViewById(R.id.search_button);
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d(TAG, "Trying to SearchActivity");
+//
+//                Intent mapsIntent = new Intent(MainActivity.this, SearchActivity.class);
+//                startActivity(mapsIntent);
+//            }
+//        });
 
     }
 

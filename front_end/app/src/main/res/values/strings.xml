@@ -5,7 +5,7 @@
     <string name="search_button">search</string>
     <string name="bookings_button">bookings</string>
     <string name="explore_button">explore</string>
-    <string name="courses_button">courses</string>
+    <string name="filter_button">filter study rooms</string>
     <string name="title_activity_explore">ExploreActivity</string>
     <string name="ils_button">informal learning spaces</string>
     <string name="study_rooms_button">study rooms</string>

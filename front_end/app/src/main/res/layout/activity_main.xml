@@ -105,7 +105,7 @@
         app:layout_constraintVertical_bias="0.303" />
 
     <Button
-        android:id="@+id/courses_button"
+        android:id="@+id/filter_button"
         android:layout_width="310dp"
         android:layout_height="63dp"
         android:background="@drawable/regular_button"
@@ -114,7 +114,7 @@
         android:includeFontPadding="false"
 
         android:paddingStart="16dp"
-        android:text="@string/courses_button"
+        android:text="@string/filter_button"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="#000000"
@@ -151,7 +151,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/search_button"
         app:layout_constraintVertical_bias="0.455"
-        app:srcCompat="@drawable/education" />
+        app:srcCompat="@drawable/filter" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
