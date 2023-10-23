@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "Trying to SearchActivity");
 
-                Intent mapsIntent = new Intent(MainActivity.this, SearchActivity.class);
-                startActivity(mapsIntent);
+                Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(searchIntent);
             }
         });
 

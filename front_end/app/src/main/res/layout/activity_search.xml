@@ -6,6 +6,77 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
+    <TextView
+        android:id="@+id/deixis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_guild_text"
+        tools:layout_editor_absoluteX="125dp"
+        tools:layout_editor_absoluteY="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="fill_parent"-->
+<!--        android:layout_height="fill_parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        >-->
+
+<!--        <Button-->
+<!--            android:id="@+id/ils_button"-->
+<!--            android:layout_width="0dip"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/top_button"-->
+<!--            android:fontFamily="@font/roboto_slab"-->
+<!--            android:text="@string/ils_button"-->
+<!--            android:textAllCaps="false"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/sutdy_rooms_button"-->
+<!--            android:layout_width="0dip"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/bottom_button"-->
+<!--            android:fontFamily="@font/roboto_slab"-->
+<!--            android:text="@string/study_rooms_button"-->
+<!--            android:textAllCaps="false"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/lecture_halls_button"-->
+<!--            android:layout_width="0dip"-->
+<!--            android:layout_height="75dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/top_button"-->
+<!--            android:fontFamily="@font/roboto_slab"-->
+<!--            android:text="@string/lecture_halls_button"-->
+<!--            android:textAllCaps="false"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="1.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintVertical_bias="1.0" />-->
+<!--            />-->
+<!--    </LinearLayout>-->
     <Button
         android:id="@+id/ils_button"
         android:layout_width="137dp"
@@ -52,5 +123,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ListView
+        android:id="@+id/building_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-33dp">
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

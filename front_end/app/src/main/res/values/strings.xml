@@ -13,4 +13,7 @@
     <string name="building_name_textview">Dynamic Building</string>
     <string name="building_code_textview">Dynamic Building Code</string>
     <string name="type_textview">Dynamic Type</string>
+    <string name="building_search">Search</string>
+    <string name="search_guild_text">Please Click Button Below</string>
+
 </resources>
