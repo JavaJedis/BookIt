@@ -1,9 +1,12 @@
 package com.javajedis.bookit;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,18 +35,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
+// concise way to request location permissions: https://chat.openai.com/share/26df5995-8f25-4a29-990e-f612ef9847d0
 public class ExploreActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityExploreBinding binding;
 
-    final private String ILS_BUILDINGS = "[{\"building_code\":\"ALSC\",\"building_name\":\"Abdul Ladha Science Student Centre (ALSC) - Various Informal Learning Spaces\",\"address\":\"2055 East Mall, Vancouver, BC V6T 1Z4\",\"lat\":49.26607735,\"lon\":-123.25137314363899},{\"building_code\":\"ALRD\",\"building_name\":\"Allard Hall  (ALRD) - 1st Floor\",\"address\":\"1822 East Mall, Vancouver, BC V6T 1Z1\",\"lat\":49.26999585,\"lon\":-123.25328031852874},{\"building_code\":\"NEST\",\"building_name\":\"AMS Student Nest (NEST) - Various Informal Learning Spaces\",\"address\":\"6133 University Blvd, Vancouver, BC V6T 1Z1\",\"lat\":49.2661147,\"lon\":-123.2492381}]";
-    final private String CLASSROOM_BUILDINGS = "[{\"building_code\":\"AERL\",\"building_name\":\"Aquatic Ecosystems Research Laboratory\",\"address\":\"2202 Main Mall, Vancouver, BC V6T 1Z4\",\"hours\":\"Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed\",\"lat\":49.2628901,\"lon\":-123.2513752},{\"building_code\":\"ALRD\",\"building_name\":\"Allard Hall\",\"address\":\"1822 East Mall, Vancouver, BC V6T 1Z1\",\"hours\":\"Mon to Thurs: 7:30AM - 9:00PM, Fri: 7:30AM - 8:00PM, Sat: 7:30AM - 6:00PM, Sun: 10:00AM - 6:00PM, Holidays: Refer to the Law Library hours\",\"lat\":49.26999585,\"lon\":-123.25328031852874},{\"building_code\":\"ANGU\",\"building_name\":\"Henry Angus\",\"address\":\"2053 Main Mall, Vancouver, BC V6T 1Z2\",\"hours\":\"Mon to Sun: 7:00AM - 9:00PM, Holidays: Closed\",\"lat\":49.2655042,\"lon\":-123.2538704}]";
-
-    private String ILSBuildings;
+    private String buildings;
 
     private Button ilsButton;
     private Button lectureHallsButton;
+    private Button studyRoomsButton;
+
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
         ilsButton = findViewById(R.id.ils_button);
@@ -64,7 +70,6 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                 Log.d("ExploreActivity", "Setting locations of ILS buildings");
                 String getUrl = "https://bookit.henrydhc.me/ils/building_all";
                 getLocations(getUrl);
-//                    setLocations(ILS_BUILDINGS);
             }
         });
 
@@ -72,12 +77,24 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         lectureHallsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ExploreActivity", "Setting locations of classroom buildings");
-                try {
-                    setLocations(CLASSROOM_BUILDINGS);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+                Log.d("ExploreActivity", "Setting locations of Lecture Hall buildings");
+//                try {
+//                    setLocations(CLASSROOM_BUILDINGS);
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+                String getUrl = "https://bookit.henrydhc.me/lecturehalls/building_all";
+                getLocations(getUrl);
+            }
+        });
+
+        studyRoomsButton = findViewById(R.id.sutdy_rooms_button);
+        studyRoomsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("ExploreActivity", "Setting locations of Study Room buildings");
+                String getUrl = "https://bookit.henrydhc.me/studyrooms/building_all";
+                getLocations(getUrl);
             }
         });
     }
@@ -99,17 +116,73 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         // Add a marker in Sydney and move the camera
         LatLng ubc = new LatLng(49.2606, -123.2460);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubc, zoomLevel));
+
+        if (checkLocationPermission()) {
+            // If permissions are already granted, proceed
+            initMap();
+        } else {
+            // Request location permissions
+            requestLocationPermission();
+        }
     }
 
-    private void setLocations(String buildings) throws JSONException {
+    // Check for location permissions
+    private boolean checkLocationPermission() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    // Request location permissions
+    private void requestLocationPermission() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                LOCATION_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, initialize the map
+                initMap();
+            } else {
+                // Permission denied, handle it (e.g., show a message)
+                // You can show a message to the user or take other actions here
+            }
+        }
+    }
+
+    private void initMap() {
+        // Your existing map initialization code
+
+        // Enable My Location Layer on the map
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+    }
+
+    private void setLocations(String buildings, String buildingType) throws JSONException {
         String type = "";
         float c = 0;
-        if (Objects.equals(buildings, ILSBuildings)) {
+        if (Objects.equals(buildingType, "all_ils_buildings")) {
             type = "ils";
             c = BitmapDescriptorFactory.HUE_MAGENTA;
-        } else if (Objects.equals(buildings, CLASSROOM_BUILDINGS)) {
-            type = "classroom";
+        } else if (Objects.equals(buildingType, "all_lecture_buildings")) {
+            type = "lecture";
             c = BitmapDescriptorFactory.HUE_AZURE;
+        } else if (Objects.equals(buildingType, "all_studyroom_buildings")) {
+            type = "study";
+            c = BitmapDescriptorFactory.HUE_ORANGE;
         }
 
         mMap.clear();
@@ -189,18 +262,19 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                         JSONArray jsonArray = responseObject.getJSONArray("data");
                         // Assuming "buildings" is always present in the first object
                         JSONObject firstObject = jsonArray.getJSONObject(0);
+                        String buildingType = firstObject.getString("type");
+                        System.out.println(buildingType);
                         JSONArray data = firstObject.getJSONArray("buildings");
 
                         // format
-                        ILSBuildings = data.toString();
-                        System.out.println(ILSBuildings);
-                        System.out.println(ILS_BUILDINGS);
+                        buildings = data.toString();
+                        System.out.println(buildings);
 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    setLocations(ILSBuildings);
+                                    setLocations(buildings, buildingType);
                                 } catch (JSONException e) {
                                     Log.e("ExploreActivity", "Error setting locations for ILS Buildings");
                                 }

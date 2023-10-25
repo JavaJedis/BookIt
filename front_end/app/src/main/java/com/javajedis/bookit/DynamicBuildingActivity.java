@@ -48,14 +48,95 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_building);
 
-        getBuildingInfo();
+        if (Objects.equals(getIntent().getStringExtra("type"), "ils")) {
+            getBuildingInfoILS();
+        } else if (Objects.equals(getIntent().getStringExtra("type"), "lecture")) {
+            getBuildingInfoLecture();
+        } else {
+            getBuildingInfoStudy();
+        }
+//        getBuildingInfo();
+    }
+
+    private void getBuildingInfoStudy() {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://bookit.henrydhc.me/studyrooms/" + getIntent().getStringExtra("buildingCode");
+        System.out.println(url);
+        Log.d("DynamicBuildingActivity", url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue((new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        assert response.body() != null;
+                        String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
+//                        // parse
+                        JSONObject responseObject = new JSONObject(jsonResponse);
+//                        JSONArray roomsArray = new JSONArray(jsonResponse);
+                        JSONArray roomsArray = responseObject.getJSONArray("data");
+                        for (int i = 0; i < roomsArray.length(); i++) {
+                            JSONObject roomInfo = roomsArray.getJSONObject(i);
+
+                            String name = roomInfo.optString("building_name");
+                            String code = roomInfo.optString("building_code");
+                            String number = roomInfo.optString("room_no");
+                            String capacity = roomInfo.optString("capacity");
+                            String address = roomInfo.optString("building_address");
+                            String description = roomInfo.optString("features");
+
+                            Map<String, String> roomDetails = new HashMap<>();
+                            roomDetails.put("name", name);
+                            roomDetails.put("address", address);
+                            roomDetails.put("capacity", capacity);
+                            roomDetails.put("description", description);
+
+                            // update map of rooms
+                            String key = code + " " + number;
+                            roomDictionary.put(key, roomDetails);
+                        }
+
+                        // update list of rooms
+                        roomNames.clear();
+                        roomNames.addAll(roomDictionary.keySet());
+
+                        setUpRoomModels();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
+                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(DynamicBuildingActivity.this));
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }));
     }
 
     private void setUpRoomModels() {
         int image;
         if (Objects.equals(getIntent().getStringExtra("type"), "ils")) {
             image = R.drawable.student_desk;
-        } else if (Objects.equals(getIntent().getStringExtra("type"), "classrooms")) {
+        } else if (Objects.equals(getIntent().getStringExtra("type"), "lecture")) {
             image = R.drawable.education;
         } else {
             image = R.drawable.office;
@@ -66,10 +147,11 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         }
     }
 
-    private void getBuildingInfo() {
+    private void getBuildingInfoILS() {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://bookit.henrydhc.me/" + getIntent().getStringExtra("type") + "/" + getIntent().getStringExtra("buildingCode");
+        String url = "https://bookit.henrydhc.me/ils/" + getIntent().getStringExtra("buildingCode");
         System.out.println(url);
+        Log.d("DynamicBuildingActivity", url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -137,6 +219,84 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         }));
     }
 
+    private void getBuildingInfoLecture() {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://bookit.henrydhc.me/lecturehalls/" + getIntent().getStringExtra("buildingCode");
+        System.out.println(url);
+        Log.d("DynamicBuildingActivity", url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue((new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        assert response.body() != null;
+                        String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
+//                        // parse
+                        JSONObject responseObject = new JSONObject(jsonResponse);
+//                        JSONArray roomsArray = new JSONArray(jsonResponse);
+                        JSONArray roomsArray = responseObject.getJSONArray("data");
+                        for (int i = 0; i < roomsArray.length(); i++) {
+                            JSONObject roomInfo = roomsArray.getJSONObject(i);
+
+                            String name = roomInfo.optString("building name");
+                            String roomCode = roomInfo.optString("room code");
+                            String buildingCode = roomInfo.optString("building code");
+                            String hours = roomInfo.optString("hours");
+                            String address = roomInfo.optString("address");
+                            String capacity = roomInfo.optString("capacity");
+                            JSONObject unavailableTimes = roomInfo.optJSONObject("unavailable_times");
+                            String image_url = roomInfo.optString("classroom_image_url");
+
+                            Map<String, String> roomDetails = new HashMap<>();
+                            roomDetails.put("buildingName", name);
+                            roomDetails.put("hours", hours);
+                            roomDetails.put("address", address);
+                            roomDetails.put("capacity", capacity);
+                            roomDetails.put("unavailableTimes", String.valueOf(unavailableTimes));
+                            roomDetails.put("image_url", image_url);
+
+                            // update map of rooms
+                            String key = buildingCode + " " + roomCode;
+                            roomDictionary.put(key, roomDetails);
+                        }
+
+                        // update list of rooms
+                        roomNames.clear();
+                        roomNames.addAll(roomDictionary.keySet());
+
+                        setUpRoomModels();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
+                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(DynamicBuildingActivity.this));
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }));
+    }
+
     @Override
     public void onItemClick(int position) {
         Intent roomInfoIntent = new Intent(DynamicBuildingActivity.this, DynamicRoomActivity.class);
@@ -150,6 +310,9 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         roomInfoIntent.putExtra("capacity", roomDetails.get("capacity"));
         roomInfoIntent.putExtra("description", roomDetails.get("description"));
         roomInfoIntent.putExtra("image_url", roomDetails.get("image_url"));
+        roomInfoIntent.putExtra("hours", roomDetails.get("hours"));
+        roomInfoIntent.putExtra("unavailableTimes", roomDetails.get("unavailableTimes"));
+        roomInfoIntent.putExtra("type", getIntent().getStringExtra("type"));
         startActivity(roomInfoIntent);
     }
 }

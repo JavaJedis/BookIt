@@ -27,6 +27,9 @@
         android:theme="@style/Theme.BookIt"
         tools:targetApi="31">
         <activity
+            android:name=".FilterActivity"
+            android:exported="false" />
+        <activity
             android:name=".DynamicRoomActivity"
             android:exported="false" />
         <activity

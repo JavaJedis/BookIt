@@ -2,11 +2,14 @@ package com.javajedis.bookit;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +21,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -86,6 +104,8 @@ public class LoginActivity extends AppCompatActivity {
             // signed in successfully
             String loggedIn = account.getGivenName();
 
+            sendUser(account);
+
             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
             mainIntent.putExtra("clientName", loggedIn);
             startActivity(mainIntent);
@@ -94,6 +114,51 @@ public class LoginActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
+    }
+
+    private void sendUser(GoogleSignInAccount account) {
+        OkHttpClient client = new OkHttpClient();
+
+        String postUrl = "https://bookit.henrydhc.me/user/login";
+
+        try {
+            JSONObject jsonRequest = new JSONObject();
+            try {
+//                jsonRequest.put("email", account.getEmail());
+                jsonRequest.put("token", account.getIdToken());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            RequestBody requestBody = RequestBody.create(JSON, jsonRequest.toString());
+
+            Request request = new Request.Builder()
+                    .url(postUrl)
+                    .post(requestBody)
+                    .build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    e.printStackTrace();
+                    Log.e("LoginActivity", "POST request failed: " + e.getMessage());
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
+                        String responseBody = response.body().string();
+                        Log.d("LoginActivity", responseBody);
+                    } else {
+                        Log.e("LoginActivity", "POST request failed with code: " + response.code());
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

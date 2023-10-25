@@ -15,5 +15,10 @@
     <string name="type_textview">Dynamic Type</string>
     <string name="building_search">Search</string>
     <string name="search_guild_text">Please Click Button Below</string>
+    <string name="directions_button">take me there</string>
+    <string name="start_time_button">start time</string>
+    <string name="hours_button">duration</string>
+    <string name="filter_bottom_button">filter</string>
+    <string name="day_button">day</string>
 
 </resources>
