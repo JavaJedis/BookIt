@@ -1,11 +1,14 @@
 package com.javajedis.bookit;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,12 +19,19 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -44,23 +54,45 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private TextView hours;
 
     private Button directionsButton;
+    private Button bookNowButton;
 
     private boolean locationPermissionGranted = false;
     private boolean isDetailsActivityRunning = false;
     private String cityGeo;
+
+    final static String TAG = "LoginActivity";
+
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount account;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_room);
 
+        Log.w(TAG, "In the LoginActivity");
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        account = GoogleSignIn.getLastSignedInAccount(this);
+
         // load image from URL: https://youtu.be/V1uxaRfSqu8?si=lW-nzkUHVHw870iW
 
         roomImage = findViewById(R.id.room_imageView);
 
-        Picasso.get()
-                .load(getIntent().getStringExtra("image_url"))
-                .into(roomImage);
+        if (getIntent().getStringExtra("image_url") != null) {
+            Picasso.get()
+                    .load(getIntent().getStringExtra("image_url"))
+                    .into(roomImage);
+        } else {
+            roomImage.setImageResource(R.drawable.general_study_room);
+        }
 
         roomName = findViewById(R.id.room_name_textView);
         roomName.setText(getIntent().getStringExtra("roomName"));
@@ -98,6 +130,30 @@ public class DynamicRoomActivity extends AppCompatActivity {
             hours.setText(availability);
         }
 
+        bookNowButton = findViewById(R.id.book_now_button);
+
+        if (Objects.equals(getIntent().getStringExtra("type"), "study")) {
+            bookNowButton.setVisibility(View.VISIBLE);
+        } else {
+            bookNowButton.setVisibility(View.GONE);
+        }
+
+        bookNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do stuff
+
+                if (account == null) {
+                    signIn();
+                }
+                else {
+                    Intent calendarIntent = new Intent(DynamicRoomActivity.this, CalendarActivity.class);
+                    calendarIntent.putExtra("codePlusNumber", getIntent().getStringExtra("roomName"));
+                    startActivity(calendarIntent);
+                }
+            }
+        });
+
         directionsButton = findViewById(R.id.directions_button);
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +169,33 @@ public class DynamicRoomActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                }
+            }
+    );
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        signInLauncher.launch(signInIntent);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            Log.w(TAG, "Trying to get Google account");
+            account = completedTask.getResult(ApiException.class);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
     }
 
     private void getLocationInfo() {
@@ -140,7 +223,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
                         e.printStackTrace();
                         cityGeo = "Error";
                     }
-                    startDetailsActivity();
+                    startGoogleMaps();
                     locationManager.removeUpdates(this);
                 }
             };
@@ -171,7 +254,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
         isDetailsActivityRunning = false; // Reset the flag when the MainActivity is stopped
     }
 
-    private void startDetailsActivity() {
+    private void startGoogleMaps() {
         if (!isDetailsActivityRunning) {
             isDetailsActivityRunning = true;
 

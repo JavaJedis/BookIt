@@ -88,6 +88,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.963" />
 
+    <Button
+        android:id="@+id/book_now_button"
+        android:layout_width="154dp"
+        android:layout_height="51dp"
+        android:background="@drawable/regular_button"
+        android:fontFamily="@font/roboto_slab"
+        android:text="@string/book_now_button"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.963" />
+
     <TextView
         android:id="@+id/hours_textView"
         android:layout_width="385dp"

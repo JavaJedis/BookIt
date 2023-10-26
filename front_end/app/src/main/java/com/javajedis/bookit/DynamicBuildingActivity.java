@@ -90,17 +90,29 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
 
+                            String number = roomInfo.optString("_id");
                             String name = roomInfo.optString("building_name");
                             String code = roomInfo.optString("building_code");
-                            String number = roomInfo.optString("room_no");
+//                            String number = roomInfo.optString("room_no");
                             String capacity = roomInfo.optString("capacity");
                             String address = roomInfo.optString("building_address");
-                            String description = roomInfo.optString("features");
+                            JSONArray featuresArray = roomInfo.getJSONArray("features");
 
                             Map<String, String> roomDetails = new HashMap<>();
                             roomDetails.put("name", name);
                             roomDetails.put("address", address);
                             roomDetails.put("capacity", capacity);
+
+                            String[] parts = featuresArray.toString().replaceAll("\\[|\\]", "").replaceAll("\"", "").split(",");
+
+                            String description = "Features: ";
+                            for (String part : parts) {
+                                description += part;
+                                if (!part.equals(parts[parts.length - 1])) {
+                                    description += ", ";
+                                }
+                            }
+
                             roomDetails.put("description", description);
 
                             // update map of rooms

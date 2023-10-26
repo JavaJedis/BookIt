@@ -20,5 +20,8 @@
     <string name="hours_button">duration</string>
     <string name="filter_bottom_button">filter</string>
     <string name="day_button">day</string>
-
+    <string name="book_now_button">book now</string>
+    <string name="month_year_textview">Oct 2023</string>
+    <string name="previous_button">prev</string>
+    <string name="next_button">next</string>
 </resources>
