@@ -14,7 +14,9 @@
     <string name="building_code_textview">Dynamic Building Code</string>
     <string name="type_textview">Dynamic Type</string>
     <string name="building_search">Search</string>
-    <string name="search_guild_text">Please Click Button Below</string>
+    <string name="search_guild_text">Please choose one option below for more info</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="recycler_room_name">Macleod</string>
     <string name="directions_button">take me there</string>
     <string name="start_time_button">start time</string>
     <string name="hours_button">duration</string>
