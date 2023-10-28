@@ -116,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             public void onClick(View view) {
                 Log.d("SearchActivity", "Getting locations of " + spaceType +  " buildings");
                 guideText.setText("");
-                requestBuildingType = "spaceType";
+                requestBuildingType = spaceType;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

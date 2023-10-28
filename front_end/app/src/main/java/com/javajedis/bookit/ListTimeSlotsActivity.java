@@ -34,7 +34,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ListTimeSlotsActivity extends AppCompatActivity implements RecyclerViewInterface{
+public class ListTimeSlotsActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<TimeSlotsModel> timeSlotModels = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e("ListTimeSlotsActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
