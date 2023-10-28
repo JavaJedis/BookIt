@@ -51,7 +51,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
 
     private void getTimeSlots() {
         OkHttpClient client = new OkHttpClient();
-        String url = "https://bookit.henrydhc.me/studyrooms/" + getIntent().getStringExtra("buildingCode") + "/" + getIntent().getStringExtra("roomNumber");
+        String url = "https://bookit.henrydhc.me/studyrooms/" + getIntent().getStringExtra("buildingCode") + "/" + getIntent().getStringExtra("roomNumber") + "/" + "slots";
         System.out.println(url);
         Log.d("ListTimeActivity", url);
         String date = getIntent().getStringExtra("date");
@@ -118,6 +118,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                     }
                 } else {
                     Log.e("ListTimeSlotsActivity", "No response.");
+                    System.out.println(response.body().toString());
                 }
             }
         }));

@@ -56,6 +56,8 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private Button directionsButton;
     private Button bookNowButton;
 
+    private Button viewCommentsButton;
+
     private boolean locationPermissionGranted = false;
     private boolean isMapsRunning = false;
     private String cityGeo;
@@ -131,18 +133,19 @@ public class DynamicRoomActivity extends AppCompatActivity {
         }
 
         bookNowButton = findViewById(R.id.book_now_button);
+        viewCommentsButton = findViewById(R.id.view_comments_button);
 
         if (Objects.equals(getIntent().getStringExtra("type"), "study")) {
             bookNowButton.setVisibility(View.VISIBLE);
+            viewCommentsButton.setVisibility(View.VISIBLE);
         } else {
             bookNowButton.setVisibility(View.GONE);
+            viewCommentsButton.setVisibility(View.GONE);
         }
 
         bookNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // do stuff
-
                 if (account == null) {
                     signIn();
                 }
@@ -152,6 +155,15 @@ public class DynamicRoomActivity extends AppCompatActivity {
                     calendarIntent.putExtra("fromFilter", false);
                     startActivity(calendarIntent);
                 }
+            }
+        });
+
+        viewCommentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent commentsIntent = new Intent(DynamicRoomActivity.this, CommentsActivity.class);
+                commentsIntent.putExtra("codePlusNumber", getIntent().getStringExtra("roomName"));
+                startActivity(commentsIntent);
             }
         });
 
