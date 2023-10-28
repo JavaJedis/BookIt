@@ -83,6 +83,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/study_rooms_filter_recycler_view"
         android:layout_width="409dp"
         android:layout_height="561dp"
         app:layout_constraintBottom_toBottomOf="@+id/filter_bottom_button"

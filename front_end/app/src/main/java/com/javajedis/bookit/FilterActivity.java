@@ -113,7 +113,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     public static String addHoursToTime(String inputTime, String hoursToAdd) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             Date date = sdf.parse(inputTime);
 
             int hours = 0;
@@ -150,14 +150,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     }
 
     private void setUpRoomModels() {
-        int image;
-        if (Objects.equals(getIntent().getStringExtra("type"), "ils")) {
-            image = R.drawable.student_desk;
-        } else if (Objects.equals(getIntent().getStringExtra("type"), "lecture")) {
-            image = R.drawable.education;
-        } else {
-            image = R.drawable.office;
-        }
+        int image = R.drawable.office;
 
         for (int i = 0; i < roomNames.size(); i++) {
             roomModels.add(new RoomModel(roomNames.get(i), image));
@@ -245,22 +238,16 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     private void getStudyRooms(String date, String startTime, String endTime) {
         OkHttpClient client = new OkHttpClient();
 
-//        String getUrl = "https://bookit.henrydhc.me/filter";
-        String getUrl = "https://bookit.henrydhc.me/studyrooms/ESC";
-        JSONObject json = new JSONObject();
-        try {
-            json.put("date", date);
-            json.put("startTime", startTime);
-            json.put("endTime", endTime);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        String getUrl = "https://bookit.henrydhc.me/filter";
+        Log.d("FilterActivity", getUrl);
 
-        RequestBody requestBody = RequestBody.create(parse("application/json"), json.toString());
+        getUrl += "?date=" + date;
+        getUrl += "?startTime=" + startTime;
+        getUrl += "?endTime=" + endTime;
 
         Request request = new Request.Builder()
                 .url(getUrl)
-                .post(requestBody)
+                .get()
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -284,20 +271,34 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
 
-                            String name = roomInfo.optString("name");
+                            String number = roomInfo.optString("_id");
+                            String name = roomInfo.optString("building_name");
+                            String code = roomInfo.optString("building_code");
+//                            String number = roomInfo.optString("room_no");
                             String capacity = roomInfo.optString("capacity");
-                            String address = roomInfo.optString("address");
-                            String description = roomInfo.optString("description");
-                            String image_url = roomInfo.optString("image_url");
+                            String address = roomInfo.optString("building_address");
+                            JSONArray featuresArray = roomInfo.getJSONArray("features");
 
                             Map<String, String> roomDetails = new HashMap<>();
+                            roomDetails.put("name", name);
                             roomDetails.put("address", address);
                             roomDetails.put("capacity", capacity);
+
+                            String[] parts = featuresArray.toString().replaceAll("\\[|\\]", "").replaceAll("\"", "").split(",");
+
+                            String description = "Features: ";
+                            for (String part : parts) {
+                                description += part;
+                                if (!part.equals(parts[parts.length - 1])) {
+                                    description += ", ";
+                                }
+                            }
+
                             roomDetails.put("description", description);
-                            roomDetails.put("image_url", image_url);
 
                             // update map of rooms
-                            roomDictionary.put(name, roomDetails);
+                            String key = code + " " + number;
+                            roomDictionary.put(key, roomDetails);
                         }
 
                         // update list of rooms
@@ -308,19 +309,17 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
+                                RecyclerView recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
                                 RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(FilterActivity.this));
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e("FilterActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
-                } else {
-                    Log.e("FilterActivity", "Request was not successful. Response code: " + response.code());
                 }
             }
         });
@@ -341,7 +340,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         roomInfoIntent.putExtra("image_url", roomDetails.get("image_url"));
         roomInfoIntent.putExtra("hours", roomDetails.get("hours"));
         roomInfoIntent.putExtra("unavailableTimes", roomDetails.get("unavailableTimes"));
-        roomInfoIntent.putExtra("type", getIntent().getStringExtra("type"));
+        roomInfoIntent.putExtra("type", "study");
         startActivity(roomInfoIntent);
     }
 }

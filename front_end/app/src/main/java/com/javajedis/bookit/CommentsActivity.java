@@ -1,0 +1,105 @@
+package com.javajedis.bookit;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.util.Log;
+
+import com.javajedis.bookit.model.RoomModel;
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerView.adapter.Comments_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class CommentsActivity extends AppCompatActivity {
+
+    private String buildingCode;
+    private String roomNumber;
+
+    ArrayList<String> commentsList = new ArrayList<>();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_comments);
+
+        String codePlusNumber = getIntent().getStringExtra("codePlusNumber");
+
+        String[] parts = codePlusNumber.split(" ");
+        buildingCode = parts[0];
+        roomNumber = parts[1];
+
+        getComments();
+    }
+
+    private void getComments() {
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://bookit.henrydhc.me/studyrooms/" + buildingCode + "/" + roomNumber + "/comments";
+        System.out.println(url);
+        Log.d("CommentsActivity", url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        client.newCall(request).enqueue((new Callback() {
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                Log.e("CommentsActivity", "GET request failed: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        assert response.body() != null;
+                        String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
+//                        // parse
+                        JSONObject responseObject = new JSONObject(jsonResponse);
+//                        JSONArray roomsArray = new JSONArray(jsonResponse);
+                        JSONArray commentsArray = responseObject.getJSONArray("data");
+
+                        for (int i = 0; i < commentsArray.length(); i++) {
+                            String comment = commentsArray.getString(i);
+                            commentsList.add(comment);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RecyclerView recyclerView = findViewById(R.id.comments_recycler_view);
+                                Comments_RecyclerViewAdapter adapter = new Comments_RecyclerViewAdapter(CommentsActivity.this, commentsList);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e("CommentsActivity", "Error reading response: " + e.getMessage());
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }));
+    }
+}

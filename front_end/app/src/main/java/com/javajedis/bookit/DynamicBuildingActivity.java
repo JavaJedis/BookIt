@@ -68,7 +68,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         client.newCall(request).enqueue((new Callback() {
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
             }
@@ -132,7 +132,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -219,7 +219,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -297,7 +297,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
