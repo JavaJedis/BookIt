@@ -34,4 +34,8 @@
     <string name="month_year_textview">Oct 2023</string>
     <string name="previous_button">prev</string>
     <string name="next_button">next</string>
+    <!--  Management Pages  -->
+    <string name="show_current_admin_button">see current</string>
+    <string name="add_new_admin_button">add new</string>
+    <string name="admin_user_email">USER NOT FOUND</string>
 </resources>
