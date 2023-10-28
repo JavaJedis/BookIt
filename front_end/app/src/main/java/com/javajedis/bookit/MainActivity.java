@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private String userType;
 
+    private Button bookingsButton;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent filterIntent = new Intent(MainActivity.this, FilterActivity.class);
                 startActivity(filterIntent);
+            }
+        });
+
+        bookingsButton = findViewById(R.id.bookings_button);
+        bookingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Trying to open BookingsActivity");
+
+                Intent bookingsIntent = new Intent(MainActivity.this, BookingsActivity.class);
+                startActivity(bookingsIntent);
             }
         });
     }

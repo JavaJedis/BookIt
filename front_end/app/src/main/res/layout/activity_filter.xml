@@ -14,8 +14,8 @@
 
         <Button
             android:id="@+id/day_button"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/top_button"
             android:fontFamily="@font/roboto_slab"
@@ -32,8 +32,8 @@
 
         <Button
             android:id="@+id/start_time_button"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bottom_button"
             android:fontFamily="@font/roboto_slab"
@@ -49,8 +49,8 @@
 
         <Button
             android:id="@+id/hours_button"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/top_button"
             android:fontFamily="@font/roboto_slab"

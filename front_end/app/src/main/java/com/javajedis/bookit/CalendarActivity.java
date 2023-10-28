@@ -42,16 +42,22 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
     private String buildingCode;
     private String roomNumber;
 
+    private Boolean fromFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        String codePlusName = getIntent().getStringExtra("codePlusNumber");
-        assert codePlusName != null;
-        String[] parts = codePlusName.split(" ");
-        buildingCode = parts[0];
-        roomNumber = parts[1];
+        fromFilter = getIntent().getBooleanExtra("fromFilter", false);
+
+        if (!fromFilter) {
+            String codePlusName = getIntent().getStringExtra("codePlusNumber");
+            assert codePlusName != null;
+            String[] parts = codePlusName.split(" ");
+            buildingCode = parts[0];
+            roomNumber = parts[1];
+        }
 
 
         initWidgets();
@@ -162,11 +168,17 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
-            Intent timeSlotsIntent = new Intent(CalendarActivity.this, ListTimeSlotsActivity.class);
-            timeSlotsIntent.putExtra("buildingCode", buildingCode);
-            timeSlotsIntent.putExtra("roomNumber", roomNumber);
-            timeSlotsIntent.putExtra("date", dayText + " " + monthYearFromDate(selectedDate));
-            startActivity(timeSlotsIntent);
+            if (fromFilter) {
+                Intent filterIntent = new Intent(CalendarActivity.this, FilterActivity.class);
+                filterIntent.putExtra("date", dayText + " " + monthYearFromDate(selectedDate));
+                startActivity(filterIntent);
+            } else {
+                Intent timeSlotsIntent = new Intent(CalendarActivity.this, ListTimeSlotsActivity.class);
+                timeSlotsIntent.putExtra("buildingCode", buildingCode);
+                timeSlotsIntent.putExtra("roomNumber", roomNumber);
+                timeSlotsIntent.putExtra("date", dayText + " " + monthYearFromDate(selectedDate));
+                startActivity(timeSlotsIntent);
+            }
         }
     }
 }

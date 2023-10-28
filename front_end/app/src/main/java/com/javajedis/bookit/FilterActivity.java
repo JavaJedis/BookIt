@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -25,7 +26,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +54,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     private String startTime;
 
     private Button filterButton;
+    private Button dayButton;
 
     List<String> roomNames = new ArrayList<>();
     ArrayList<RoomModel> roomModels = new ArrayList<>();
@@ -57,6 +63,13 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+
+        dayButton = findViewById(R.id.day_button);
+        String date = getIntent().getStringExtra("date");
+
+        if (date != null) {
+            dayButton.setText(date);
+        }
 
         startTimeButton = findViewById(R.id.start_time_button);
         startTimeButton.setOnClickListener(new View.OnClickListener() {
@@ -70,9 +83,69 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getStudyRooms();
+                if (date == null || startTime == null || duration == null) {
+                    Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
+                } else {
+                    System.out.println(date);
+                    System.out.println(startTime);
+                    System.out.println(duration);
+
+                    String militaryTime = "";
+                    String endTime = "";
+                    try {
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat regClock = new SimpleDateFormat("hh:mm a");
+                        Date convert = regClock.parse(startTime);
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat militaryClock = new SimpleDateFormat("HH:mm");
+                        assert convert != null;
+                        militaryTime = militaryClock.format(convert);
+
+                        endTime = addHoursToTime(militaryTime, duration);
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    getStudyRooms(date, militaryTime, endTime);
+                }
             }
         });
+    }
+
+    public static String addHoursToTime(String inputTime, String hoursToAdd) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            Date date = sdf.parse(inputTime);
+
+            int hours = 0;
+            int minutes = 0;
+
+            // Parse the hours to add
+            String[] parts = hoursToAdd.split(" ");
+            for (int i = 0; i < parts.length; i += 2) {
+                int value = Integer.parseInt(parts[i]);
+                if (parts[i + 1].equals("hour") || parts[i + 1].equals("hours")) {
+                    hours += value;
+                } else if (parts[i + 1].equals("minute") || parts[i + 1].equals("minutes")) {
+                    minutes += value;
+                }
+            }
+
+            // Create a Calendar object and set it to the input time
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            // Add the specified hours and minutes
+            calendar.add(Calendar.HOUR, hours);
+            calendar.add(Calendar.MINUTE, minutes);
+
+            // Format the result as "HH:mm" and return
+            String resultTime = sdf.format(calendar.getTime());
+
+            return resultTime;
+        } catch (Exception e) {
+            // Handle any parsing errors here
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void setUpRoomModels() {
@@ -132,20 +205,23 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     // pop-up menu for days of the week and duration: https://chat.openai.com/share/021b3349-433a-4ded-bb34-3d2e23c61bf8
     public void showDayMenu(View view) {
-        final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select a Day")
-                .setItems(days, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selectedDay = days[which];
-                        // Update the day_button text
-                        Button dayButton = findViewById(R.id.day_button);
-                        dayButton.setText(selectedDay);
-                        day = selectedDay;
-                    }
-                })
-                .show();
+//        final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Select a Day")
+//                .setItems(days, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String selectedDay = days[which];
+//                        // Update the day_button text
+//                        Button dayButton = findViewById(R.id.day_button);
+//                        dayButton.setText(selectedDay);
+//                        day = selectedDay;
+//                    }
+//                })
+//                .show();
+        Intent calendarIntent = new Intent(FilterActivity.this, CalendarActivity.class);
+        calendarIntent.putExtra("fromFilter", true);
+        startActivity(calendarIntent);
     }
 
     public void showDurationMenu(View view) {
@@ -165,15 +241,16 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                 .show();
     }
 
-    private void getStudyRooms() {
+    private void getStudyRooms(String date, String startTime, String endTime) {
         OkHttpClient client = new OkHttpClient();
 
-        String getUrl = "https://bookit.henrydhc.me/filter";
+//        String getUrl = "https://bookit.henrydhc.me/filter";
+        String getUrl = "https://bookit.henrydhc.me/studyrooms/ESC";
         JSONObject json = new JSONObject();
         try {
-            json.put("day", day);
-            json.put("duration", duration);
+            json.put("date", date);
             json.put("startTime", startTime);
+            json.put("endTime", endTime);
         } catch (JSONException e) {
             e.printStackTrace();
         }

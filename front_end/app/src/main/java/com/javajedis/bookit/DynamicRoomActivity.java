@@ -57,7 +57,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private Button bookNowButton;
 
     private boolean locationPermissionGranted = false;
-    private boolean isDetailsActivityRunning = false;
+    private boolean isMapsRunning = false;
     private String cityGeo;
 
     final static String TAG = "LoginActivity";
@@ -149,6 +149,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
                 else {
                     Intent calendarIntent = new Intent(DynamicRoomActivity.this, CalendarActivity.class);
                     calendarIntent.putExtra("codePlusNumber", getIntent().getStringExtra("roomName"));
+                    calendarIntent.putExtra("fromFilter", false);
                     startActivity(calendarIntent);
                 }
             }
@@ -162,7 +163,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
                     // not granted yet
                     ActivityCompat.requestPermissions(DynamicRoomActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
                 } else {
-                    if (!isDetailsActivityRunning) {
+                    if (!isMapsRunning) {
                         getLocationInfo();
                     }
 //                    getLocationInfo();
@@ -251,12 +252,12 @@ public class DynamicRoomActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        isDetailsActivityRunning = false; // Reset the flag when the MainActivity is stopped
+        isMapsRunning = false; // Reset the flag when the MainActivity is stopped
     }
 
     private void startGoogleMaps() {
-        if (!isDetailsActivityRunning) {
-            isDetailsActivityRunning = true;
+        if (!isMapsRunning) {
+            isMapsRunning = true;
 
             // opening Google Maps for navigation: https://youtu.be/WiMa7nh7rF4?si=m8RUFufQeYRbCpXb
 
