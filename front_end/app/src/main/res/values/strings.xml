@@ -1,4 +1,5 @@
 <resources>
+    <!--  Main page  -->
     <string name="app_name">BookIt</string>
     <string name="guest_button">guest</string>
     <string name="hello_message_textview">Hello, Guest.</string>
@@ -6,17 +7,24 @@
     <string name="bookings_button">bookings</string>
     <string name="explore_button">explore</string>
     <string name="filter_button">filter study rooms</string>
+    <string name="manage_room_button">manage rooms</string>
+    <string name="manage_admin_button">manage admins</string>
+    <string name="manage_building_button">add/delete buildings</string>
+    <!--  Explore page  -->
     <string name="title_activity_explore">ExploreActivity</string>
     <string name="ils_button">informal learning spaces</string>
     <string name="study_rooms_button">study rooms</string>
     <string name="lecture_halls_button">lecture halls</string>
+    <!--  Dynamic building page  -->
     <string name="building_name_textview">Dynamic Building</string>
     <string name="building_code_textview">Dynamic Building Code</string>
     <string name="type_textview">Dynamic Type</string>
+    <!--  Search Page  -->
     <string name="building_search">Search</string>
     <string name="search_guild_text">Please choose one option below for more info</string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="recycler_room_name">Macleod</string>
+    <string name="recycler_room_name">NOT FOUND</string>
+    <!--  Dynamic Room Page  -->
     <string name="directions_button">take me there</string>
     <string name="start_time_button">start time</string>
     <string name="hours_button">duration</string>

@@ -11,6 +11,9 @@ import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.javajedis.bookit.model.BookingsModel;
+import com.javajedis.bookit.recyclerView.adapter.Bookings_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,7 +1,5 @@
 package com.javajedis.bookit;
 
-import static okhttp3.MediaType.*;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,22 +9,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.javajedis.bookit.management.AdminManagementActivity;
+import com.javajedis.bookit.management.BuildingManagementActivity;
+import com.javajedis.bookit.management.RoomManagementActivity;
 
 import java.io.IOException;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 // this activity represents the home page of the app
@@ -35,14 +32,10 @@ public class MainActivity extends AppCompatActivity {
     final static String TAG = "MainActivity";
     TextView helloMessageTextView;
     private String clientName;
-
     private Button exploreButton;
     private Button searchButton;
-
     private Button filterButton;
-
     private String userType;
-
     private Button bookingsButton;
 
     @SuppressLint("SetTextI18n")
@@ -121,10 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
 //            RequestBody requestBody = RequestBody.create(parse("application/json"), jsonRequest.toString());
 
-            Request request = new Request.Builder()
-                    .url(getUrl)
-                    .get()
-                    .build();
+            Request request = new Request.Builder().url(getUrl).get().build();
 
             client.newCall(request).enqueue(new Callback() {
                 @Override
@@ -152,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
             userType = "regular";
         }
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -184,5 +173,56 @@ public class MainActivity extends AppCompatActivity {
         }
         helloMessageTextView = findViewById(R.id.hello_message_textview);
         helloMessageTextView.setText("Hello, " + clientName + ".");
+    }
+
+    private void showAdminView() {
+        Button manageRoomButton = findViewById(R.id.manage_room_button);
+        manageRoomButton.setVisibility(View.VISIBLE);
+        ImageView manageRoomImageView = findViewById(R.id.manage_room_imageView);
+        manageRoomImageView.setVisibility(View.VISIBLE);
+
+        manageRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent manageRoomIntent = new Intent(MainActivity.this, RoomManagementActivity.class);
+                // TODO: info needed to display room management activity
+//                manageRoomIntent.putExtra("buildingName", );
+//                manageRoomIntent.putExtra("buildingCode", );
+
+                startActivity(manageRoomIntent);
+            }
+        });
+    }
+
+    private void showSuperAdminView() {
+        Button manageBuildingButton = findViewById(R.id.manage_building_button);
+        manageBuildingButton.setVisibility(View.VISIBLE);
+        ImageView manageBuildingImageView = findViewById(R.id.manage_building_imageView);
+        manageBuildingImageView.setVisibility(View.VISIBLE);
+
+        manageBuildingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent manageBuildingIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
+                // TODO: info needed to display building management activity
+
+                startActivity(manageBuildingIntent);
+            }
+        });
+
+        Button manageAdminButton = findViewById(R.id.manage_admin_button);
+        manageAdminButton.setVisibility(View.VISIBLE);
+        ImageView manageAdminImageView = findViewById(R.id.manage_admin_imageView);
+        manageAdminImageView.setVisibility(View.VISIBLE);
+
+        manageAdminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
+                // TODO: info needed to display admin management activity
+
+                startActivity(manageAdminIntent);
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.recyclerView.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.javajedis.bookit.viewHolder.CalendarViewHolder;
+import com.javajedis.bookit.R;
+
 import java.util.ArrayList;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
+public class Calendar_RecyclerViewAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     private final ArrayList<String> daysOfMonth;
     private final OnItemListener onItemListener;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
+    public Calendar_RecyclerViewAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener) {
         this.daysOfMonth = daysOfMonth;
         this.onItemListener = onItemListener;
     }

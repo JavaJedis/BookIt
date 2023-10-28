@@ -1,4 +1,4 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.recyclerView.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,10 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.javajedis.bookit.R;
+import com.javajedis.bookit.model.TimeSlotsModel;
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 
-import okhttp3.Callback;
+import java.util.ArrayList;
 
 public class TimeSlots_RecyclerViewAdapter extends RecyclerView.Adapter<TimeSlots_RecyclerViewAdapter.MyViewHolder> {
 

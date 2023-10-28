@@ -1,4 +1,4 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.model;
 
 import android.widget.Button;
 
@@ -7,7 +7,6 @@ public class BookingsModel {
     int image;
     String timeSlot;
     String date;
-
     String action;
 
     public BookingsModel(String room, int image, String timeSlot, String date, String action) {

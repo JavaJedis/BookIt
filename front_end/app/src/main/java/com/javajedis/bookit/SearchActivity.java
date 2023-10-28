@@ -15,6 +15,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerView.adapter.SearchResult_RecyclerViewAdapter;
+import com.javajedis.bookit.util.Constant;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +33,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SearchActivity extends AppCompatActivity implements RecyclerViewInterface{
+public class SearchActivity extends AppCompatActivity implements RecyclerViewInterface {
     private final String[] allBuildingCodes = {"AERL", "ALRD", "ANGU", "ANSO", "AUDX", "BIOL", "BUCH", "CEME", "CHBE", "CHEM", "CIRS",
             "DMP", "EOS", "ESB", "FNH", "FORW", "FRDM", "FSC", "GEOG", "HEBB", "HENN", "IBLC", "IONA",
             "IRC", "LASR", "LIFE", "LSK", "MATH", "MATX", "MCLD", "MCML", "ORCH", "OSB1", "PHRM", "PCN",
@@ -46,10 +50,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     private ArrayList<String> showingBuildingNames;
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
-    private final String DOMAIN = "https://bookit.henrydhc.me";
     TextView guideText;
     private SearchResult_RecyclerViewAdapter adapter;
-    private boolean showFullName = false;
+//    private boolean showFullName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,18 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     public void onItemClick(int position) {
         Intent dynamiBuildingIntent = new Intent(SearchActivity.this, DynamicBuildingActivity.class);
 
-        dynamiBuildingIntent.putExtra("type", requestBuildingType);
+        switch (requestBuildingType) {
+            case "ils":
+                dynamiBuildingIntent.putExtra("type", Constant.TYPE_ILS);
+                break;
+            case "studyrooms":
+                dynamiBuildingIntent.putExtra("type", Constant.TYPE_STUDY_ROOM);
+                break;
+            case "lecturehalls":
+                dynamiBuildingIntent.putExtra("type", Constant.TYPE_LECTURE_HALL);
+                break;
+        }
+
         dynamiBuildingIntent.putExtra("buildingName", showingBuildingNames.get(position));
         dynamiBuildingIntent.putExtra("buildingCode", showingBuildingCodes.get(position));
 
@@ -143,11 +157,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                                 showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
                                 break;
                         }
-                        if (showFullName) {
-                            showingBuildingList = showingBuildingNames;
-                        } else {
-                            showingBuildingList = showingBuildingCodes;
-                        }
+//                        if (showFullName) {
+//                            showingBuildingList = showingBuildingNames;
+//                        } else {
+//                            showingBuildingList = showingBuildingCodes;
+//                        }
 
                         adapter.setBuildingNames(showingBuildingList);
                         recyclerView.setAdapter(adapter);
@@ -165,7 +179,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     }
     private void initStudySpaceType(String spaceType) {
         OkHttpClient client = new OkHttpClient();
-        String url = DOMAIN + "/" + spaceType + "/building_all";
+        String url = Constant.DOMAIN + "/" + spaceType + "/building_all";
         Request request = new Request.Builder().url(url).get().build();
 
         client.newCall(request).enqueue((new Callback() {

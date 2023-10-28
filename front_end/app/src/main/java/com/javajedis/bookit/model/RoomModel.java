@@ -1,4 +1,4 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.model;
 
 public class RoomModel {
     String roomName;

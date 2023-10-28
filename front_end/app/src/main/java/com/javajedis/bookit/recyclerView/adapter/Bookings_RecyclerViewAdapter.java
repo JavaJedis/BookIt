@@ -1,20 +1,20 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.recyclerView.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.javajedis.bookit.model.BookingsModel;
+import com.javajedis.bookit.R;
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 
-import okhttp3.Callback;
+import java.util.ArrayList;
 
 public class Bookings_RecyclerViewAdapter extends RecyclerView.Adapter<Bookings_RecyclerViewAdapter.MyViewHolder> {
 

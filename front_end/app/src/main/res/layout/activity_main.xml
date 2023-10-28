@@ -8,7 +8,6 @@
     android:visibility="visible"
     tools:context=".MainActivity">
 
-
     <TextView
         android:id="@+id/hello_message_textview"
         android:layout_width="372dp"
@@ -126,6 +125,122 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/search_button"
         app:layout_constraintVertical_bias="0.453" />
+
+    <Button
+        android:id="@+id/manage_room_button"
+        android:layout_width="310dp"
+        android:layout_height="63dp"
+        android:background="@drawable/regular_button"
+        android:elegantTextHeight="false"
+        android:fontFamily="@font/roboto_slab"
+        android:includeFontPadding="false"
+
+        android:text="@string/manage_room_button"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:paddingStart="16dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.227"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.603"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/manage_room_imageView"
+        android:layout_width="40dp"
+        android:layout_height="75dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.749"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.6"
+        app:srcCompat="@drawable/room"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/manage_admin_button"
+        android:layout_width="310dp"
+        android:layout_height="63dp"
+        android:background="@drawable/regular_button"
+        android:elegantTextHeight="false"
+        android:fontFamily="@font/roboto_slab"
+        android:includeFontPadding="false"
+
+        android:text="@string/manage_admin_button"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:paddingStart="16dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.227"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.753"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/manage_admin_imageView"
+        android:layout_width="40dp"
+        android:layout_height="75dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.749"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.75"
+        app:srcCompat="@drawable/admin"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/manage_building_button"
+        android:layout_width="310dp"
+        android:layout_height="63dp"
+        android:background="@drawable/regular_button"
+        android:elegantTextHeight="false"
+        android:fontFamily="@font/roboto_slab"
+        android:includeFontPadding="false"
+
+        android:text="@string/manage_building_button"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:paddingStart="16dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.227"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.603"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/manage_building_imageView"
+        android:layout_width="40dp"
+        android:layout_height="75dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.749"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.6"
+        app:srcCompat="@drawable/building"
+        android:visibility="gone"/>
+
+
 
     <ImageView
         android:id="@+id/imageView3"

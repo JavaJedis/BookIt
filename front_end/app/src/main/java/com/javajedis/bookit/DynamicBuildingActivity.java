@@ -8,13 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.Marker;
+import com.javajedis.bookit.model.RoomModel;
+import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +33,7 @@ import okhttp3.Response;
 // code on how to use RecyclerView: https://youtu.be/Mc0XT58A1Z4?si=qYZ41YoIpvQ_4wL0,
 //                                  https://youtu.be/7GPUpvcU1FE?si=s3ph_3ehYePOocRk
 
-public class DynamicBuildingActivity extends AppCompatActivity implements RecyclerViewInterface{
+public class DynamicBuildingActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     ArrayList<RoomModel> roomModels = new ArrayList<>();
     List<String> roomNames = new ArrayList<>();
