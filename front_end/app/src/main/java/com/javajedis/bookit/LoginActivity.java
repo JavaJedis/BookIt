@@ -39,6 +39,8 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
+    // checking login commit/push
+
     final static String TAG = "LoginActivity";
 
     private GoogleSignInClient mGoogleSignInClient;
