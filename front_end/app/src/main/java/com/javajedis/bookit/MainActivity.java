@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         getUserType();
 
+        showSuperAdminView();
+
         exploreButton = findViewById(R.id.explore_button);
         exploreButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,8 +221,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
-                // TODO: info needed to display admin management activity
-
+                // TODO: email need to be changed
+                manageAdminIntent.putExtra("AdminEmail", "abc@gmail.com");
                 startActivity(manageAdminIntent);
             }
         });

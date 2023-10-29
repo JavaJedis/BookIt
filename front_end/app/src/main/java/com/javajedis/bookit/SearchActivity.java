@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.SearchResult_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerView.adapter.Buildings_RecyclerViewAdapter;
 import com.javajedis.bookit.util.Constant;
 
 import org.json.JSONArray;
@@ -40,19 +40,19 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             "SCRF", "SOWK", "SPPH", "SWNG", "UCEN", "WESB"};
 
     private final String[] allBuildingNames = allBuildingCodes;
-    private final ArrayList<String> informalLearningSpaceBuildingCodes = new ArrayList<>();
-    private final ArrayList<String> informalLearningSpaceBuildingNames = new ArrayList<>();
-    private final ArrayList<String> lectureHallBuildingCodes = new ArrayList<>();
-    private final ArrayList<String> lectureHallBuildingNames = new ArrayList<>();
-    private final ArrayList<String> studyRoomBuildingCodes = new ArrayList<>();
-    private final ArrayList<String> studyRoomBuildingNames = new ArrayList<>();
+    private ArrayList<String> informalLearningSpaceBuildingCodes = new ArrayList<>();
+    private ArrayList<String> informalLearningSpaceBuildingNames = new ArrayList<>();
+    private ArrayList<String> lectureHallBuildingCodes = new ArrayList<>();
+    private ArrayList<String> lectureHallBuildingNames = new ArrayList<>();
+    private ArrayList<String> studyRoomBuildingCodes = new ArrayList<>();
+    private ArrayList<String> studyRoomBuildingNames = new ArrayList<>();
     private ArrayList<String> showingBuildingCodes;
     private ArrayList<String> showingBuildingNames;
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
     TextView guideText;
-    private SearchResult_RecyclerViewAdapter adapter;
-//    private boolean showFullName = false;
+    private Buildings_RecyclerViewAdapter adapter;
+    private boolean showFullName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +61,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
 
         initBuildingData();
 
-        SearchView searchView = findViewById(R.id.searchView);
+        SearchView searchView = findViewById(R.id.building_searchView);
         searchView.clearFocus();
-        searchView.setQueryHint("Search");
+        searchView.setQueryHint("Search Study Spaces");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -77,7 +77,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             }
         });
 
-        adapter = new SearchResult_RecyclerViewAdapter(SearchActivity.this,SearchActivity.this);
+        adapter = new Buildings_RecyclerViewAdapter(SearchActivity.this,SearchActivity.this);
         RecyclerView recyclerView = findViewById(R.id.building_recyclerView);
 
         guideText = findViewById(R.id.guide_text);
@@ -113,9 +113,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     }
     private void filterList(String text) {
         ArrayList<String> filteredList = new ArrayList<>();
-        for (String allBuildingCode : allBuildingCodes) {
-            if (allBuildingCode.toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(allBuildingCode);
+        for (String building : showingBuildingList) {
+            if (building.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(building);
             }
         }
         if (filteredList.isEmpty()) {
@@ -157,11 +157,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                                 showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
                                 break;
                         }
-//                        if (showFullName) {
-//                            showingBuildingList = showingBuildingNames;
-//                        } else {
-//                            showingBuildingList = showingBuildingCodes;
-//                        }
+                        if (showFullName) {
+                            showingBuildingList = showingBuildingNames;
+                        } else {
+                            showingBuildingList = showingBuildingCodes;
+                        }
 
                         adapter.setBuildingNames(showingBuildingList);
                         recyclerView.setAdapter(adapter);
@@ -243,6 +243,4 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             }
         }
     }
-
-
 }

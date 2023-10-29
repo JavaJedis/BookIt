@@ -13,11 +13,11 @@
         app:layout_constraintBottom_toBottomOf="@+id/building_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/searchView"
+        app:layout_constraintTop_toTopOf="@+id/building_searchView"
         app:layout_constraintVertical_bias="0.93" />
 
     <android.widget.SearchView
-        android:id="@+id/searchView"
+        android:id="@+id/building_searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        app:layout_constraintTop_toBottomOf="@+id/building_searchView"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
@@ -81,6 +81,6 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/lecture_halls_button"
             android:textAllCaps="false" />
-
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
