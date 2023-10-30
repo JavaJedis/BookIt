@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -155,6 +156,9 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                     endMinute -= 60;
                 }
                 @SuppressLint("DefaultLocale") String end = String.format("%02d%02d", endHour, endMinute);
+                if (start.equals("2330") && end.equals("0000")) {
+                    end = "2400";
+                }
                 intervals.add(start + "-" + end);
             }
         }
@@ -171,6 +175,10 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         String[] startEndTimes = selectedTimeSlot.split("-");
         String startTime = startEndTimes[0];
         String endTime = startEndTimes[1];
+
+        if (endTime.equals("0000")) {
+            endTime = "2400";
+        }
 
         System.out.println(outputDate);
         System.out.println(startTime);
@@ -194,7 +202,6 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                 jsonRequest.put("endTime", endTime);
                 jsonRequest.put("buildingCode", getIntent().getStringExtra("buildingCode"));
                 jsonRequest.put("roomNo", getIntent().getStringExtra("roomNumber"));
-                assert account != null;
                 jsonRequest.put("token", account.getIdToken());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -221,8 +228,11 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                         assert response.body() != null;
                         String responseBody = response.body().string();
                         Log.d("ListTimeSlotsActivity", responseBody);
+                        Intent bookingsIntent = new Intent(ListTimeSlotsActivity.this, BookingsActivity.class);
+                        startActivity(bookingsIntent);
                     } else {
                         Log.e("ListTimeSlotsActivity", "POST request failed with code: " + response.code());
+                        assert response.body() != null;
                         System.out.println(response.body().string());
                     }
                 }

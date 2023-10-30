@@ -4,14 +4,23 @@ import static okhttp3.MediaType.parse;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +58,9 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private Button startTimeButton;
 
+    private boolean locationPermissionGranted = false;
+    private boolean isMapsRunning = false;
+
     private int hour, min;
     private String day;
     private String duration;
@@ -56,17 +68,21 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private Button filterButton;
     private Button dayButton;
+    private String date;
 
     List<String> roomNames = new ArrayList<>();
     ArrayList<RoomModel> roomModels = new ArrayList<>();
     private Map<String, Map<String, String>> roomDictionary = new HashMap<>();
+
+    private double lat;
+    private double lon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
         dayButton = findViewById(R.id.day_button);
-        String date = getIntent().getStringExtra("date");
+        date = getIntent().getStringExtra("date");
 
         if (date != null) {
             dayButton.setText(date);
@@ -84,31 +100,107 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (date == null || startTime == null || duration == null) {
-                    Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
-                } else {
-                    System.out.println(date);
-                    System.out.println(startTime);
-                    System.out.println(duration);
-
-                    String militaryTime = "";
-                    String endTime = "";
-                    try {
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat regClock = new SimpleDateFormat("hh:mm a");
-                        Date convert = regClock.parse(startTime);
-                        @SuppressLint("SimpleDateFormat") SimpleDateFormat militaryClock = new SimpleDateFormat("HH:mm");
-                        assert convert != null;
-                        militaryTime = militaryClock.format(convert);
-
-                        endTime = addHoursToTime(militaryTime, duration);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
+                if (!locationPermissionGranted) {
+                    ActivityCompat.requestPermissions(FilterActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                }  else {
+                    if (!isMapsRunning) {
+                        getLocationInfo();
                     }
-
-                    getStudyRooms(date, militaryTime, endTime);
                 }
+//                else {
+//                    if (date == null || startTime == null || duration == null) {
+//                        Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
+//                    } else {
+//                        System.out.println(date);
+//                        System.out.println(startTime);
+//                        System.out.println(duration);
+//
+//                        String militaryTime = "";
+//                        String endTime = "";
+//                        try {
+//                            @SuppressLint("SimpleDateFormat") SimpleDateFormat regClock = new SimpleDateFormat("hh:mm a");
+//                            Date convert = regClock.parse(startTime);
+//                            @SuppressLint("SimpleDateFormat") SimpleDateFormat militaryClock = new SimpleDateFormat("HH:mm");
+//                            assert convert != null;
+//                            militaryTime = militaryClock.format(convert);
+//
+//                            endTime = addHoursToTime(militaryTime, duration);
+//                        } catch (ParseException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//
+//                        getStudyRooms(date, militaryTime, endTime);
+//                    }
+//                }
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isMapsRunning = false;
+    }
+
+    private void getLocationInfo() {
+        if (locationPermissionGranted) {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            LocationListener locationListener = new LocationListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onLocationChanged(Location location) {
+                    lat = location.getLatitude();
+                    lon = location.getLongitude();
+
+                    checkFilterStatus();
+                    locationManager.removeUpdates(this);
+                }
+            };
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        }
+    }
+
+    private void checkFilterStatus() {
+
+        if (date == null || startTime == null || duration == null) {
+            Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
+        } else {
+            System.out.println(date);
+            System.out.println(startTime);
+            System.out.println(duration);
+
+            String militaryTime = "";
+            String endTime = "";
+            try {
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat regClock = new SimpleDateFormat("hh:mm a");
+                Date convert = regClock.parse(startTime);
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat militaryClock = new SimpleDateFormat("HH:mm");
+                assert convert != null;
+                militaryTime = militaryClock.format(convert);
+
+                endTime = addHoursToTime(militaryTime, duration);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            getStudyRooms(date, militaryTime, endTime);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                locationPermissionGranted = true;
+            } else {
+                locationPermissionGranted = false;
+            }
+        }
     }
 
     public static String addHoursToTime(String inputTime, String hoursToAdd) {
@@ -241,9 +333,11 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         String getUrl = "https://bookit.henrydhc.me/filter";
         Log.d("FilterActivity", getUrl);
 
-        getUrl += "?date=" + date;
         getUrl += "?startTime=" + startTime;
         getUrl += "?endTime=" + endTime;
+        getUrl += "?date=" + date;
+        getUrl += "?lat=" + lat;
+        getUrl += "?lon=" + lon;
 
         Request request = new Request.Builder()
                 .url(getUrl)

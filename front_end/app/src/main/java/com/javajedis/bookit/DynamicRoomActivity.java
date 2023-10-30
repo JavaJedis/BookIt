@@ -57,6 +57,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private Button bookNowButton;
 
     private Button viewCommentsButton;
+    private Button reportButton;
 
     private boolean locationPermissionGranted = false;
     private boolean isMapsRunning = false;
@@ -134,13 +135,16 @@ public class DynamicRoomActivity extends AppCompatActivity {
 
         bookNowButton = findViewById(R.id.book_now_button);
         viewCommentsButton = findViewById(R.id.view_comments_button);
+        reportButton = findViewById(R.id.report_button);
 
         if (Objects.equals(getIntent().getStringExtra("type"), "study")) {
             bookNowButton.setVisibility(View.VISIBLE);
             viewCommentsButton.setVisibility(View.VISIBLE);
+            reportButton.setVisibility(View.VISIBLE);
         } else {
             bookNowButton.setVisibility(View.GONE);
             viewCommentsButton.setVisibility(View.GONE);
+            reportButton.setVisibility(View.GONE);
         }
 
         bookNowButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +168,20 @@ public class DynamicRoomActivity extends AppCompatActivity {
                 Intent commentsIntent = new Intent(DynamicRoomActivity.this, CommentsActivity.class);
                 commentsIntent.putExtra("codePlusNumber", getIntent().getStringExtra("roomName"));
                 startActivity(commentsIntent);
+            }
+        });
+
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("DynamicRoomActivity", "Going to report");
+                Intent postIntent = new Intent(DynamicRoomActivity.this, PostActivity.class);
+                String codePlusNumber = getIntent().getStringExtra("roomName");
+                String[] parts = codePlusNumber.split(" ");
+                postIntent.putExtra("buildingCode", parts[0]);
+                postIntent.putExtra("roomNumber", parts[1]);
+                postIntent.putExtra("commenting", false);
+                startActivity(postIntent);
             }
         });
 

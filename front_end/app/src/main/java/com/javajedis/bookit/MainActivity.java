@@ -1,9 +1,12 @@
 package com.javajedis.bookit;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +17,10 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
 import com.javajedis.bookit.management.RoomManagementActivity;
@@ -37,12 +44,23 @@ public class MainActivity extends AppCompatActivity {
     private Button filterButton;
     private String userType;
     private Button bookingsButton;
+    private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount account;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        account = GoogleSignIn.getLastSignedInAccount(this);
 
         getUserType();
 
@@ -85,12 +103,46 @@ public class MainActivity extends AppCompatActivity {
         bookingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Trying to open BookingsActivity");
+                if (account == null) {
+//                    signIn();
+//                    updateHelloMessage(account);
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                } else {
+                    Log.d(TAG, "Trying to open BookingsActivity");
 
-                Intent bookingsIntent = new Intent(MainActivity.this, BookingsActivity.class);
-                startActivity(bookingsIntent);
+                    Intent bookingsIntent = new Intent(MainActivity.this, BookingsActivity.class);
+                    startActivity(bookingsIntent);
+                }
             }
         });
+    }
+
+    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                }
+            }
+    );
+
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        signInLauncher.launch(signInIntent);
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            Log.w(TAG, "Trying to get Google account");
+            account = completedTask.getResult(ApiException.class);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+        }
     }
 
     // GET request while sending info to BE: https://chat.openai.com/share/c6b266b7-c9c2-4cd7-91f2-7a307b4ecc45

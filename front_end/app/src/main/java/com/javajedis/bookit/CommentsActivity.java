@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.javajedis.bookit.model.RoomModel;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
@@ -34,6 +37,8 @@ public class CommentsActivity extends AppCompatActivity {
     private String buildingCode;
     private String roomNumber;
 
+    private Button postComment;
+
     ArrayList<String> commentsList = new ArrayList<>();
 
     @Override
@@ -48,6 +53,19 @@ public class CommentsActivity extends AppCompatActivity {
         roomNumber = parts[1];
 
         getComments();
+
+        postComment = findViewById(R.id.post_comment_button);
+        postComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("CommentsActivity", "Going to post comment");
+                Intent postIntent = new Intent(CommentsActivity.this, PostActivity.class);
+                postIntent.putExtra("buildingCode", buildingCode);
+                postIntent.putExtra("roomNumber", roomNumber);
+                postIntent.putExtra("commenting", true);
+                startActivity(postIntent);
+            }
+        });
     }
 
     private void getComments() {

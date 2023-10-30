@@ -35,8 +35,15 @@
     <string name="previous_button">prev</string>
     <string name="next_button">next</string>
     <string name="view_comments_button">view comments</string>
+    <string name="report_button">report room</string>
     <!--  Management Pages  -->
     <string name="show_current_admin_button">see current</string>
     <string name="add_new_admin_button">add new</string>
     <string name="admin_user_email">USER NOT FOUND</string>
+    <!--  Comment Pages  -->
+    <string name="post_comment_button">post comment</string>
+    <string name="message_hint_text_caption">Please enter a comment here regarding the study room.</string>
+    <string name="post_comment_bottom_button">send your post</string>
+    <!-- Web Client ID -->
+    <string name="server_client_id">111894204425-1rmaa8m6jh19fnjl34hmf4tk0sqmvuhu.apps.googleusercontent.com</string>
 </resources>

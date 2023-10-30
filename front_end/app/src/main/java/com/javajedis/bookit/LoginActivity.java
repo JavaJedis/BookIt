@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.server_client_id))
                 .requestEmail()
                 .build();
 
@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
 //                jsonRequest.put("email", account.getEmail());
                 jsonRequest.put("token", account.getIdToken());
+                System.out.println(account.getIdToken());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
