@@ -66,9 +66,7 @@ public class Buildings_RecyclerViewAdapter extends RecyclerView.Adapter<Building
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
-
             buildingNames = itemView.findViewById(R.id.building_name_row_textView);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,6 +80,5 @@ public class Buildings_RecyclerViewAdapter extends RecyclerView.Adapter<Building
                 }
             });
         }
-
     }
 }

@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/roboto_slab"
-            android:text="@string/recycler_room_name"
+            android:text="@string/search_building_name"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="normal"

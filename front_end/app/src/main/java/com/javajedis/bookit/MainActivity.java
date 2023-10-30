@@ -238,12 +238,13 @@ public class MainActivity extends AppCompatActivity {
         manageRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent manageRoomIntent = new Intent(MainActivity.this, RoomManagementActivity.class);
-                // TODO: info needed to display room management activity
-//                manageRoomIntent.putExtra("buildingName", );
-//                manageRoomIntent.putExtra("buildingCode", );
+                Intent buildingManagementIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-                startActivity(manageRoomIntent);
+                assert account != null;
+                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
+
+                startActivity(buildingManagementIntent);
             }
         });
     }
@@ -258,8 +259,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent manageBuildingIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
-                // TODO: info needed to display building management activity
-
                 startActivity(manageBuildingIntent);
             }
         });
@@ -273,8 +272,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
-                // TODO: email need to be changed
-                manageAdminIntent.putExtra("AdminEmail", "abc@gmail.com");
                 startActivity(manageAdminIntent);
             }
         });

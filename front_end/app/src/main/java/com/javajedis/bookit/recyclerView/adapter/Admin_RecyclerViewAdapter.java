@@ -14,31 +14,31 @@ import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class AdminUsers_RecyclerViewAdapter extends RecyclerView.Adapter<Buildings_RecyclerViewAdapter.MyViewHolder>{
-    ArrayList<String> userEmails;
+public class Admin_RecyclerViewAdapter extends RecyclerView.Adapter<Buildings_RecyclerViewAdapter.MyViewHolder>{
+    ArrayList<String> adminEmails;
     Context context;
 
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public AdminUsers_RecyclerViewAdapter(Context context, ArrayList<String> userEmails, RecyclerViewInterface recyclerViewInterface) {
-        this.userEmails = userEmails;
+    public Admin_RecyclerViewAdapter(Context context, ArrayList<String> adminEmails, RecyclerViewInterface recyclerViewInterface) {
+        this.adminEmails = adminEmails;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
-    public AdminUsers_RecyclerViewAdapter(Context context, RecyclerViewInterface recyclerViewInterface) {
-        this.userEmails = new ArrayList<>();
+    public Admin_RecyclerViewAdapter(Context context, RecyclerViewInterface recyclerViewInterface) {
+        this.adminEmails = new ArrayList<>();
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
     public void setFilterList(ArrayList<String> filterList) {
-        this.userEmails = filterList;
+        this.adminEmails = filterList;
         notifyDataSetChanged();
     }
 
-    public void setUserEmails(ArrayList<String> userEmails) {
-        this.userEmails = userEmails;
+    public void setAdminEmails(ArrayList<String> adminEmails) {
+        this.adminEmails = adminEmails;
     }
     @NonNull
     @Override
@@ -52,12 +52,12 @@ public class AdminUsers_RecyclerViewAdapter extends RecyclerView.Adapter<Buildin
     @Override
     public void onBindViewHolder(@NonNull Buildings_RecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values to each row
-        holder.buildingNames.setText(userEmails.get(position));
+        holder.buildingNames.setText(adminEmails.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return userEmails.size();
+        return adminEmails.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -81,6 +81,5 @@ public class AdminUsers_RecyclerViewAdapter extends RecyclerView.Adapter<Buildin
                 }
             });
         }
-
     }
 }

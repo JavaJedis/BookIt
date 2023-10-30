@@ -8,4 +8,6 @@ public class Constant {
     public static final String TYPE_LECTURE_HALL = "lecture";
 
     public static final String TYPE_STUDY_ROOM = "study";
+
+    public static final int BUILDING_CODE_LENGTH = 4;
 }
