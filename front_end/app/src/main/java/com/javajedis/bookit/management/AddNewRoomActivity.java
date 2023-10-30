@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.util.ServerRequests;
 
+import java.util.Objects;
+
 public class AddNewRoomActivity extends AppCompatActivity {
     private final String TAG = "AddNewRoomActivity";
     private TextView topTextView;
@@ -49,11 +51,18 @@ public class AddNewRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 roomNumber = roomNumberEditText.getText().toString();
-                capacity = Integer.parseInt(capacityEditText.getText().toString());
+                String capacityText = capacityEditText.getText().toString();
                 features = fearturesEditText.getText().toString();
-
-                if (roomNumber == null || features == null) {
+                boolean pureNumber = capacityText.matches("[0-9]+");
+                if (pureNumber) {
+                    capacity = Integer.parseInt(capacityText);
+                } else {
+                    capacity = 0;
+                }
+                if (Objects.equals(roomNumber, "") || features.equals("") || Objects.equals(capacityText, "")) {
                     Toast.makeText(AddNewRoomActivity.this, "please fill in all the info and submit", Toast.LENGTH_SHORT).show();
+                } else if (!pureNumber) {
+                    Toast.makeText(AddNewRoomActivity.this, "capacity must be number only", Toast.LENGTH_SHORT).show();
                 } else if (capacity<=0) {
                     Toast.makeText(AddNewRoomActivity.this, "capacity must be positive", Toast.LENGTH_SHORT).show();
                 } else {

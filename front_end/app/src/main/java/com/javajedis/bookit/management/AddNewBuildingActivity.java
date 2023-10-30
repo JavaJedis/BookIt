@@ -15,6 +15,8 @@ import com.javajedis.bookit.R;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
+import java.util.Objects;
+
 public class AddNewBuildingActivity extends AppCompatActivity {
     private final String TAG = "AddNewRoomActivity";
 
@@ -42,7 +44,7 @@ public class AddNewBuildingActivity extends AppCompatActivity {
                 buildingName = buildingNameEditText.getText().toString();
                 buildingCode = buildingCodeEditText.getText().toString();
                 address = addressEditText.getText().toString();
-                if (buildingName == null || buildingCode == null || address == null) {
+                if (Objects.equals(buildingName, "") || Objects.equals(buildingCode, "") || address.equals("")) {
                     Toast.makeText(AddNewBuildingActivity.this, "Please fill in all the info and submit", Toast.LENGTH_SHORT).show();
                 } else if (buildingCode.length() != Constant.BUILDING_CODE_LENGTH) {
                     Toast.makeText(AddNewBuildingActivity.this, "building code must have length of 4", Toast.LENGTH_SHORT).show();

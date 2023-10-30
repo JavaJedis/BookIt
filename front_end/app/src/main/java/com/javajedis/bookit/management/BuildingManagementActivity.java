@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +32,7 @@ import okhttp3.Response;
 
 public class BuildingManagementActivity extends AppCompatActivity implements RecyclerViewInterface {
     private final String TAG = "BuildingManagementActivity";
-    private ArrayList<String> managedBuildings = new ArrayList<>();
+    private final ArrayList<String> managedBuildings = new ArrayList<>();
 
     private Building_Selection_RecyclerViewAdapter adapter;
 
@@ -52,8 +53,8 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
         recyclerView.setAdapter(adapter);
 
         // TODO: choose the correct set of buttons to display according to user type
-        showSuperAdminView();
-        // showAdminView();
+//        showSuperAdminView();
+         showAdminView();
     }
 
     @Override
@@ -119,10 +120,14 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
         addRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addNewRoomIntent = new Intent(BuildingManagementActivity.this, AddNewRoomActivity.class);
-                addNewRoomIntent.putExtra("building", selectedBuilding);
-                addNewRoomIntent.putExtra("AdminEmail", adminEmail);
-                startActivity(addNewRoomIntent);
+                if (selectedBuilding == null || selectedBuilding.equals("")) {
+                    Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent addNewRoomIntent = new Intent(BuildingManagementActivity.this, AddNewRoomActivity.class);
+                    addNewRoomIntent.putExtra("building", selectedBuilding);
+                    addNewRoomIntent.putExtra("AdminEmail", adminEmail);
+                    startActivity(addNewRoomIntent);
+                }
             }
         });
 
@@ -132,9 +137,13 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
         modifyRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent deleteRoomIntent = new Intent(BuildingManagementActivity.this, RoomManagementActivity.class);
-                deleteRoomIntent.putExtra("building", selectedBuilding);
-                startActivity(deleteRoomIntent);
+                if (selectedBuilding == null || selectedBuilding.equals("")) {
+                    Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent deleteRoomIntent = new Intent(BuildingManagementActivity.this, RoomManagementActivity.class);
+                    deleteRoomIntent.putExtra("building", selectedBuilding);
+                    startActivity(deleteRoomIntent);
+                }
             }
         });
     }

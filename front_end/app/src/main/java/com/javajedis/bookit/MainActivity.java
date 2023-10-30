@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.javajedis.bookit.management.AddNewBuildingActivity;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
 import com.javajedis.bookit.management.RoomManagementActivity;
@@ -64,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
         getUserType();
 
-        showSuperAdminView();
+//        showSuperAdminView();
+        showAdminView();
 
         exploreButton = findViewById(R.id.explore_button);
         exploreButton.setOnClickListener(new View.OnClickListener() {
@@ -241,8 +243,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent buildingManagementIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
                 GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-                assert account != null;
-                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
+//                assert account != null;
+//                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
+                buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
 
                 startActivity(buildingManagementIntent);
             }
@@ -258,8 +261,8 @@ public class MainActivity extends AppCompatActivity {
         manageBuildingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent manageBuildingIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
-                startActivity(manageBuildingIntent);
+                Intent addBuildingIntent = new Intent(MainActivity.this, AddNewBuildingActivity.class);
+                startActivity(addBuildingIntent);
             }
         });
 

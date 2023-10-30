@@ -35,7 +35,7 @@ import okhttp3.Response;
 public class AdminManagementActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private final String TAG = "AdminManagementActivity";
-    private ArrayList<String> allAdmins = new ArrayList<>();
+    private final ArrayList<String> allAdmins = new ArrayList<>();
     private ArrayList<String> showingAdminList;
     private Admin_RecyclerViewAdapter adapter;
     @Override

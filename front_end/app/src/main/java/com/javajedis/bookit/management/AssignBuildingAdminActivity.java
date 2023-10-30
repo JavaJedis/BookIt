@@ -38,7 +38,6 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
 
     private final String TAG = "AssignBuildingAdminActivity";
     private ArrayList<String> allBuildings = new ArrayList<>();
-
     private ArrayList<String> showingList = new ArrayList<>();
     private Building_Selection_RecyclerViewAdapter adapter;
     private EditText editText;
@@ -140,6 +139,7 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
                                         JSONObject object = jsonArray.getJSONObject(i);
                                         String srBuildingName = object.getString("building_name");
                                         String userEmail = object.getString("building_code");
+                                        assert (allBuildings!=null);
                                         allBuildings.add(userEmail);
                                     }
                                     // setup adapter when data is ready

@@ -21,7 +21,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/assign_building_recyclerView"
         android:layout_width="409dp"
-        android:layout_height="522dp"
+        android:layout_height="510dp"
         app:layout_constraintBottom_toTopOf="@+id/admin_email_linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -66,7 +66,7 @@
     <LinearLayout
         android:id="@+id/admin_management_linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,8 @@
             android:background="@drawable/top_button"
             android:fontFamily="@font/roboto_slab"
             android:text="@string/submit_assign_admin_button"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
