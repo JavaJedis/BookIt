@@ -45,6 +45,9 @@
             android:name=".management.BuildingManagementActivity"
             android:exported="false" />
         <activity
+            android:name=".management.DeleteBuildingActivity"
+            android:exported="false" />
+        <activity
             android:name=".management.RoomManagementActivity"
             android:exported="false" />
         <activity

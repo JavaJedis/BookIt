@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "202917476499",
+    "project_id": "bookit-8ed21",
+    "storage_bucket": "bookit-8ed21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202917476499:android:3a166608b1f4ce865f7566",
+        "android_client_info": {
+          "package_name": "com.javajedis.bookit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFaDUcbbnHCi5AGpBs11yZsZ7icCK3jfc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

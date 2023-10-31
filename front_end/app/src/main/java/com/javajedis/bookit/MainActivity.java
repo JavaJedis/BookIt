@@ -24,7 +24,11 @@ import com.google.android.gms.tasks.Task;
 import com.javajedis.bookit.management.AddNewBuildingActivity;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
+import com.javajedis.bookit.management.DeleteBuildingActivity;
 import com.javajedis.bookit.management.RoomManagementActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -185,13 +189,23 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println(responseBody);
                         // You can parse and process the response data as needed
                         Log.d(TAG, "Got response from server: " + responseBody);
-                        // TODO get info from responseBody and show correct view
-                        showSuperAdminView();
+                        try {
+                            JSONObject responseObject = new JSONObject(responseBody);
+                            userType = responseObject.getString("data");
+                            if (userType.equals("admin")) {
+                                showAdminView();
+                            } else if (userType.equals("superadmin")) {
+                                showSuperAdminView();
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+//                        showSuperAdminView();
 //                        showAdminView();
-
-
                     } else {
                         Log.e(TAG, "Request was not successful. Response code: " + response.code());
+                        assert response.body() != null;
+                        System.out.println(response.body().string());
                         userType = "regular";
                     }
                 }
@@ -235,49 +249,87 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAdminView() {
-        Button manageRoomButton = findViewById(R.id.manage_room_button);
-        manageRoomButton.setVisibility(View.VISIBLE);
-        ImageView manageRoomImageView = findViewById(R.id.manage_room_imageView);
-        manageRoomImageView.setVisibility(View.VISIBLE);
-
-        manageRoomButton.setOnClickListener(new View.OnClickListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                Intent buildingManagementIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
+            public void run() {
+                Button manageRoomButton = findViewById(R.id.manage_room_button);
+                manageRoomButton.setVisibility(View.VISIBLE);
+                ImageView manageRoomImageView = findViewById(R.id.manage_room_imageView);
+                manageRoomImageView.setVisibility(View.VISIBLE);
 
-//                assert account != null;
-//                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
-                buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
+                manageRoomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent buildingManagementIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
+                        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-                startActivity(buildingManagementIntent);
+                        //                assert account != null;
+                        //                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
+                        buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
+                        buildingManagementIntent.putExtra("userType", userType);
+
+                        startActivity(buildingManagementIntent);
+                    }
+                });
             }
         });
     }
 
+//    private void showSuperAdminView() {
+//        Button manageBuildingButton = findViewById(R.id.manage_building_button);
+//        manageBuildingButton.setVisibility(View.VISIBLE);
+//        ImageView manageBuildingImageView = findViewById(R.id.manage_building_imageView);
+//        manageBuildingImageView.setVisibility(View.VISIBLE);
+//
+//        manageBuildingButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        Button manageAdminButton = findViewById(R.id.manage_admin_button);
+//        manageAdminButton.setVisibility(View.VISIBLE);
+//        ImageView manageAdminImageView = findViewById(R.id.manage_admin_imageView);
+//        manageAdminImageView.setVisibility(View.VISIBLE);
+//
+//        manageAdminButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
+//                startActivity(manageAdminIntent);
+//            }
+//        });
+//    }
     private void showSuperAdminView() {
-        Button manageBuildingButton = findViewById(R.id.manage_building_button);
-        manageBuildingButton.setVisibility(View.VISIBLE);
-        ImageView manageBuildingImageView = findViewById(R.id.manage_building_imageView);
-        manageBuildingImageView.setVisibility(View.VISIBLE);
-
-        manageBuildingButton.setOnClickListener(new View.OnClickListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
+            public void run() {
+                Button manageBuildingButton = findViewById(R.id.manage_building_button);
+                manageBuildingButton.setVisibility(View.VISIBLE);
+                ImageView manageBuildingImageView = findViewById(R.id.manage_building_imageView);
+                manageBuildingImageView.setVisibility(View.VISIBLE);
 
-            }
-        });
+                manageBuildingButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent deleteBuildingIntent = new Intent(MainActivity.this, DeleteBuildingActivity.class);
+                        startActivity(deleteBuildingIntent);
+                    }
+                });
 
-        Button manageAdminButton = findViewById(R.id.manage_admin_button);
-        manageAdminButton.setVisibility(View.VISIBLE);
-        ImageView manageAdminImageView = findViewById(R.id.manage_admin_imageView);
-        manageAdminImageView.setVisibility(View.VISIBLE);
+                Button manageAdminButton = findViewById(R.id.manage_admin_button);
+                manageAdminButton.setVisibility(View.VISIBLE);
+                ImageView manageAdminImageView = findViewById(R.id.manage_admin_imageView);
+                manageAdminImageView.setVisibility(View.VISIBLE);
 
-        manageAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
-                startActivity(manageAdminIntent);
+                manageAdminButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
+                        startActivity(manageAdminIntent);
+                    }
+                });
             }
         });
     }

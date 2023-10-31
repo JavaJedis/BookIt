@@ -20,7 +20,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,10 +48,29 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private Button guestButton;
 
+    private String deviceToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        deviceToken = task.getResult();
+
+                        Log.d(TAG, deviceToken);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         Log.w(TAG, "In the LoginActivity");
         // Configure sign-in to request the user's ID, email address, and basic
@@ -130,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
 //                jsonRequest.put("email", account.getEmail());
                 jsonRequest.put("token", account.getIdToken());
+                jsonRequest.put("device_token", deviceToken);
                 System.out.println(account.getIdToken());
             } catch (JSONException e) {
                 e.printStackTrace();

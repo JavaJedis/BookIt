@@ -12,9 +12,11 @@ public class Authentication {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
 
         if (account == null) {
+            System.out.println("null");
             Toast.makeText(context, "You need to sign in to a google account", Toast.LENGTH_SHORT);
             return null;
         }
+        System.out.println("token");
         return account.getIdToken();
     }
 
@@ -22,9 +24,11 @@ public class Authentication {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(context);
 
         if (account == null) {
+            System.out.println("null");
             Toast.makeText(context, "You need to sign in to a google account", Toast.LENGTH_SHORT);
             return null;
         }
+        System.out.println("email");
         return account.getEmail();
     }
 

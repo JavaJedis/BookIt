@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
@@ -25,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,11 +47,22 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
     private String adminEmail;
 
+    private TextView adminHeading;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_management);
 
-        adminEmail = getIntent().getStringExtra("AdminEmail");
+        adminHeading = findViewById(R.id.admin_info_textView);
+
+//        adminEmail = Authentication.getCurrentAccountEmail(this);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
+
+        assert account != null;
+        adminEmail = account.getEmail();
+
+        adminHeading.setText(account.getGivenName());
 
         initAdminBuildings();
 
@@ -79,6 +95,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray data = responseObject.getJSONArray("data");
+                        System.out.println(data + "yoooooooooooooooooooooooo penis");
 
                         String managedBuilding = data.toString();
                         runOnUiThread(new Runnable() {
@@ -98,6 +115,10 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     } catch (IOException | JSONException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     }
+                } else {
+                    Log.e(TAG, "Response is not successful");
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
                 }
             }
         });
@@ -136,8 +157,11 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     // You can parse and process the response data as needed
 
                     // TODO get info from responseBody and show correct view
-                    showSuperAdminView();
-                    showAdminView();
+                    if (Objects.equals(getIntent().getStringExtra("userType"), "admin")) {
+                        showAdminView();
+                    } else if (Objects.equals(getIntent().getStringExtra("userType"), "superadmin")) {
+                        showSuperAdminView();
+                    }
                 } else {
                     Log.e(TAG, "Request was not successful. Response code: " + response.code());
                 }
@@ -146,63 +170,72 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
     }
 
     private void showAdminView() {
-        // admin buttons
-        Button addRoomButton = findViewById(R.id.add_room_button);
-        addRoomButton.setVisibility(View.VISIBLE);
-        addRoomButton.setOnClickListener(new View.OnClickListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                if (selectedBuilding == null || selectedBuilding.equals("")) {
-                    Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent addNewRoomIntent = new Intent(BuildingManagementActivity.this, AddNewRoomActivity.class);
-                    addNewRoomIntent.putExtra("building", selectedBuilding);
-                    addNewRoomIntent.putExtra("AdminEmail", adminEmail);
-                    startActivity(addNewRoomIntent);
-                }
-            }
-        });
+            public void run() {
+                // admin buttons
+                Button addRoomButton = findViewById(R.id.add_room_button);
+                addRoomButton.setVisibility(View.VISIBLE);
+                addRoomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectedBuilding == null || selectedBuilding.equals("")) {
+                            Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent addNewRoomIntent = new Intent(BuildingManagementActivity.this, AddNewRoomActivity.class);
+                            addNewRoomIntent.putExtra("building", selectedBuilding);
+                            addNewRoomIntent.putExtra("AdminEmail", adminEmail);
+                            startActivity(addNewRoomIntent);
+                        }
+                    }
+                });
 
-        Button modifyRoomButton = findViewById(R.id.modify_room_button);
-        modifyRoomButton.setVisibility(View.VISIBLE);
+                Button modifyRoomButton = findViewById(R.id.modify_room_button);
+                modifyRoomButton.setVisibility(View.VISIBLE);
 
-        modifyRoomButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedBuilding == null || selectedBuilding.equals("")) {
-                    Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent deleteRoomIntent = new Intent(BuildingManagementActivity.this, RoomManagementActivity.class);
-                    deleteRoomIntent.putExtra("building", selectedBuilding);
-                    startActivity(deleteRoomIntent);
-                }
+                modifyRoomButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (selectedBuilding == null || selectedBuilding.equals("")) {
+                            Toast.makeText(BuildingManagementActivity.this, "Please select a building", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent deleteRoomIntent = new Intent(BuildingManagementActivity.this, RoomManagementActivity.class);
+                            deleteRoomIntent.putExtra("building", selectedBuilding);
+                            startActivity(deleteRoomIntent);
+                        }
+                    }
+                });
             }
         });
     }
 
     private void showSuperAdminView() {
-        // super admin buttons
-        Button removeBuildingButton = findViewById(R.id.remove_building_button);
-        removeBuildingButton.setVisibility(View.VISIBLE);
-        removeBuildingButton.setOnClickListener(new View.OnClickListener() {
+        runOnUiThread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                Intent refreshPage = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
-                ServerRequests.requestDeleteBuildingFromAdmin(adminEmail, selectedBuilding, BuildingManagementActivity.this);
-                startActivity(refreshPage);
-            }
-        });
+            public void run() {
+                // super admin buttons
+                Button removeBuildingButton = findViewById(R.id.remove_building_button);
+                removeBuildingButton.setVisibility(View.VISIBLE);
+                removeBuildingButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent refreshPage = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
+                        ServerRequests.requestDeleteBuildingFromAdmin(adminEmail, selectedBuilding, BuildingManagementActivity.this);
+                        startActivity(refreshPage);
+                    }
+                });
 
-        Button removeAdminButton = findViewById(R.id.remove_admin_button);
-        removeAdminButton.setVisibility(View.VISIBLE);
-        removeAdminButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent adminManagementIntent = new Intent(BuildingManagementActivity.this, AdminManagementActivity.class);
-                ServerRequests.requestDeleteAdmin(adminEmail, BuildingManagementActivity.this);
-                startActivity(adminManagementIntent);
+                Button removeAdminButton = findViewById(R.id.remove_admin_button);
+                removeAdminButton.setVisibility(View.VISIBLE);
+                removeAdminButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent adminManagementIntent = new Intent(BuildingManagementActivity.this, AdminManagementActivity.class);
+                        ServerRequests.requestDeleteAdmin(adminEmail, BuildingManagementActivity.this);
+                        startActivity(adminManagementIntent);
+                    }
+                });
             }
         });
     }
-
 }

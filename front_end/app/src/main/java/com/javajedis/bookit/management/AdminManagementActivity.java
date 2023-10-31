@@ -78,6 +78,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
         Intent buildingManagementIntent = new Intent(AdminManagementActivity.this, BuildingManagementActivity.class);
 
         buildingManagementIntent.putExtra("AdminEmail", showingAdminList.get(position));
+        buildingManagementIntent.putExtra("userType", "superadmin");
 
         startActivity(buildingManagementIntent);
     }
