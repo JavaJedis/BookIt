@@ -25,12 +25,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -91,60 +88,9 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
 
     private void initBuildingData() {
         initStudySpaceType("ils");
-        initStudySpaceType("lecturehalls");
-        initStudySpaceType("studyrooms");
+//        initStudySpaceType("lecturehalls");
+//        initStudySpaceType("studyrooms");
     }
-
-//    private void initStudySpaceType(String spaceType) {
-//        OkHttpClient client = new OkHttpClient();
-//        String url = Constant.DOMAIN + "/" + spaceType + "/building_all";
-//        Request request = new Request.Builder().url(url).get().build();
-//
-//        client.newCall(request).enqueue((new Callback() {
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                e.printStackTrace();
-//                Log.e(TAG, "GET " + spaceType + " building request failed: " + e.getMessage());
-//            }
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) {
-//                if (response.isSuccessful()) {
-//                    try {
-//                        assert response.body() != null;
-//                        String jsonResponse = response.body().string();
-//                        Log.d(TAG, "Get a response from server: " + jsonResponse);
-//                        // parse
-//                        JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray jsonArray = responseObject.getJSONArray("data");
-//                        // Assuming "buildings" is always present in the first object
-//                        JSONObject firstObject = jsonArray.getJSONObject(0);
-//                        JSONArray data = firstObject.getJSONArray("buildings");
-//                        // format
-//                        String buildings = data.toString();
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    initData(buildings);
-//                                    RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
-//                                    adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
-//                                    System.out.println(allBuildings.size());
-//                                    recyclerView.setAdapter(adapter);
-//                                    recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
-//                                } catch (JSONException e) {
-//                                    Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
-//                                }
-//                            }
-//                        });
-//                    } catch (IOException | JSONException e) {
-//                        Log.e(TAG, "Error reading response: " + e.getMessage());
-//                    }
-//                } else {
-//                    Log.d(TAG, "Get response not successful from server: ");
-//                }
-//            }
-//        }));
-//    }
 
     private void initStudySpaceType(String spaceType) {
         OkHttpClient client = new OkHttpClient();
@@ -157,7 +103,6 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                 e.printStackTrace();
                 Log.e(TAG, "GET " + spaceType + " building request failed: " + e.getMessage());
             }
-
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
@@ -177,14 +122,16 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                             @Override
                             public void run() {
                                 try {
-                                    addDataToAdapter(buildings); // Add data to the adapter
+                                    initData(buildings);
                                 } catch (JSONException e) {
                                     Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
+                                    e.printStackTrace();
                                 }
                             }
                         });
                     } catch (IOException | JSONException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
                     Log.d(TAG, "Get response not successful from server: ");
@@ -193,7 +140,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         }));
     }
 
-    private void addDataToAdapter(String data) throws JSONException {
+    private void initData (String data) throws JSONException{
         JSONArray jsonArray = new JSONArray(data);
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject object = jsonArray.getJSONObject(i);
@@ -208,18 +155,5 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
-    }
-
-
-    private void initData (String data) throws JSONException{
-        JSONArray jsonArray = new JSONArray(data);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
-            String buildingCode = object.getString("building_code");
-            allBuildingSet.add(buildingCode);
-        }
-        allBuildings = new ArrayList<>(allBuildingSet);
-//        System.out.println(allBuildings.size());
-        Collections.sort(allBuildings);
     }
 }
