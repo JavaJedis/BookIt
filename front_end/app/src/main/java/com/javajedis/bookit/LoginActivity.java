@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
+                Log.d(TAG,"Login result code: " + result.getResultCode());
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
 
             // signed in successfully
             String loggedIn = account.getGivenName();
-
+            Log.d(TAG, "signed in successfully to: " + loggedIn);
             sendUser(account);
 
             Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);

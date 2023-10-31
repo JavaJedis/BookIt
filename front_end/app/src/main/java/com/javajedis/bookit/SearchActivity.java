@@ -194,6 +194,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
+                        Log.d("SearchActivity", "Get a response from server: " + jsonResponse);
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray jsonArray = responseObject.getJSONArray("data");
@@ -215,6 +216,8 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                     } catch (IOException | JSONException e) {
                         Log.e("SearchActivity", "Error reading response: " + e.getMessage());
                     }
+                } else {
+                    Log.d("SearchActivity", "Get response not successful from server: ");
                 }
             }
         }));

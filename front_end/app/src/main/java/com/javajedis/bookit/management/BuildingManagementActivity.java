@@ -9,11 +9,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.util.Authentication;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
@@ -48,13 +50,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
         initAdminBuildings();
 
-        adapter = new Building_Selection_RecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
-        RecyclerView recyclerView = findViewById(R.id.building_management_recyclerView);
-        recyclerView.setAdapter(adapter);
-
-        // TODO: choose the correct set of buttons to display according to user type
-//        showSuperAdminView();
-         showAdminView();
+        checkUserIdentityAndSetView();
     }
 
     @Override
@@ -84,12 +80,16 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray data = responseObject.getJSONArray("data");
 
-                        String managedBuildings = data.toString();
+                        String managedBuilding = data.toString();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    initData(managedBuildings);
+                                    initData(managedBuilding);
+                                    adapter = new Building_Selection_RecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
+                                    RecyclerView recyclerView = findViewById(R.id.building_management_recyclerView);
+                                    recyclerView.setAdapter(adapter);
+                                    recyclerView.setLayoutManager(new LinearLayoutManager(BuildingManagementActivity.this));
                                 } catch (JSONException e) {
                                     Log.e(TAG, "Error setting locations for admin management Buildings");
                                 }
@@ -111,6 +111,38 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
             String buildingCode = object.toString();
             managedBuildings.add(buildingCode);
         }
+    }
+
+    private void checkUserIdentityAndSetView() {
+        OkHttpClient client = new OkHttpClient();
+        String userToken = Authentication.getCurrentAccountToken(BuildingManagementActivity.this);
+        String getUrl = Constant.DOMAIN + "/user/type/?token=" + userToken;
+
+        Request request = new Request.Builder().url(getUrl).get().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "GET request failed: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String responseBody = response.body().string();
+                    System.out.println(responseBody);
+                    // You can parse and process the response data as needed
+
+                    // TODO get info from responseBody and show correct view
+                    showSuperAdminView();
+                    showAdminView();
+                } else {
+                    Log.e(TAG, "Request was not successful. Response code: " + response.code());
+                }
+            }
+        });
     }
 
     private void showAdminView() {
@@ -156,7 +188,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
             @Override
             public void onClick(View v) {
                 Intent refreshPage = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
-                ServerRequests.requestDeleteBuildingFromAdmin(adminEmail, selectedBuilding);
+                ServerRequests.requestDeleteBuildingFromAdmin(adminEmail, selectedBuilding, BuildingManagementActivity.this);
                 startActivity(refreshPage);
             }
         });
@@ -167,7 +199,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
             @Override
             public void onClick(View v) {
                 Intent adminManagementIntent = new Intent(BuildingManagementActivity.this, AdminManagementActivity.class);
-                ServerRequests.requestDeleteAdmin(adminEmail);
+                ServerRequests.requestDeleteAdmin(adminEmail, BuildingManagementActivity.this);
                 startActivity(adminManagementIntent);
             }
         });

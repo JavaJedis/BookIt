@@ -52,7 +52,7 @@ public class AddNewBuildingActivity extends AppCompatActivity {
                 else if (!buildingCode.matches("[A-Z]+")) { // From https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
                     Toast.makeText(AddNewBuildingActivity.this, "building code contains capital letters only", Toast.LENGTH_SHORT).show();
                 } else  {
-                    ServerRequests.requestAddBuilding(buildingName, buildingCode, address);
+                    ServerRequests.requestAddBuilding(buildingName, buildingCode, address, AddNewBuildingActivity.this);
                     Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, MainActivity.class);
                     startActivity(mainActivityIntent);
                 }

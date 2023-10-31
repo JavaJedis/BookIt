@@ -119,7 +119,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             String startTime = bookingInfo.optString("startTime");
                             String endTime = bookingInfo.optString("endTime");
 
-                            Boolean confirmed;
+                            boolean confirmed;
                             try {
                                 confirmed = bookingInfo.optBoolean("confirmed");
                             } catch (Exception e) {
@@ -131,7 +131,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             bookingDetails.put("date", date);
                             bookingDetails.put("startTime", startTime);
                             bookingDetails.put("endTime", endTime);
-                            bookingDetails.put("confirmed", confirmed.toString());
+                            bookingDetails.put("confirmed", Boolean.toString(confirmed));
 
                             bookingsDictionary.put(_id, bookingDetails);
                         }

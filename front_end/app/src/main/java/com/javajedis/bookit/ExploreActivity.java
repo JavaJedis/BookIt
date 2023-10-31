@@ -283,6 +283,8 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                     } catch (IOException | JSONException e) {
                         Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
                     }
+                } else {
+                    Log.d("ExploreActivity", "Get response not successful from server");
                 }
             }
         }));

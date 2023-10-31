@@ -64,7 +64,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
             @Override
             public void onClick(View v) {
                 if (selectedRoom != null) {
-                    ServerRequests.requestDeleteRoom(building, selectedRoom);
+                    ServerRequests.requestDeleteRoom(building, selectedRoom, RoomManagementActivity.this);
                     Intent roomManagementIntent = new Intent(RoomManagementActivity.this, RoomManagementActivity.class);
                     roomManagementIntent.putExtra("building", building);
                     startActivity(roomManagementIntent);
@@ -79,6 +79,8 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
     @Override
     public void onItemClick(int position) {
         selectedRoom = allStudyRooms.get(position);
+        Button deleteRoomButton = findViewById(R.id.delete_study_room_button);
+        deleteRoomButton.setEnabled(true);
     }
 
     private void initRoomData() {

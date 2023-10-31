@@ -61,6 +61,10 @@
     <string name="features_textView">Features:</string>
     <string name="features_editText_hint">Features available</string>
     <string name="add_new_room_button">add new study room</string>
+    <!--  Delete Building Page  -->
+    <string name="delete_building_textView">Add/Delete Building</string>
+    <string name="delete_building_button">delete selected building</string>
+    <string name="add_building_button">add a new building</string>
     <!--  Add Building Page  -->
     <string name="add_building_textView">Add a new building into the system</string>
     <string name="building_name_textView">Building Name:</string>

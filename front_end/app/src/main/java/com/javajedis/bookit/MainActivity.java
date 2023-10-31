@@ -63,10 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         account = GoogleSignIn.getLastSignedInAccount(this);
 
-        getUserType();
-
-//        showSuperAdminView();
-        showAdminView();
+        getUserTypeAndSetView();
 
         exploreButton = findViewById(R.id.explore_button);
         exploreButton.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // GET request while sending info to BE: https://chat.openai.com/share/c6b266b7-c9c2-4cd7-91f2-7a307b4ecc45
-    private void getUserType() {
+    private void getUserTypeAndSetView() {
         OkHttpClient client = new OkHttpClient();
 
         String getUrl = "https://bookit.henrydhc.me/user/type";
@@ -187,6 +184,12 @@ public class MainActivity extends AppCompatActivity {
                         String responseBody = response.body().string();
                         System.out.println(responseBody);
                         // You can parse and process the response data as needed
+                        Log.d(TAG, "Got response from server: " + responseBody);
+                        // TODO get info from responseBody and show correct view
+                        showSuperAdminView();
+//                        showAdminView();
+
+
                     } else {
                         Log.e(TAG, "Request was not successful. Response code: " + response.code());
                         userType = "regular";
@@ -261,8 +264,7 @@ public class MainActivity extends AppCompatActivity {
         manageBuildingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addBuildingIntent = new Intent(MainActivity.this, AddNewBuildingActivity.class);
-                startActivity(addBuildingIntent);
+
             }
         });
 

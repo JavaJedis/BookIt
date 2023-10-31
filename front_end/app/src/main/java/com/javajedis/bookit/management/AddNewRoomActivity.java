@@ -66,7 +66,7 @@ public class AddNewRoomActivity extends AppCompatActivity {
                 } else if (capacity<=0) {
                     Toast.makeText(AddNewRoomActivity.this, "capacity must be positive", Toast.LENGTH_SHORT).show();
                 } else {
-                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, features);
+                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, features, AddNewRoomActivity.this);
                     Intent buildingManagementIntent = new Intent(AddNewRoomActivity.this, BuildingManagementActivity.class);
                     buildingManagementIntent.putExtra("AdminEmail", adminEmail);
                 }
