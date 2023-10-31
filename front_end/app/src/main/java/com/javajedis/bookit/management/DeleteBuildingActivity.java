@@ -95,6 +95,57 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         initStudySpaceType("studyrooms");
     }
 
+//    private void initStudySpaceType(String spaceType) {
+//        OkHttpClient client = new OkHttpClient();
+//        String url = Constant.DOMAIN + "/" + spaceType + "/building_all";
+//        Request request = new Request.Builder().url(url).get().build();
+//
+//        client.newCall(request).enqueue((new Callback() {
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                e.printStackTrace();
+//                Log.e(TAG, "GET " + spaceType + " building request failed: " + e.getMessage());
+//            }
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) {
+//                if (response.isSuccessful()) {
+//                    try {
+//                        assert response.body() != null;
+//                        String jsonResponse = response.body().string();
+//                        Log.d(TAG, "Get a response from server: " + jsonResponse);
+//                        // parse
+//                        JSONObject responseObject = new JSONObject(jsonResponse);
+//                        JSONArray jsonArray = responseObject.getJSONArray("data");
+//                        // Assuming "buildings" is always present in the first object
+//                        JSONObject firstObject = jsonArray.getJSONObject(0);
+//                        JSONArray data = firstObject.getJSONArray("buildings");
+//                        // format
+//                        String buildings = data.toString();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    initData(buildings);
+//                                    RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
+//                                    adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+//                                    System.out.println(allBuildings.size());
+//                                    recyclerView.setAdapter(adapter);
+//                                    recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
+//                                } catch (JSONException e) {
+//                                    Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
+//                                }
+//                            }
+//                        });
+//                    } catch (IOException | JSONException e) {
+//                        Log.e(TAG, "Error reading response: " + e.getMessage());
+//                    }
+//                } else {
+//                    Log.d(TAG, "Get response not successful from server: ");
+//                }
+//            }
+//        }));
+//    }
+
     private void initStudySpaceType(String spaceType) {
         OkHttpClient client = new OkHttpClient();
         String url = Constant.DOMAIN + "/" + spaceType + "/building_all";
@@ -106,6 +157,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                 e.printStackTrace();
                 Log.e(TAG, "GET " + spaceType + " building request failed: " + e.getMessage());
             }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
@@ -125,11 +177,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                             @Override
                             public void run() {
                                 try {
-                                    initData(buildings);
-                                    RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
-                                    adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
-                                    recyclerView.setAdapter(adapter);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
+                                    addDataToAdapter(buildings); // Add data to the adapter
                                 } catch (JSONException e) {
                                     Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
                                 }
@@ -145,6 +193,24 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         }));
     }
 
+    private void addDataToAdapter(String data) throws JSONException {
+        JSONArray jsonArray = new JSONArray(data);
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject object = jsonArray.getJSONObject(i);
+            String buildingCode = object.getString("building_code");
+            allBuildingSet.add(buildingCode);
+        }
+        allBuildings = new ArrayList<>(allBuildingSet);
+        Collections.sort(allBuildings);
+
+        // Create a new adapter and set it to the RecyclerView
+        adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+        RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
+    }
+
+
     private void initData (String data) throws JSONException{
         JSONArray jsonArray = new JSONArray(data);
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -153,6 +219,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
             allBuildingSet.add(buildingCode);
         }
         allBuildings = new ArrayList<>(allBuildingSet);
+//        System.out.println(allBuildings.size());
         Collections.sort(allBuildings);
     }
 }

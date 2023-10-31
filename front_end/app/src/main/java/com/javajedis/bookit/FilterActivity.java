@@ -59,7 +59,6 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     private Button startTimeButton;
 
     private boolean locationPermissionGranted = false;
-    private boolean isMapsRunning = false;
 
     private int hour, min;
     private String day;
@@ -70,7 +69,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     private Button dayButton;
     private String date;
 
-    List<String> roomNames = new ArrayList<>();
+    List<String> roomNames;
     ArrayList<RoomModel> roomModels = new ArrayList<>();
     private Map<String, Map<String, String>> roomDictionary = new HashMap<>();
 
@@ -80,6 +79,8 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+
+        roomNames = new ArrayList<>();
 
         dayButton = findViewById(R.id.day_button);
         date = getIntent().getStringExtra("date");
@@ -102,10 +103,8 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
             public void onClick(View view) {
                 if (!locationPermissionGranted) {
                     ActivityCompat.requestPermissions(FilterActivity.this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-                }  else {
-                    if (!isMapsRunning) {
-                        getLocationInfo();
-                    }
+                } else {
+                    getLocationInfo();
                 }
 //                else {
 //                    if (date == null || startTime == null || duration == null) {
@@ -136,12 +135,6 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         });
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        isMapsRunning = false;
-    }
-
     private void getLocationInfo() {
         if (locationPermissionGranted) {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -168,12 +161,12 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         if (date == null || startTime == null || duration == null) {
             Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
         } else {
-            System.out.println(date);
-            System.out.println(startTime);
-            System.out.println(duration);
+//            System.out.println(date);
+//            System.out.println(startTime);
+//            System.out.println(duration);
 
             String militaryTime = "";
-            String endTime = "";
+//            String endTime = "";
             try {
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat regClock = new SimpleDateFormat("hh:mm a");
                 Date convert = regClock.parse(startTime);
@@ -181,12 +174,44 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                 assert convert != null;
                 militaryTime = militaryClock.format(convert);
 
-                endTime = addHoursToTime(militaryTime, duration);
+//                endTime = addHoursToTime(militaryTime, duration);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
 
-            getStudyRooms(date, militaryTime, endTime);
+            double durationDouble = 0.5;
+            if (duration.equals("1 hour")) {
+                durationDouble = 1;
+            } else if (duration.equals("1.5 hours")) {
+                durationDouble = 1.5;
+            } else if (duration.equals("2 hours")) {
+                durationDouble = 2;
+            } else if (duration.equals("2.5 hours")) {
+                durationDouble = 2.5;
+            } else if (duration.equals("3 hours")) {
+                durationDouble = 3;
+            }
+
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat inputFormat = new SimpleDateFormat("dd MMMM yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            String formattedDate = "";
+            try {
+                Date date = inputFormat.parse(this.date);
+                assert date != null;
+                formattedDate = outputFormat.format(date);
+//                System.out.println(formattedDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            militaryTime = militaryTime.replace(":", "");
+
+            System.out.println(formattedDate);
+            System.out.println(militaryTime);
+            System.out.println(durationDouble);
+
+            getStudyRooms(formattedDate, militaryTime, durationDouble);
         }
     }
 
@@ -197,6 +222,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 locationPermissionGranted = true;
+                getLocationInfo();
             } else {
                 locationPermissionGranted = false;
             }
@@ -327,17 +353,20 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                 .show();
     }
 
-    private void getStudyRooms(String date, String startTime, String endTime) {
+    private void getStudyRooms(String date, String startTime, double durationDouble) {
         OkHttpClient client = new OkHttpClient();
 
         String getUrl = "https://bookit.henrydhc.me/filter";
         Log.d("FilterActivity", getUrl);
 
+        System.out.println(lat);
+        System.out.println(lon);
+
         getUrl += "?startTime=" + startTime;
-        getUrl += "?endTime=" + endTime;
-        getUrl += "?date=" + date;
-        getUrl += "?lat=" + lat;
-        getUrl += "?lon=" + lon;
+        getUrl += "&duration=" + durationDouble;
+        getUrl += "&day=" + date;
+        getUrl += "&lat=" + lat;
+        getUrl += "&lon=" + lon;
 
         Request request = new Request.Builder()
                 .url(getUrl)
@@ -392,12 +421,13 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
                             // update map of rooms
                             String key = code + " " + number;
+                            roomNames.add(key);
                             roomDictionary.put(key, roomDetails);
                         }
 
                         // update list of rooms
-                        roomNames.clear();
-                        roomNames.addAll(roomDictionary.keySet());
+//                        roomNames.clear();
+//                        roomNames.addAll(roomDictionary.keySet());
 
                         setUpRoomModels();
                         runOnUiThread(new Runnable() {
@@ -414,6 +444,10 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
+                } else {
+                    Log.e("FilterActivity", "Response not successful");
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
                 }
             }
         });

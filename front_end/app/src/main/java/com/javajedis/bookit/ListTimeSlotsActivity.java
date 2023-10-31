@@ -137,7 +137,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                 timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "book now"));
             }
             if (binarySlots.charAt(i) == '1') {
-                timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "get on waitlist"));
+                timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "get on wait-list"));
             }
         }
         System.out.println(timeSlotModels.size());

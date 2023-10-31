@@ -194,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                             userType = responseObject.getString("data");
                             if (userType.equals("admin")) {
                                 showAdminView();
+//                                showSuperAdminView();
                             } else if (userType.equals("superadmin")) {
                                 showSuperAdminView();
                             }
