@@ -25,12 +25,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -91,8 +88,8 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
 
     private void initBuildingData() {
         initStudySpaceType("ils");
-        initStudySpaceType("lecturehalls");
-        initStudySpaceType("studyrooms");
+//        initStudySpaceType("lecturehalls");
+//        initStudySpaceType("studyrooms");
     }
 
     private void initStudySpaceType(String spaceType) {
@@ -126,17 +123,15 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                             public void run() {
                                 try {
                                     initData(buildings);
-                                    RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
-                                    adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
-                                    recyclerView.setAdapter(adapter);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
                                 } catch (JSONException e) {
                                     Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
+                                    e.printStackTrace();
                                 }
                             }
                         });
                     } catch (IOException | JSONException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
                     Log.d(TAG, "Get response not successful from server: ");
@@ -154,5 +149,11 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         }
         allBuildings = new ArrayList<>(allBuildingSet);
         Collections.sort(allBuildings);
+
+        // Create a new adapter and set it to the RecyclerView
+        adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+        RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
     }
 }

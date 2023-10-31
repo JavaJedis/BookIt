@@ -57,10 +57,12 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
 //        adminEmail = Authentication.getCurrentAccountEmail(this);
 
+        adminEmail = getIntent().getStringExtra("AdminEmail");
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
 
         assert account != null;
-        adminEmail = account.getEmail();
+//        adminEmail = account.getEmail();
 
         adminHeading.setText(account.getGivenName());
 
@@ -95,8 +97,6 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray data = responseObject.getJSONArray("data");
-                        System.out.println(data + "yoooooooooooooooooooooooo penis");
-
                         String managedBuilding = data.toString();
                         runOnUiThread(new Runnable() {
                             @Override

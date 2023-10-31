@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                             } else if (userType.equals("superadmin")) {
                                 showSuperAdminView();
                             }
+
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -263,9 +264,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent buildingManagementIntent = new Intent(MainActivity.this, BuildingManagementActivity.class);
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(MainActivity.this);
 
-                        //                assert account != null;
-                        //                buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
-                        buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
+                        assert account != null;
+                        buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
+//                        buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
                         buildingManagementIntent.putExtra("userType", userType);
 
                         startActivity(buildingManagementIntent);
@@ -275,32 +276,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    private void showSuperAdminView() {
-//        Button manageBuildingButton = findViewById(R.id.manage_building_button);
-//        manageBuildingButton.setVisibility(View.VISIBLE);
-//        ImageView manageBuildingImageView = findViewById(R.id.manage_building_imageView);
-//        manageBuildingImageView.setVisibility(View.VISIBLE);
-//
-//        manageBuildingButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//
-//        Button manageAdminButton = findViewById(R.id.manage_admin_button);
-//        manageAdminButton.setVisibility(View.VISIBLE);
-//        ImageView manageAdminImageView = findViewById(R.id.manage_admin_imageView);
-//        manageAdminImageView.setVisibility(View.VISIBLE);
-//
-//        manageAdminButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent manageAdminIntent = new Intent(MainActivity.this, AdminManagementActivity.class);
-//                startActivity(manageAdminIntent);
-//            }
-//        });
-//    }
     private void showSuperAdminView() {
         runOnUiThread(new Runnable() {
             @Override
