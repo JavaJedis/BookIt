@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -51,11 +50,13 @@ import okhttp3.Response;
 
 public class BookingsActivity extends AppCompatActivity implements RecyclerViewInterface {
 
+    private final String TAG = "BookingsActivity";
+
     ArrayList<BookingsModel> bookingsModels = new ArrayList<>();
 
     List<String> bookingIDs = new ArrayList<>();
 
-    private Map<String, Map<String, String>> bookingsDictionary = new HashMap<>();
+    private final Map<String, Map<String, String>> bookingsDictionary = new HashMap<>();
 
     private double lat;
     private double lon;
@@ -77,10 +78,11 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
         String url = "https://bookit.henrydhc.me/user/bookings";
         System.out.println(url);
         Log.d("BookingsActivity", url);
-        String date = getIntent().getStringExtra("date");
+//        String date = getIntent().getStringExtra("date");
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+        assert account != null;
         url += "?token=" + account.getIdToken();
         Request request = new Request.Builder()
                 .url(url)
@@ -90,9 +92,9 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
         client.newCall(request).enqueue((new Callback() {
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("BookingsActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
@@ -156,12 +158,12 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("BookingsActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    Log.e("BookingsActivity", "No response.");
+                    Log.e(TAG, "No response.");
                     assert response.body() != null;
                     System.out.println(response.body().string());
                 }
@@ -179,15 +181,14 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
             int endTimeInt = Integer.parseInt(Objects.requireNonNull(Objects.requireNonNull(bookingsDictionary.get(_id)).get("endTime")));
             int currentTimeInt = Integer.parseInt(currentTime);
 
-            String actionStatus = "";
+            String actionStatus;
             String name = Objects.requireNonNull(bookingsDictionary.get(_id)).get("name");
             String dateBooking = Objects.requireNonNull(bookingsDictionary.get(_id)).get("date");
             System.out.println(dateBooking);
 
             if (isCurrentDateBefore(dateBooking)) {
                 actionStatus = "click to cancel";
-            }
-            else if (isCurrentDateEqual(dateBooking)) {
+            } else if (isCurrentDateEqual(dateBooking)) {
                 if (startTimeInt > currentTimeInt) {
                     actionStatus = "click to cancel";
                 } else if (currentTimeInt < endTimeInt) {
@@ -371,7 +372,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     e.printStackTrace();
-                    Log.e("BookingsActivity", "PUT request failed: " + e.getMessage());
+                    Log.e(TAG, "PUT request failed: " + e.getMessage());
                 }
 
                 @Override
@@ -379,7 +380,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                     if (response.isSuccessful()) {
                         assert response.body() != null;
                         String responseBody = response.body().string();
-                        Log.d("BookingsActivity", responseBody);
+                        Log.d(TAG, responseBody);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -396,7 +397,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             }
                         });
                     } else {
-                        Log.e("BookingsActivity", "PUT request failed with code: " + response.code());
+                        Log.e(TAG, "PUT request failed with code: " + response.code());
                         System.out.println(response.body().string());
                         if (response.code() == 400) {
                             runOnUiThread(new Runnable() {
@@ -434,7 +435,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                Log.e("BookingsActivity", "DELETE request failed: " + e.getMessage());
+                Log.e(TAG, "DELETE request failed: " + e.getMessage());
             }
 
             @Override
@@ -458,7 +459,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                         }
                     });
                 } else {
-                    Log.e("BookingsActivity", "No response.");
+                    Log.e(TAG, "No response.");
                     assert response.body() != null;
                     System.out.println(response.body().string());
                     Toast.makeText(BookingsActivity.this, "Unable to cancel booking. Oops!", Toast.LENGTH_SHORT).show();

@@ -29,12 +29,10 @@ import okhttp3.Response;
 
 public class PostActivity extends AppCompatActivity {
 
+    private final String TAG = "PostActivity";
     private EditText mEditTextMessage;
-    
     private Button postCommentButton;
-
     private String post;
-
     private Boolean commenting;
     private String messageType;
     private String postURL;
@@ -52,7 +50,7 @@ public class PostActivity extends AppCompatActivity {
         postCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("PostActivity", "Posting comment");
+                Log.d(TAG, "Posting comment");
 
                 post = mEditTextMessage.getText().toString();
                 if (post.length() == 0) {
@@ -75,7 +73,6 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void postComment() {
@@ -93,19 +90,15 @@ public class PostActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             MediaType JSON = MediaType.parse("application/json; charset=utf-8");
             RequestBody requestBody = RequestBody.create(JSON, jsonRequest.toString());
 
-            Request request = new Request.Builder()
-                    .url(postURL)
-                    .post(requestBody)
-                    .build();
+            Request request = new Request.Builder().url(postURL).post(requestBody).build();
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     e.printStackTrace();
-                    Log.e("PostActivity", "POST request failed: " + e.getMessage());
+                    Log.e(TAG, "POST request failed: " + e.getMessage());
                 }
 
                 @Override
@@ -113,7 +106,7 @@ public class PostActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         assert response.body() != null;
                         String responseBody = response.body().string();
-                        Log.d("PostActivity", responseBody);
+                        Log.d(TAG, responseBody);
                         if (commenting) {
                             Intent commentsIntent = new Intent(PostActivity.this, CommentsActivity.class);
                             String codePlusNumber = getIntent().getStringExtra("buildingCode") + " " + getIntent().getStringExtra("roomNumber");
@@ -127,7 +120,7 @@ public class PostActivity extends AppCompatActivity {
                             startActivity(mainIntent);
                         }
                     } else {
-                        Log.e("PostActivity", "POST request failed with code: " + response.code());
+                        Log.e(TAG, "POST request failed with code: " + response.code());
                     }
                 }
             });

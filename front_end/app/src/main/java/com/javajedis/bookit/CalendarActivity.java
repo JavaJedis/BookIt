@@ -20,10 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CalendarActivity extends AppCompatActivity implements Calendar_RecyclerViewAdapter.OnItemListener{
-    
-    private Button previousButton;
-
-    private Button nextButton;
 
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -54,7 +50,7 @@ public class CalendarActivity extends AppCompatActivity implements Calendar_Recy
         selectedDate = LocalDate.now();
         setMonthView();
 
-        previousButton = findViewById(R.id.previous_button);
+        Button previousButton = findViewById(R.id.previous_button);
         previousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +58,7 @@ public class CalendarActivity extends AppCompatActivity implements Calendar_Recy
             }
         });
 
-        nextButton = findViewById(R.id.next_button);
+        Button nextButton = findViewById(R.id.next_button);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +112,7 @@ public class CalendarActivity extends AppCompatActivity implements Calendar_Recy
             if (isSelectable) {
                 daysInMonthArray.add(String.valueOf(i));
             } else {
-                daysInMonthArray.add("X"); // Make the day unclickable
+                daysInMonthArray.add("X"); // Make the day un-clickable
             }
         }
 

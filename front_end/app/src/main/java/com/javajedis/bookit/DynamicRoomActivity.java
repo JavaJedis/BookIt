@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -45,6 +44,7 @@ import java.util.Objects;
 
 public class DynamicRoomActivity extends AppCompatActivity {
 
+    private final String TAG = "LoginActivity";
     private ImageView roomImage;
     private TextView roomName;
     private TextView address;
@@ -62,8 +62,6 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private boolean locationPermissionGranted = false;
     private boolean isMapsRunning = false;
     private String cityGeo;
-
-    final static String TAG = "LoginActivity";
 
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
@@ -177,6 +175,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
                 Log.d("DynamicRoomActivity", "Going to report");
                 Intent postIntent = new Intent(DynamicRoomActivity.this, PostActivity.class);
                 String codePlusNumber = getIntent().getStringExtra("roomName");
+                assert codePlusNumber != null;
                 String[] parts = codePlusNumber.split(" ");
                 postIntent.putExtra("buildingCode", parts[0]);
                 postIntent.putExtra("roomNumber", parts[1]);
@@ -202,7 +201,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
         });
     }
 
-    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {

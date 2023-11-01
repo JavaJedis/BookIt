@@ -39,6 +39,7 @@ import okhttp3.Response;
 // concise way to request location permissions: https://chat.openai.com/share/26df5995-8f25-4a29-990e-f612ef9847d0
 public class ExploreActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private final String TAG = "ExploreActivity";
     private GoogleMap mMap;
     private ActivityExploreBinding binding;
 
@@ -67,7 +68,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         ilsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ExploreActivity", "Setting locations of ILS buildings");
+                Log.d(TAG, "Setting locations of ILS buildings");
                 String getUrl = "https://bookit.henrydhc.me/ils/building_all";
                 getLocations(getUrl);
             }
@@ -77,7 +78,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         lectureHallsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ExploreActivity", "Setting locations of Lecture Hall buildings");
+                Log.d(TAG, "Setting locations of Lecture Hall buildings");
 //                try {
 //                    setLocations(CLASSROOM_BUILDINGS);
 //                } catch (JSONException e) {
@@ -92,7 +93,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         studyRoomsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("ExploreActivity", "Setting locations of Study Room buildings");
+                Log.d(TAG, "Setting locations of Study Room buildings");
                 String getUrl = "https://bookit.henrydhc.me/studyrooms/building_all";
                 getLocations(getUrl);
             }
@@ -220,7 +221,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                             buildingInfoIntent.putExtra("buildingCode", obj.getString("building_code"));
                         }
                     } catch (JSONException e) {
-                        Log.d("ExploreActivity", "Error when trying to find building name in jsonArray");
+                        Log.d(TAG, "Error when trying to find building name in jsonArray");
                     }
                 }
 
@@ -242,23 +243,20 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
 
         client.newCall(request).enqueue((new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("ExploreActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
                         System.out.println(jsonResponse);
                         // parse
-//                        JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray data = responseObject.getJSONArray("buildings");
                         JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray jsonArray = new JSONArray(jsonResponse);
                         JSONArray jsonArray = responseObject.getJSONArray("data");
                         // Assuming "buildings" is always present in the first object
                         JSONObject firstObject = jsonArray.getJSONObject(0);
@@ -276,15 +274,15 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                                 try {
                                     setLocations(buildings, buildingType);
                                 } catch (JSONException e) {
-                                    Log.e("ExploreActivity", "Error setting locations for ILS Buildings");
+                                    Log.e(TAG, "Error setting locations for ILS Buildings");
                                 }
                             }
                         });
                     } catch (IOException | JSONException e) {
-                        Log.e("ExploreActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     }
                 } else {
-                    Log.d("ExploreActivity", "Get response not successful from server");
+                    Log.d(TAG, "Get response not successful from server");
                 }
             }
         }));

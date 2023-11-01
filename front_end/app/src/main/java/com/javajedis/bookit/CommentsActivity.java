@@ -11,10 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.javajedis.bookit.model.RoomModel;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Comments_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,9 +19,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,6 +27,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CommentsActivity extends AppCompatActivity {
+
+    private final String TAG = "CommentsActivity";
 
     private String buildingCode;
     private String roomNumber;
@@ -48,6 +44,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         String codePlusNumber = getIntent().getStringExtra("codePlusNumber");
 
+        assert codePlusNumber != null;
         String[] parts = codePlusNumber.split(" ");
         buildingCode = parts[0];
         roomNumber = parts[1];
@@ -58,7 +55,7 @@ public class CommentsActivity extends AppCompatActivity {
         postComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("CommentsActivity", "Going to post comment");
+                Log.d(TAG, "Going to post comment");
                 Intent postIntent = new Intent(CommentsActivity.this, PostActivity.class);
                 postIntent.putExtra("buildingCode", buildingCode);
                 postIntent.putExtra("roomNumber", roomNumber);
@@ -72,7 +69,7 @@ public class CommentsActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         String url = "https://bookit.henrydhc.me/studyrooms/" + buildingCode + "/" + roomNumber + "/comments";
         System.out.println(url);
-        Log.d("CommentsActivity", url);
+        Log.d(TAG, url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -83,11 +80,11 @@ public class CommentsActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("CommentsActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
@@ -112,7 +109,7 @@ public class CommentsActivity extends AppCompatActivity {
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("CommentsActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

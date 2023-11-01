@@ -36,6 +36,8 @@ import okhttp3.Response;
 
 public class ListTimeSlotsActivity extends AppCompatActivity implements RecyclerViewInterface {
 
+    private final String TAG = "ListTimeSlotsActivity";
+
     ArrayList<TimeSlotsModel> timeSlotModels = new ArrayList<>();
 
     List<String> timeSlots = new ArrayList<>();
@@ -63,7 +65,9 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         outputDate = "";
         try {
             // Parse the input date string into a Date object
+            assert date != null;
             Date convert = inputFormat.parse(date);
+            assert convert != null;
             outputDate = outputFormat.format(convert);
 
             System.out.println("Output Date: " + outputDate);
@@ -83,22 +87,21 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         client.newCall(request).enqueue((new Callback() {
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("ListTimeActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     System.out.println("yo");
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
                         System.out.println(jsonResponse);
-//                        // parse
+                        // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray roomsArray = new JSONArray(jsonResponse);
                         String binarySlots = responseObject.getString("data");
                         System.out.println(binarySlots);
 
@@ -113,13 +116,14 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("ListTimeSlotsActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    Log.e("ListTimeSlotsActivity", "No response.");
-                    System.out.println(response.body().toString());
+                    Log.e(TAG, "No response.");
+                    assert response.body() != null;
+                    System.out.println(response.body());
                 }
             }
         }));
@@ -170,7 +174,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
     public void onItemClick(int position) {
         TimeSlotsModel selectedModel = timeSlotModels.get(position);
         String selectedTimeSlot = selectedModel.getTimeInterval();
-        String selectedStatus = selectedModel.getStatus();
+//        String selectedStatus = selectedModel.getStatus();
 
         String[] startEndTimes = selectedTimeSlot.split("-");
         String startTime = startEndTimes[0];
@@ -188,6 +192,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
+        assert account != null;
         System.out.println(account.getEmail());
 
         OkHttpClient client = new OkHttpClient();
@@ -219,7 +224,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     e.printStackTrace();
-                    Log.e("ListTimeSlotsActivity", "POST request failed: " + e.getMessage());
+                    Log.e(TAG, "POST request failed: " + e.getMessage());
                 }
 
                 @Override
@@ -227,11 +232,11 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                     if (response.isSuccessful()) {
                         assert response.body() != null;
                         String responseBody = response.body().string();
-                        Log.d("ListTimeSlotsActivity", responseBody);
+                        Log.d(TAG, responseBody);
                         Intent bookingsIntent = new Intent(ListTimeSlotsActivity.this, BookingsActivity.class);
                         startActivity(bookingsIntent);
                     } else {
-                        Log.e("ListTimeSlotsActivity", "POST request failed with code: " + response.code());
+                        Log.e(TAG, "POST request failed with code: " + response.code());
                         assert response.body() != null;
                         System.out.println(response.body().string());
                     }

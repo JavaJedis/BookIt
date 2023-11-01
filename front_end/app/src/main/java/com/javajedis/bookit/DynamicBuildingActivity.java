@@ -34,11 +34,11 @@ import okhttp3.Response;
 //                                  https://youtu.be/7GPUpvcU1FE?si=s3ph_3ehYePOocRk
 
 public class DynamicBuildingActivity extends AppCompatActivity implements RecyclerViewInterface {
-
+    private final String TAG = "DynamicBuildingActivity";
     ArrayList<RoomModel> roomModels = new ArrayList<>();
     List<String> roomNames = new ArrayList<>();
 
-    private Map<String, Map<String, String>> roomDictionary = new HashMap<>();
+    private final Map<String, Map<String, String>> roomDictionary = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,30 +59,26 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         OkHttpClient client = new OkHttpClient();
         String url = "https://bookit.henrydhc.me/studyrooms/" + getIntent().getStringExtra("buildingCode");
         System.out.println(url);
-        Log.d("DynamicBuildingActivity", url);
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
+        Log.d(TAG, url);
+        Request request = new Request.Builder().url(url).get().build();
 
         client.newCall(request).enqueue((new Callback() {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
                         System.out.println(jsonResponse);
-//                        // parse
+                        // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray roomsArray = new JSONArray(jsonResponse);
                         JSONArray roomsArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
@@ -90,7 +86,6 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             String number = roomInfo.optString("_id");
                             String name = roomInfo.optString("building_name");
                             String code = roomInfo.optString("building_code");
-//                            String number = roomInfo.optString("room_no");
                             String capacity = roomInfo.optString("capacity");
                             String address = roomInfo.optString("building_address");
                             JSONArray featuresArray = roomInfo.getJSONArray("features");
@@ -132,7 +127,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -160,7 +155,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         OkHttpClient client = new OkHttpClient();
         String url = "https://bookit.henrydhc.me/ils/" + getIntent().getStringExtra("buildingCode");
         System.out.println(url);
-        Log.d("DynamicBuildingActivity", url);
+        Log.d(TAG, url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -169,21 +164,20 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         client.newCall(request).enqueue((new Callback() {
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
                         System.out.println(jsonResponse);
-//                        // parse
+                        // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray roomsArray = new JSONArray(jsonResponse);
                         JSONArray roomsArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
@@ -219,7 +213,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -232,7 +226,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         OkHttpClient client = new OkHttpClient();
         String url = "https://bookit.henrydhc.me/lecturehalls/" + getIntent().getStringExtra("buildingCode");
         System.out.println(url);
-        Log.d("DynamicBuildingActivity", url);
+        Log.d(TAG, url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -241,21 +235,20 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
         client.newCall(request).enqueue((new Callback() {
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("DynamicBuildingActivity", "GET request failed: " + e.getMessage());
+                Log.e(TAG, "GET request failed: " + e.getMessage());
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
                         System.out.println(jsonResponse);
-//                        // parse
+                        // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
-//                        JSONArray roomsArray = new JSONArray(jsonResponse);
                         JSONArray roomsArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
@@ -297,7 +290,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

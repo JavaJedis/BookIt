@@ -1,15 +1,9 @@
 package com.javajedis.bookit;
 
-import android.app.Service;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

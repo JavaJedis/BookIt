@@ -34,25 +34,29 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerViewInterface {
+
+    private final String TAG = "SearchActivity";
     private final String[] allBuildingCodes = {"AERL", "ALRD", "ANGU", "ANSO", "AUDX", "BIOL", "BUCH", "CEME", "CHBE", "CHEM", "CIRS",
             "DMP", "EOS", "ESB", "FNH", "FORW", "FRDM", "FSC", "GEOG", "HEBB", "HENN", "IBLC", "IONA",
             "IRC", "LASR", "LIFE", "LSK", "MATH", "MATX", "MCLD", "MCML", "ORCH", "OSB1", "PHRM", "PCN",
             "SCRF", "SOWK", "SPPH", "SWNG", "UCEN", "WESB"};
 
     private final String[] allBuildingNames = allBuildingCodes;
-    private ArrayList<String> informalLearningSpaceBuildingCodes = new ArrayList<>();
-    private ArrayList<String> informalLearningSpaceBuildingNames = new ArrayList<>();
-    private ArrayList<String> lectureHallBuildingCodes = new ArrayList<>();
-    private ArrayList<String> lectureHallBuildingNames = new ArrayList<>();
-    private ArrayList<String> studyRoomBuildingCodes = new ArrayList<>();
-    private ArrayList<String> studyRoomBuildingNames = new ArrayList<>();
+    private final ArrayList<String> informalLearningSpaceBuildingCodes = new ArrayList<>();
+    private final ArrayList<String> informalLearningSpaceBuildingNames = new ArrayList<>();
+    private final ArrayList<String> lectureHallBuildingCodes = new ArrayList<>();
+    private final ArrayList<String> lectureHallBuildingNames = new ArrayList<>();
+    private final ArrayList<String> studyRoomBuildingCodes = new ArrayList<>();
+
+    private final ArrayList<String> studyRoomBuildingNames = new ArrayList<>();
     private ArrayList<String> showingBuildingCodes;
     private ArrayList<String> showingBuildingNames;
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
     TextView guideText;
     private Buildings_RecyclerViewAdapter adapter;
-    private boolean showFullName = false;
+
+//    private boolean showFullName = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +132,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("SearchActivity", "Getting locations of " + spaceType +  " buildings");
+                Log.d(TAG, "Getting locations of " + spaceType +  " buildings");
                 guideText.setText("");
                 requestBuildingType = spaceType;
                 runOnUiThread(new Runnable() {
@@ -157,11 +161,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                                 showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
                                 break;
                         }
-                        if (showFullName) {
-                            showingBuildingList = showingBuildingNames;
-                        } else {
+//                        if (showFullName) {
+//                            showingBuildingList = showingBuildingNames;
+//                        } else {
                             showingBuildingList = showingBuildingCodes;
-                        }
+//                        }
 
                         adapter.setBuildingNames(showingBuildingList);
                         recyclerView.setAdapter(adapter);
@@ -175,7 +179,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
         initStudySpaceType("ils");
         initStudySpaceType("lecturehalls");
         initStudySpaceType("studyrooms");
-        Log.d("SearchActivity", "in init BuildingData Finish" );
+        Log.d(TAG, "in init BuildingData Finish" );
     }
     private void initStudySpaceType(String spaceType) {
         OkHttpClient client = new OkHttpClient();
@@ -186,7 +190,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
-                Log.e("SearchActivity", "GET " + spaceType + " building request failed: " + e.getMessage());
+                Log.e(TAG, "GET " + spaceType + " building request failed: " + e.getMessage());
             }
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
@@ -194,7 +198,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
-                        Log.d("SearchActivity", "Get a response from server: " + jsonResponse);
+                        Log.d(TAG, "Get a response from server: " + jsonResponse);
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray jsonArray = responseObject.getJSONArray("data");
@@ -209,15 +213,15 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                                 try {
                                     initData(spaceType, buildings);
                                 } catch (JSONException e) {
-                                    Log.e("SearchActivity", "Error setting locations for " + spaceType + " Buildings");
+                                    Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
                                 }
                             }
                         });
                     } catch (IOException | JSONException e) {
-                        Log.e("SearchActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     }
                 } else {
-                    Log.d("SearchActivity", "Get response not successful from server: ");
+                    Log.d(TAG, "Get response not successful from server: ");
                 }
             }
         }));
