@@ -1,0 +1,24 @@
+{
+  "name": "bookit_backend",
+  "version": "1.0.0",
+  "description": "Bookit Backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "be_test"
+  },
+  "author": "Java-Jedis",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.4",
+    "axios": "^1.5.1",
+    "dotenv": "^16.3.1",
+    "ejson": "^2.2.3",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0",
+    "fs": "^0.0.1-security",
+    "geolib": "^3.3.4",
+    "https": "^1.0.0",
+    "mongodb": "^6.1.0",
+    "node-schedule": "^2.1.1"
+  }
+}

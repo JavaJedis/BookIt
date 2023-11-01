@@ -46,7 +46,6 @@ function sendStudyRoomComment(req, res) {
         room: req.params.room_no, 
         comment: req.body.comment
     }
-    console.log(data)
     if (commentUploader(data)) {
         res.status(201);
         res.type('json');

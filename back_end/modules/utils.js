@@ -79,6 +79,39 @@ function onFailure(res, err) {
     ))
 }
 
+//Time representation handling functions
+
+/**
+ * Convert military time to decimal representation
+ * @param {Array} time Military time in an integer array of size 2.
+ * @returns Decimal representation of the time.
+ */
+function militaryTimeToDecimal(time) {
+
+    if (time == null || !(time instanceof Array) || time.length != 2) {
+        throw Error("Invalid Arguments");
+    }
+
+    
+    const hour = time[0];
+    const min = time[1];
+
+    if (hour == null || min == null) {
+        throw Error("Invalid hour or min");
+    }
+
+    if (!Number.isInteger(hour) || !Number.isInteger(min)) {
+        throw Error("Invalid hour or min");
+    }
+
+    if (hour % 1 != 0 || min % 30 != 0) {
+        throw Error("Invalid hour or min");
+    }
+
+    return hour * 2 + min / 30;
+
+}
+
 
 //Function Exports
 module.exports = {
@@ -87,5 +120,6 @@ module.exports = {
     onFailure, 
     logInit, 
     logDeinit, 
-    serverLog
+    serverLog, 
+    militaryTimeToDecimal
 }
