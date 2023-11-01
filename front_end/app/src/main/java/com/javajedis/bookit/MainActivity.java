@@ -194,16 +194,17 @@ public class MainActivity extends AppCompatActivity {
                             userType = responseObject.getString("data");
                             if (userType.equals("admin")) {
                                 showAdminView();
-//                                showSuperAdminView();
                             } else if (userType.equals("superadmin")) {
                                 showSuperAdminView();
+                            } else if (userType.equals("user")) {
+                                // do nothing right now
+                            } else {
+                                Log.e(TAG, "Error: unknown user type : " + responseBody);
                             }
 
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-//                        showSuperAdminView();
-//                        showAdminView();
                     } else {
                         Log.e(TAG, "Request was not successful. Response code: " + response.code());
                         assert response.body() != null;

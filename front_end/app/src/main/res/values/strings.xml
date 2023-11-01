@@ -74,6 +74,22 @@
     <string name="address_textView">Building Address:</string>
     <string name="address_editText">No., Street, City, Country</string>
     <string name="add_new_building_button">add new building</string>
+    <string name="open_time_monday_button">Mon</string>
+    <string name="close_time_monday_button">Mon</string>
+    <string name="open_time_tuesday_button">Tue</string>
+    <string name="close_time_tuesday_button">Tue</string>
+    <string name="open_time_wednesday_button">Wed</string>
+    <string name="close_time_wednesday_button">Wed</string>
+    <string name="open_time_thursday_button">Thur</string>
+    <string name="close_time_thursday_button">Thur</string>
+    <string name="open_time_friday_button">Fri</string>
+    <string name="close_time_friday_button">Fri</string>
+    <string name="open_time_saturday_button">Sat</string>
+    <string name="close_time_saturday_button">Sat</string>
+    <string name="open_time_sunday_button">Sun</string>
+    <string name="close_time_sunday_button">Sun</string>
+    <string name="open_times_textView">open time of the week</string>
+    <string name="close_times_textView">close time of the week</string>
     <!--  Delete StudyRoom Page  -->
     <string name="delete_room_from_building_textView">Delete study room from building: [BUILDING CODE]</string>
     <string name="modify_time_slots_button">modify time slots</string>

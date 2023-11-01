@@ -25,7 +25,7 @@
         android:id="@+id/building_name_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
@@ -63,7 +63,7 @@
         android:id="@+id/building_code_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
@@ -102,11 +102,11 @@
         android:id="@+id/address_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/add_building_linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/open_times_linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
@@ -134,6 +134,202 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/open_times_textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/regular_button"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/open_times_textView"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/open_times_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/open_times_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/close_times_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/open_time_monday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_monday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_tuesday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_tuesday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_wednesday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_wednesday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_thursday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_thursday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_friday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_friday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_saturday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_saturday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/open_time_sunday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/open_time_sunday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/close_times_textView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@drawable/regular_button"
+        android:fontFamily="@font/roboto_slab"
+        android:gravity="center"
+        android:text="@string/close_times_textView"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/close_times_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/open_times_linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <LinearLayout
+        android:id="@+id/close_times_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_building_linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/close_time_monday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_monday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_tuesday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_tuesday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_wednesday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_wednesday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_thursday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_thursday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_friday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_friday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_saturday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/bottom_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_saturday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/close_time_sunday_button"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/top_button"
+            android:fontFamily="@font/roboto_slab"
+            android:text="@string/close_time_sunday_button"
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <LinearLayout

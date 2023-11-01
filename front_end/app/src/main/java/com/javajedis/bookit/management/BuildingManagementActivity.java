@@ -55,16 +55,13 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
         adminHeading = findViewById(R.id.admin_info_textView);
 
-//        adminEmail = Authentication.getCurrentAccountEmail(this);
-
         adminEmail = getIntent().getStringExtra("AdminEmail");
 
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
+//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
+//
+//        assert account != null;
 
-        assert account != null;
-//        adminEmail = account.getEmail();
-
-        adminHeading.setText(account.getGivenName());
+        adminHeading.setText(adminEmail);
 
         initAdminBuildings();
 
@@ -157,10 +154,15 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     // You can parse and process the response data as needed
 
                     // TODO get info from responseBody and show correct view
-                    if (Objects.equals(getIntent().getStringExtra("userType"), "admin")) {
+                    String currentUserType = getIntent().getStringExtra("userType");
+                    if (Objects.equals(currentUserType, "admin")) {
                         showAdminView();
-                    } else if (Objects.equals(getIntent().getStringExtra("userType"), "superadmin")) {
+                    } else if (Objects.equals(currentUserType, "superadmin")) {
                         showSuperAdminView();
+                    } else if (Objects.equals(currentUserType, "user")) {
+                        Log.e (TAG, "Error, normal user shouldn't be able to see this page: " + responseBody);
+                    } else {
+                        Log.e(TAG, "Error: unknown user type : " + responseBody);
                     }
                 } else {
                     Log.e(TAG, "Request was not successful. Response code: " + response.code());

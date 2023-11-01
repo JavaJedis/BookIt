@@ -168,17 +168,15 @@ public class ServerRequests {
         });
     }
 
-    public static void requestAddRoom(String building, String roomNumber, int capacity, String features, Context context) {
-        // TODO need endpoints to do this
-        String superAdminToken = Authentication.getCurrentAccountToken(context);
+    public static void requestAddRoom(String buildingCode, String roomNumber, int capacity, String features, Context context) {
+        String adminToken = Authentication.getCurrentAccountToken(context);
 
-        String url = Constant.DOMAIN + "/user/admin";
+        String url = Constant.DOMAIN + "/studyrooms/" + buildingCode;
         JSONObject jsonRequest = new JSONObject();
 
         try {
-            jsonRequest.put("token", superAdminToken);
-            jsonRequest.put("building", building);
-            jsonRequest.put("roomNumber", roomNumber);
+            jsonRequest.put("token", adminToken);
+            jsonRequest.put("room_number", roomNumber);
             jsonRequest.put("capacity", capacity);
             jsonRequest.put("features", features);
         } catch (JSONException e) {
@@ -210,15 +208,96 @@ public class ServerRequests {
 
     }
 
-    public static void requestDeleteRoom(String building, String roomNumber, Context context) {
-        // TODO need endpoints to do this
+    public static void requestDeleteRoom(String buildingCode, String roomNumber, Context context) {
+        String adminToken = Authentication.getCurrentAccountToken(context);
+
+        String url = Constant.DOMAIN + "/studyrooms/" + buildingCode + "/" + roomNumber + "?token=" + adminToken;
+
+        Request request = new Request.Builder().url(url).delete().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("DeleteRoom", "Delete failed: " + e.getMessage());
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String responseBody = response.body().string();
+                    Log.d("DeleteRoom", responseBody);
+                } else {
+                    Log.e("DeleteRoom", "DeleteBuilding request failed with code: " + response.code());
+                }
+            }
+        });
     }
 
-    public static void requestAddBuilding(String buildingName, String buildingCode, String buildingAddress, Context context) {
-        // TODO need endpoints to do this
+    public static void requestAddBuilding(String buildingName, String buildingCode, String buildingAddress, String[] openTimes, String[] closeTimes, Context context) {
+        String superAdminToken = Authentication.getCurrentAccountToken(context);
+
+        String url = Constant.DOMAIN + "/studyrooms/building";
+
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("token", superAdminToken);
+            jsonRequest.put("building_code", buildingCode);
+            jsonRequest.put("building_name", buildingName);
+            jsonRequest.put("building_address", buildingAddress);
+            jsonRequest.put("open_times", openTimes);
+            jsonRequest.put("close_times", closeTimes);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, jsonRequest.toString());
+
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("AddBuilding", "Add failed: " + e.getMessage());
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String responseBody = response.body().string();
+                    Log.d("AddBuilding successful", responseBody);
+                } else {
+                    Log.e("AddBuilding", "AddBuilding request failed with code: " + response.code());
+                }
+            }
+        });
     }
 
     public static void requestDeleteBuilding(String buildingCode, Context context) {
-        // TODO need endpoints to do this
+        String superAdminToken = Authentication.getCurrentAccountToken(context);
+
+        String url = Constant.DOMAIN + "/studyrooms/" + buildingCode + "?token=" + superAdminToken;
+
+        Request request = new Request.Builder().url(url).delete().build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("DeleteBuilding", "Delete failed: " + e.getMessage());
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String responseBody = response.body().string();
+                    Log.d("DeleteBuilding", responseBody);
+                } else {
+                    Log.e("DeleteBuilding", "DeleteBuilding request failed with code: " + response.code());
+                }
+            }
+        });
     }
 }
