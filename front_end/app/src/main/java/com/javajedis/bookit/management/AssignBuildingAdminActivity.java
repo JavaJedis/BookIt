@@ -72,8 +72,7 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
                     Intent adminManagementIntent = new Intent(AssignBuildingAdminActivity.this, AdminManagementActivity.class);
                     editText = findViewById(R.id.new_admin_email);
                     newAdminEmail = editText.getText().toString();
-                    ServerRequests.requestAddAdmin(newAdminEmail, selectedBuilding, AssignBuildingAdminActivity.this);
-                    startActivity(adminManagementIntent);
+                    ServerRequests.requestAddAdmin(newAdminEmail, selectedBuilding, AssignBuildingAdminActivity.this, adminManagementIntent);
                 } else {
                     Toast.makeText(AssignBuildingAdminActivity.this, "Must select a building assign to this admin", Toast.LENGTH_SHORT).show();
                 }
@@ -137,7 +136,6 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
                                     JSONArray jsonArray = new JSONArray(studyRooms);
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
-                                        String srBuildingName = object.getString("building_name");
                                         String userEmail = object.getString("building_code");
                                         allBuildings.add(userEmail);
                                     }

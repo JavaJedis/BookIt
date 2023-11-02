@@ -81,7 +81,8 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/submit_assign_admin_button"
             android:textAllCaps="false"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:enabled="false"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -23,14 +22,13 @@ import java.util.Objects;
 
 public class AddNewBuildingActivity extends AppCompatActivity {
     private final String TAG = "AddNewRoomActivity";
-
     private EditText buildingNameEditText;
     private String buildingName;
     private EditText buildingCodeEditText;
     private String buildingCode;
     private EditText addressEditText;
     private String address;
-    private final String[] openTimes = new String[7];
+    private final String[] openTimes = new String[7]; // 7 days per week
     private final String[] closeTimes = new String[7];
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,146 +42,72 @@ public class AddNewBuildingActivity extends AppCompatActivity {
         addressEditText = findViewById(R.id.address_editText);
 
         Button openTimeMonButton = findViewById(R.id.open_time_monday_button);
-        openTimeMonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(0, openTimeMonButton, true);
-            }
-        });
+        openTimeMonButton.setOnClickListener(v -> popTimePicker(0, openTimeMonButton, true));
 
         Button closeTimeMonButton = findViewById(R.id.close_time_monday_button);
-        closeTimeMonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(0, closeTimeMonButton, false);
-            }
-        });
+        closeTimeMonButton.setOnClickListener(v -> popTimePicker(0, closeTimeMonButton, false));
 
         Button openTimeTueButton = findViewById(R.id.open_time_tuesday_button);
-        openTimeTueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(1, openTimeTueButton, true);
-            }
-        });
+        openTimeTueButton.setOnClickListener(v -> popTimePicker(1, openTimeTueButton, true));
 
         Button closeTimeTueButton = findViewById(R.id.close_time_tuesday_button);
-        closeTimeTueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(1, closeTimeTueButton, false);
-            }
-        });
+        closeTimeTueButton.setOnClickListener(v -> popTimePicker(1, closeTimeTueButton, false));
 
         Button openTimeWedButton = findViewById(R.id.open_time_wednesday_button);
-        openTimeWedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(2, openTimeWedButton, true);
-            }
-        });
+        openTimeWedButton.setOnClickListener(v -> popTimePicker(2, openTimeWedButton, true));
 
         Button closeTimeWedButton = findViewById(R.id.close_time_wednesday_button);
-        closeTimeWedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(2, closeTimeWedButton, false);
-            }
-        });
+        closeTimeWedButton.setOnClickListener(v -> popTimePicker(2, closeTimeWedButton, false));
 
         Button openTimeThurButton = findViewById(R.id.open_time_thursday_button);
-        openTimeThurButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(3, openTimeThurButton, true);
-            }
-        });
+        openTimeThurButton.setOnClickListener(v -> popTimePicker(3, openTimeThurButton, true));
 
         Button closeTimeThurButton = findViewById(R.id.close_time_thursday_button);
-        closeTimeThurButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(3, closeTimeThurButton, false);
-            }
-        });
+        closeTimeThurButton.setOnClickListener(v -> popTimePicker(3, closeTimeThurButton, false));
 
         Button openTimeFriButton = findViewById(R.id.open_time_friday_button);
-        openTimeFriButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(4, openTimeFriButton, true);
-            }
-        });
+        openTimeFriButton.setOnClickListener(v -> popTimePicker(4, openTimeFriButton, true));
 
         Button closeTimeFriButton = findViewById(R.id.close_time_friday_button);
-        closeTimeFriButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(4, closeTimeFriButton, false);
-            }
-        });
+        closeTimeFriButton.setOnClickListener(v -> popTimePicker(4, closeTimeFriButton, false));
 
         Button openTimeSatButton = findViewById(R.id.open_time_saturday_button);
-        openTimeSatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(5, openTimeSatButton, true);
-            }
-        });
+        openTimeSatButton.setOnClickListener(v -> popTimePicker(5, openTimeSatButton, true));
 
         Button closeTimeSatButton = findViewById(R.id.close_time_saturday_button);
-        closeTimeSatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(5, closeTimeSatButton, false);
-            }
-        });
+        closeTimeSatButton.setOnClickListener(v -> popTimePicker(5, closeTimeSatButton, false));
 
         Button openTimeSunButton = findViewById(R.id.open_time_sunday_button);
-        openTimeSunButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(6, openTimeSunButton, true);
-            }
-        });
+        openTimeSunButton.setOnClickListener(v -> popTimePicker(6, openTimeSunButton, true));
 
         Button closeTimeSunButton = findViewById(R.id.close_time_sunday_button);
-        closeTimeSunButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popTimePicker(6, closeTimeSunButton, false);
-            }
-        });
+        closeTimeSunButton.setOnClickListener(v -> popTimePicker(6, closeTimeSunButton, false));
 
         Button addBuildingButton = findViewById(R.id.add_new_building_button);
-        addBuildingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buildingName = buildingNameEditText.getText().toString();
-                buildingCode = buildingCodeEditText.getText().toString();
-                address = addressEditText.getText().toString();
+        addBuildingButton.setOnClickListener(v -> {
+            buildingName = buildingNameEditText.getText().toString();
+            buildingCode = buildingCodeEditText.getText().toString();
+            address = addressEditText.getText().toString();
 
-                boolean timePass = true;
-                for (int i = 0; i < openTimes.length; i++) {
-                    if (openTimes[i] == null || closeTimes[i] == null) {
-                        timePass = false;
-                        Toast.makeText(AddNewBuildingActivity.this, "Please fill in all the info and submit", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
+            boolean timePass = true;
+            for (int i = 0; i < openTimes.length; i++) {
+                if (openTimes[i] == null || closeTimes[i] == null) {
+                    timePass = false;
+                    Toast.makeText(AddNewBuildingActivity.this, "Please fill in all the info and submit", Toast.LENGTH_SHORT).show();
+                    break;
                 }
+            }
 
-                if (timePass) {
-                    if (Objects.equals(buildingName, "") || Objects.equals(buildingCode, "") || address.equals("")) {
-                        Toast.makeText(AddNewBuildingActivity.this, "Please fill in all the info and submit", Toast.LENGTH_SHORT).show();
-                    } else if (buildingCode.length() < Constant.BUILDING_CODE_LENGTH_MIN || buildingCode.length() > Constant.BUILDING_CODE_LENGTH_MAX) {
-                        Toast.makeText(AddNewBuildingActivity.this, "building code must have length of 4", Toast.LENGTH_SHORT).show();
-                    } else if (!buildingCode.matches("[0-9A-Z]+")) { // From https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
-                        Toast.makeText(AddNewBuildingActivity.this, "building code contains capital letters only", Toast.LENGTH_SHORT).show();
-                    } else {
-                        ServerRequests.requestAddBuilding(buildingName, buildingCode, address, openTimes, closeTimes, AddNewBuildingActivity.this);
-                        Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, MainActivity.class);
-                        startActivity(mainActivityIntent);
-                    }
+            if (timePass) {
+                if (Objects.equals(buildingName, "") || Objects.equals(buildingCode, "") || address.equals("")) {
+                    Toast.makeText(AddNewBuildingActivity.this, "Please fill in all the info and submit", Toast.LENGTH_SHORT).show();
+                } else if (buildingCode.length() < Constant.BUILDING_CODE_LENGTH_MIN || buildingCode.length() > Constant.BUILDING_CODE_LENGTH_MAX) {
+                    Toast.makeText(AddNewBuildingActivity.this, "building code must have length of 4", Toast.LENGTH_SHORT).show();
+                } else if (!buildingCode.matches("[0-9A-Z]+")) { // From https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
+                    Toast.makeText(AddNewBuildingActivity.this, "building code contains capital letters only", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, MainActivity.class);
+                    ServerRequests.requestAddBuilding(buildingName, buildingCode, address, openTimes, closeTimes, AddNewBuildingActivity.this, mainActivityIntent);
                 }
             }
         });

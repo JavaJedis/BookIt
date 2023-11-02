@@ -1,13 +1,13 @@
 package com.javajedis.bookit;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+//import androidx.activity.result.ActivityResultLauncher;
+//import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+//import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,15 +21,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.ApiException;
+//import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.javajedis.bookit.management.AddNewBuildingActivity;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
 import com.javajedis.bookit.management.DeleteBuildingActivity;
-import com.javajedis.bookit.management.RoomManagementActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     private Button exploreButton;
     private Button searchButton;
     private Button filterButton;
-    private String userType;
     private Button bookingsButton;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
@@ -66,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO: implement onBackPressed on other activities as well
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
@@ -162,32 +160,32 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                    handleSignInResult(task);
-                }
-            }
-    );
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        signInLauncher.launch(signInIntent);
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            Log.w(TAG, "Trying to get Google account");
-            account = completedTask.getResult(ApiException.class);
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-        }
-    }
+//    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(),
+//            result -> {
+//                if (result.getResultCode() == Activity.RESULT_OK) {
+//                    Intent data = result.getData();
+//                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+//                    handleSignInResult(task);
+//                }
+//            }
+//    );
+//
+//    private void signIn() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        signInLauncher.launch(signInIntent);
+//    }
+//
+//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+//        try {
+//            Log.w(TAG, "Trying to get Google account");
+//            account = completedTask.getResult(ApiException.class);
+//        } catch (ApiException e) {
+//            // The ApiException status code indicates the detailed failure reason.
+//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+//        }
+//    }
 
     // GET request while sending info to BE: https://chat.openai.com/share/c6b266b7-c9c2-4cd7-91f2-7a307b4ecc45
     private void getUserTypeAndSetView() {
@@ -219,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     e.printStackTrace();
                     Log.e(TAG, "GET request failed: " + e.getMessage());
-                    userType = "regular";
                 }
 
                 @Override
@@ -232,17 +229,21 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "Got response from server: " + responseBody);
                         try {
                             JSONObject responseObject = new JSONObject(responseBody);
-                            userType = responseObject.getString("data");
-                            if (userType.equals("admin")) {
-                                showAdminView();
-                            } else if (userType.equals("superadmin")) {
-                                showSuperAdminView();
-                            } else if (userType.equals("user")) {
-                                // do nothing right now
-                            } else {
-                                Log.e(TAG, "Error: unknown user type : " + responseBody);
+                            String userType = responseObject.getString("data");
+                            switch (userType) {
+                                case "superadmin":
+                                    showSuperAdminView();
+                                    break;
+                                case "admin":
+                                    showAdminView();
+                                    break;
+                                case "user":
+                                    // do nothing right now
+                                    break;
+                                default:
+                                    Log.e(TAG, "Error: unknown user type : " + responseBody);
+                                    break;
                             }
-
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -250,13 +251,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.e(TAG, "Request was not successful. Response code: " + response.code());
                         assert response.body() != null;
                         System.out.println(response.body().string());
-                        userType = "regular";
                     }
                 }
             });
         } else {
             Log.e(TAG, "User is not signed in.");
-            userType = "regular";
         }
     }
     @Override
@@ -303,7 +302,8 @@ public class MainActivity extends AppCompatActivity {
             clientName = loggedInName;
         }
         helloMessageTextView = findViewById(R.id.hello_message_textview);
-        helloMessageTextView.setText("Hello, " + clientName + ".");
+        String helloMessage = "Hello, " + clientName + ".";
+        helloMessageTextView.setText(helloMessage);
     }
 
     private void showAdminView() {
@@ -323,8 +323,6 @@ public class MainActivity extends AppCompatActivity {
 
                         assert account != null;
                         buildingManagementIntent.putExtra("AdminEmail", account.getEmail());
-//                        buildingManagementIntent.putExtra("AdminEmail", "test@testemail.ca");
-                        buildingManagementIntent.putExtra("userType", userType);
 
                         startActivity(buildingManagementIntent);
                     }

@@ -73,7 +73,7 @@
     <string name="building_code_textView">Building Code:</string>
     <string name="building_code_editText">Four letter building code</string>
     <string name="address_textView">Building Address:</string>
-    <string name="address_editText">No., Street, City, Country</string>
+    <string name="address_editText">No., Street, City, Province</string>
     <string name="add_new_building_button">add new building</string>
     <string name="open_time_monday_button">Mon</string>
     <string name="close_time_monday_button">Mon</string>

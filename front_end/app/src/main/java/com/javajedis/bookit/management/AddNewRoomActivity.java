@@ -53,9 +53,9 @@ public class AddNewRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 roomNumber = roomNumberEditText.getText().toString();
-                System.out.println(roomNumber);
                 String capacityText = capacityEditText.getText().toString();
                 features = fearturesEditText.getText().toString();
+                // parse
                 String[] parts = features.split(",");
                 ArrayList<String> featuresList = new ArrayList<>(Arrays.asList(parts));
                 System.out.println(featuresList);
@@ -65,6 +65,7 @@ public class AddNewRoomActivity extends AppCompatActivity {
                 } else {
                     capacity = 0;
                 }
+
                 if (Objects.equals(roomNumber, "") || features.equals("") || Objects.equals(capacityText, "")) {
                     Toast.makeText(AddNewRoomActivity.this, "please fill in all the info and submit", Toast.LENGTH_SHORT).show();
                 } else if (!pureNumber) {
@@ -72,11 +73,10 @@ public class AddNewRoomActivity extends AppCompatActivity {
                 } else if (capacity<=0) {
                     Toast.makeText(AddNewRoomActivity.this, "capacity must be positive", Toast.LENGTH_SHORT).show();
                 } else {
-                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, featuresList, AddNewRoomActivity.this);
                     Intent buildingManagementIntent = new Intent(AddNewRoomActivity.this, BuildingManagementActivity.class);
                     buildingManagementIntent.putExtra("AdminEmail", adminEmail);
                     buildingManagementIntent.putExtra("userType", "admin");
-                    startActivity(buildingManagementIntent);
+                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, featuresList, AddNewRoomActivity.this, buildingManagementIntent);
                 }
             }
         });

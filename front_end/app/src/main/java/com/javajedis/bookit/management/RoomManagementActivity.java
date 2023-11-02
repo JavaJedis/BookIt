@@ -13,11 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.javajedis.bookit.DynamicBuildingActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
@@ -27,8 +25,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -64,10 +60,9 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
             @Override
             public void onClick(View v) {
                 if (selectedRoom != null) {
-                    ServerRequests.requestDeleteRoom(building, selectedRoom, RoomManagementActivity.this);
                     Intent roomManagementIntent = new Intent(RoomManagementActivity.this, RoomManagementActivity.class);
                     roomManagementIntent.putExtra("building", building);
-                    startActivity(roomManagementIntent);
+                    ServerRequests.requestDeleteRoom(building, selectedRoom, RoomManagementActivity.this, roomManagementIntent);
                 } else {
                     Toast.makeText(RoomManagementActivity.this, "Please select a room!", Toast.LENGTH_SHORT).show();
                 }
@@ -96,7 +91,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
             }
 
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
@@ -130,7 +125,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                 } else {
                     Log.e(TAG, "Response not successful");
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
+                    System.out.println(response.body());
                 }
             }
         }));

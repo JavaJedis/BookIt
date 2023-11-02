@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
@@ -45,11 +45,9 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
     private String selectedBuilding;
 
-    private String adminEmail;
+    private String regularAdminEmail;
 
     private TextView adminHeading;
-
-    private String userType;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,25 +55,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
         adminHeading = findViewById(R.id.admin_info_textView);
 
-        adminEmail = getIntent().getStringExtra("AdminEmail");
-
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
-//
-//        assert account != null;
-
-        userType = getIntent().getStringExtra("userType");
-
-        assert userType != null;
-        if (userType.equals("admin")) {
-
-            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-            assert account != null;
-            String namePlusApostrophe = account.getGivenName() + "'s";
-            adminHeading.setText(namePlusApostrophe);
-        } else {
-            adminHeading.setText(adminEmail);
-        }
+        regularAdminEmail = getIntent().getStringExtra("AdminEmail");
 
         initAdminBuildings();
 
@@ -89,7 +69,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
     private void initAdminBuildings() {
         OkHttpClient client = new OkHttpClient();
-        String url = Constant.DOMAIN + "/user/admin/" + adminEmail + "/buildings";
+        String url = Constant.DOMAIN + "/user/admin/" + regularAdminEmail + "/buildings";
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         assert account != null;
@@ -99,12 +79,12 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
                 Log.e("AdminManagement", "Get request failed: " + e.getMessage());
             }
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
@@ -113,12 +93,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray data = responseObject.getJSONArray("data");
-//                        System.out.println(data);
-//                        String managedBuilding = data.toString();
-//                        initData(data);
-//                        for (int i = 0; i < managedBuildings.size(); i++) {
-//                            System.out.println(managedBuildings.indexOf(i));
-//                        }
+                        // fill in the data
                         for (int i = 0; i < data.length(); i++) {
                             String buildingCode = data.getString(i);
                             managedBuildings.add(buildingCode);
@@ -138,19 +113,10 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                 } else {
                     Log.e(TAG, "Response is not successful");
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
+                    System.out.println(response.body());
                 }
             }
         });
-    }
-
-    private void initData(JSONArray data) throws JSONException{
-        System.out.println(data.getJSONObject(0).toString());
-        for (int i = 0; i < data.length(); i++) {
-            JSONObject object = data.getJSONObject(i);
-            String buildingCode = object.toString();
-            managedBuildings.add(buildingCode);
-        }
     }
 
     private void checkUserIdentityAndSetView() {
@@ -162,20 +128,17 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e(TAG, "GET request failed: " + e.getMessage());
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     String responseBody = response.body().string();
-                    System.out.println(responseBody);
-                    // You can parse and process the response data as needed
 
-                    // TODO get info from responseBody and show correct view
                     String currentUserType = getIntent().getStringExtra("userType");
                     if (Objects.equals(currentUserType, "admin")) {
                         showAdminView();
@@ -208,7 +171,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         } else {
                             Intent addNewRoomIntent = new Intent(BuildingManagementActivity.this, AddNewRoomActivity.class);
                             addNewRoomIntent.putExtra("building", selectedBuilding);
-                            addNewRoomIntent.putExtra("AdminEmail", adminEmail);
+                            addNewRoomIntent.putExtra("AdminEmail", regularAdminEmail);
                             startActivity(addNewRoomIntent);
                         }
                     }
@@ -229,6 +192,12 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         }
                     }
                 });
+
+                // set heading text
+                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(BuildingManagementActivity.this);
+                assert account != null;
+                String namePlusApostrophe = account.getGivenName() + "'s";
+                adminHeading.setText(namePlusApostrophe);
             }
         });
     }
@@ -243,9 +212,8 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                 removeBuildingButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent refreshPage = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
-                        ServerRequests.requestDeleteBuildingFromAdmin(adminEmail, selectedBuilding, BuildingManagementActivity.this);
-                        startActivity(refreshPage);
+                        Intent buildingManagementIntent = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
+                        ServerRequests.requestDeleteBuildingFromAdmin(regularAdminEmail, selectedBuilding, BuildingManagementActivity.this, buildingManagementIntent);
                     }
                 });
 
@@ -255,10 +223,11 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     @Override
                     public void onClick(View v) {
                         Intent adminManagementIntent = new Intent(BuildingManagementActivity.this, AdminManagementActivity.class);
-                        ServerRequests.requestDeleteAdmin(adminEmail, BuildingManagementActivity.this);
-                        startActivity(adminManagementIntent);
+                        ServerRequests.requestDeleteAdmin(regularAdminEmail, BuildingManagementActivity.this, adminManagementIntent);
                     }
                 });
+
+                adminHeading.setText(regularAdminEmail);
             }
         });
     }

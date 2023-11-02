@@ -78,7 +78,6 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
         Intent buildingManagementIntent = new Intent(AdminManagementActivity.this, BuildingManagementActivity.class);
 
         buildingManagementIntent.putExtra("AdminEmail", allAdmins.get(position));
-        buildingManagementIntent.putExtra("userType", "superadmin");
 
         startActivity(buildingManagementIntent);
     }
@@ -121,21 +120,14 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray jsonArray = responseObject.getJSONArray("data");
-                        // Assuming "buildings" is always present in the first object
-//                        JSONObject firstObject = jsonArray.getJSONObject(0);
-//
-//                        JSONArray data = firstObject.getJSONArray("admins");
-//                        // format
-//                        String dataString = data.toString();
 
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            String comment = jsonArray.getString(i);
-                            allAdmins.add(comment);
+                            String adminEmail = jsonArray.getString(i);
+                            allAdmins.add(adminEmail);
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                //                                    fillData(dataString);
                                 adapter = new Admin_RecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
                                 RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
                                 adapter.setAdminEmails(allAdmins);
@@ -149,19 +141,9 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
                 } else {
                     Log.e(TAG, "Response is not successful");
                     assert response.body() != null;
-                    System.out.println(response.body().toString());
+                    System.out.println(response.body());
                 }
             }
         }));
-    }
-
-    private void fillData(String data) throws JSONException {
-        JSONArray jsonArray = new JSONArray(data);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
-
-            String adminEmail = object.getString("admins_email");
-            allAdmins.add(adminEmail);
-        }
     }
 }
