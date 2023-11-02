@@ -49,6 +49,8 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 
     private TextView adminHeading;
 
+    private String userType;
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_management);
@@ -61,7 +63,19 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
 //
 //        assert account != null;
 
-        adminHeading.setText(adminEmail);
+        userType = getIntent().getStringExtra("userType");
+
+        assert userType != null;
+        if (userType.equals("admin")) {
+
+            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+            assert account != null;
+            String namePlusApostrophe = account.getGivenName() + "'s";
+            adminHeading.setText(namePlusApostrophe);
+        } else {
+            adminHeading.setText(adminEmail);
+        }
 
         initAdminBuildings();
 
@@ -77,6 +91,10 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
         OkHttpClient client = new OkHttpClient();
         String url = Constant.DOMAIN + "/user/admin/" + adminEmail + "/buildings";
 
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        assert account != null;
+        url += "?token=" + account.getIdToken();
+
         Request request = new Request.Builder().url(url).get().build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -91,22 +109,27 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray data = responseObject.getJSONArray("data");
-                        String managedBuilding = data.toString();
+//                        System.out.println(data);
+//                        String managedBuilding = data.toString();
+//                        initData(data);
+//                        for (int i = 0; i < managedBuildings.size(); i++) {
+//                            System.out.println(managedBuildings.indexOf(i));
+//                        }
+                        for (int i = 0; i < data.length(); i++) {
+                            String buildingCode = data.getString(i);
+                            managedBuildings.add(buildingCode);
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    initData(managedBuilding);
-                                    adapter = new Building_Selection_RecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
-                                    RecyclerView recyclerView = findViewById(R.id.building_management_recyclerView);
-                                    recyclerView.setAdapter(adapter);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(BuildingManagementActivity.this));
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for admin management Buildings");
-                                }
+                                adapter = new Building_Selection_RecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
+                                RecyclerView recyclerView = findViewById(R.id.building_management_recyclerView);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(BuildingManagementActivity.this));
                             }
                         });
                     } catch (IOException | JSONException e) {
@@ -121,11 +144,10 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
         });
     }
 
-    private void initData (String data) throws JSONException{
-
-        JSONArray jsonArray = new JSONArray(data);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject object = jsonArray.getJSONObject(i);
+    private void initData(JSONArray data) throws JSONException{
+        System.out.println(data.getJSONObject(0).toString());
+        for (int i = 0; i < data.length(); i++) {
+            JSONObject object = data.getJSONObject(i);
             String buildingCode = object.toString();
             managedBuildings.add(buildingCode);
         }

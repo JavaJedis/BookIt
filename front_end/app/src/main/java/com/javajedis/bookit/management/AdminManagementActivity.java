@@ -36,7 +36,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
 
     private final String TAG = "AdminManagementActivity";
     private final ArrayList<String> allAdmins = new ArrayList<>();
-    private ArrayList<String> showingAdminList;
+//    private ArrayList<String> showingAdminList;
     private Admin_RecyclerViewAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
     public void onItemClick(int position) {
         Intent buildingManagementIntent = new Intent(AdminManagementActivity.this, BuildingManagementActivity.class);
 
-        buildingManagementIntent.putExtra("AdminEmail", showingAdminList.get(position));
+        buildingManagementIntent.putExtra("AdminEmail", allAdmins.get(position));
         buildingManagementIntent.putExtra("userType", "superadmin");
 
         startActivity(buildingManagementIntent);
@@ -85,7 +85,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
 
     private void filterList(String text) {
         ArrayList<String> filteredList = new ArrayList<>();
-        for (String content : showingAdminList) {
+        for (String content : allAdmins) {
             if (content.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(content);
             }
@@ -101,7 +101,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
         Log.d(TAG, "in init Admin Data" );
         OkHttpClient client = new OkHttpClient();
 
-        String url = Constant.DOMAIN + "/admins_all";
+        String url = Constant.DOMAIN + "/user/admin";
 
         Request request = new Request.Builder().url(url).get().build();
 
@@ -117,34 +117,39 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
                         // parse
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray jsonArray = responseObject.getJSONArray("data");
                         // Assuming "buildings" is always present in the first object
-                        JSONObject firstObject = jsonArray.getJSONObject(0);
+//                        JSONObject firstObject = jsonArray.getJSONObject(0);
+//
+//                        JSONArray data = firstObject.getJSONArray("admins");
+//                        // format
+//                        String dataString = data.toString();
 
-                        JSONArray data = firstObject.getJSONArray("admins");
-                        // format
-                        String dataString = data.toString();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            String comment = jsonArray.getString(i);
+                            allAdmins.add(comment);
+                        }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    fillData(dataString);
-                                    adapter = new Admin_RecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
-                                    RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
-                                    showingAdminList = allAdmins;
-                                    adapter.setAdminEmails(showingAdminList);
-                                    recyclerView.setAdapter(adapter);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(AdminManagementActivity.this));
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for Buildings");
-                                }
+                                //                                    fillData(dataString);
+                                adapter = new Admin_RecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
+                                RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
+                                adapter.setAdminEmails(allAdmins);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(AdminManagementActivity.this));
                             }
                         });
                     } catch (IOException | JSONException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     }
+                } else {
+                    Log.e(TAG, "Response is not successful");
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
                 }
             }
         }));

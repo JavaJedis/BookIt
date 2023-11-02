@@ -1,5 +1,6 @@
 package com.javajedis.bookit;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -54,6 +55,14 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                // Handle the back button event
+//                finish();
+//            }
+//        };
 
         binding = ActivityExploreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

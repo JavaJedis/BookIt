@@ -33,7 +33,7 @@
             android:id="@+id/text_buildings"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="0dp"
             android:paddingLeft="30dp"
             android:text="@string/text_buildings"
             android:textSize="25sp"

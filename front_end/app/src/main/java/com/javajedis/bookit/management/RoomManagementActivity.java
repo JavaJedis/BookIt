@@ -101,6 +101,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                     try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string();
+                        System.out.println(jsonResponse);
                         JSONObject responseObject = new JSONObject(jsonResponse);
                         JSONArray roomsArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < roomsArray.length(); i++) {
@@ -122,10 +123,14 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                             }
                         });
                     } catch (IOException e) {
-                        Log.e("DynamicBuildingActivity", "Error reading response: " + e.getMessage());
+                        Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
+                } else {
+                    Log.e(TAG, "Response not successful");
+                    assert response.body() != null;
+                    System.out.println(response.body().toString());
                 }
             }
         }));

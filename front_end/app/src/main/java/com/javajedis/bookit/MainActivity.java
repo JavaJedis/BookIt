@@ -1,5 +1,6 @@
 package com.javajedis.bookit;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -14,13 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.javajedis.bookit.management.AddNewBuildingActivity;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
@@ -52,11 +56,40 @@ public class MainActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
 
+    private String deviceToken;
+
+    private Button signOutButton;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                finish();
+            }
+        };
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        deviceToken = task.getResult();
+
+                        Log.d(TAG, deviceToken);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
@@ -117,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
                     Intent bookingsIntent = new Intent(MainActivity.this, BookingsActivity.class);
                     startActivity(bookingsIntent);
                 }
+            }
+        });
+
+        signOutButton = findViewById(R.id.sign_out_button);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signOut();
             }
         });
     }
@@ -233,6 +274,20 @@ public class MainActivity extends AppCompatActivity {
         if (account != null) {
             updateHelloMessage(account);
         }
+    }
+
+    private void signOut() {
+        mGoogleSignInClient.signOut()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "Log out successful!");
+                        Toast.makeText(MainActivity.this, "You have been signed out", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+        Intent loginBuildingIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(loginBuildingIntent);
     }
 
     private void updateHelloMessage(GoogleSignInAccount account) {

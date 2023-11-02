@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.javajedis.bookit.BookingsActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerView.adapter.Bookings_RecyclerViewAdapter;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import okhttp3.Call;
@@ -59,8 +62,18 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
             public void onClick(View v) {
                 if (selectedBuilding != null) {
                     ServerRequests.requestDeleteBuilding(selectedBuilding, DeleteBuildingActivity.this);
-                    Intent deleteBuildingIntent = new Intent(DeleteBuildingActivity.this, DeleteBuildingActivity.class);
-                    startActivity(deleteBuildingIntent);
+                    allBuildings.remove(selectedBuilding);
+//                    Intent deleteBuildingIntent = new Intent(DeleteBuildingActivity.this, DeleteBuildingActivity.class);
+//                    startActivity(deleteBuildingIntent);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+                            RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
+                        }
+                    });
                 } else {
                     Toast.makeText(DeleteBuildingActivity.this, "Please select a building!", Toast.LENGTH_SHORT).show();
                 }
@@ -87,9 +100,9 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
     }
 
     private void initBuildingData() {
-        initStudySpaceType("ils");
+//        initStudySpaceType("ils");
 //        initStudySpaceType("lecturehalls");
-//        initStudySpaceType("studyrooms");
+        initStudySpaceType("studyrooms");
     }
 
     private void initStudySpaceType(String spaceType) {

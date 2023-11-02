@@ -10,6 +10,7 @@
     <string name="manage_room_button">manage rooms</string>
     <string name="manage_admin_button">manage admins</string>
     <string name="manage_building_button">add/delete buildings</string>
+    <string name="sign_out_button_caption">sign out</string>
     <!--  Explore page  -->
     <string name="title_activity_explore">ExploreActivity</string>
     <string name="ils_button">informal learning spaces</string>

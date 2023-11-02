@@ -174,7 +174,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
     public void onItemClick(int position) {
         TimeSlotsModel selectedModel = timeSlotModels.get(position);
         String selectedTimeSlot = selectedModel.getTimeInterval();
-//        String selectedStatus = selectedModel.getStatus();
+        String selectedStatus = selectedModel.getStatus();
 
         String[] startEndTimes = selectedTimeSlot.split("-");
         String startTime = startEndTimes[0];
@@ -197,7 +197,13 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
 
         OkHttpClient client = new OkHttpClient();
 
-        String postUrl = "https://bookit.henrydhc.me/studyroom/book";
+        String postUrl = "https://bookit.henrydhc.me/studyroom/";
+
+        if (selectedStatus.equals("get on wait-list")) {
+            postUrl += "waitlist";
+        } else {
+            postUrl += "book";
+        }
 
         try {
             JSONObject jsonRequest = new JSONObject();

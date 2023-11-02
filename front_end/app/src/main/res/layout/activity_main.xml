@@ -104,6 +104,29 @@
         app:layout_constraintVertical_bias="0.303" />
 
     <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="93dp"
+        android:layout_height="60dp"
+        android:background="@drawable/regular_button"
+        android:elegantTextHeight="false"
+        android:fontFamily="@font/roboto_slab"
+        android:includeFontPadding="false"
+
+        android:paddingStart="16dp"
+        android:text="@string/sign_out_button_caption"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_button"
+        app:layout_constraintVertical_bias="0.868" />
+
+    <Button
         android:id="@+id/filter_button"
         android:layout_width="310dp"
         android:layout_height="63dp"

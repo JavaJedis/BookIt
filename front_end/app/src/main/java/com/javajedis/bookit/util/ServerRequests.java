@@ -168,7 +168,7 @@ public class ServerRequests {
         });
     }
 
-    public static void requestAddRoom(String buildingCode, String roomNumber, int capacity, String features, Context context) {
+    public static void requestAddRoom(String buildingCode, String roomNumber, int capacity, ArrayList<String> features, Context context) {
         String adminToken = Authentication.getCurrentAccountToken(context);
 
         String url = Constant.DOMAIN + "/studyrooms/" + buildingCode;
@@ -176,9 +176,9 @@ public class ServerRequests {
 
         try {
             jsonRequest.put("token", adminToken);
-            jsonRequest.put("room_number", roomNumber);
+            jsonRequest.put("room_no", roomNumber);
             jsonRequest.put("capacity", capacity);
-            jsonRequest.put("features", features);
+            jsonRequest.put("features", features.toArray());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -186,7 +186,7 @@ public class ServerRequests {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, jsonRequest.toString());
 
-        Request request = new Request.Builder().url(url).delete(requestBody).build();
+        Request request = new Request.Builder().url(url).post(requestBody).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override

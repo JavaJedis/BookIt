@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.util.ServerRequests;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class AddNewRoomActivity extends AppCompatActivity {
@@ -51,8 +53,12 @@ public class AddNewRoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 roomNumber = roomNumberEditText.getText().toString();
+                System.out.println(roomNumber);
                 String capacityText = capacityEditText.getText().toString();
                 features = fearturesEditText.getText().toString();
+                String[] parts = features.split(",");
+                ArrayList<String> featuresList = new ArrayList<>(Arrays.asList(parts));
+                System.out.println(featuresList);
                 boolean pureNumber = capacityText.matches("[0-9]+");
                 if (pureNumber) {
                     capacity = Integer.parseInt(capacityText);
@@ -66,9 +72,11 @@ public class AddNewRoomActivity extends AppCompatActivity {
                 } else if (capacity<=0) {
                     Toast.makeText(AddNewRoomActivity.this, "capacity must be positive", Toast.LENGTH_SHORT).show();
                 } else {
-                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, features, AddNewRoomActivity.this);
+                    ServerRequests.requestAddRoom(selectedBuilding, roomNumber, capacity, featuresList, AddNewRoomActivity.this);
                     Intent buildingManagementIntent = new Intent(AddNewRoomActivity.this, BuildingManagementActivity.class);
                     buildingManagementIntent.putExtra("AdminEmail", adminEmail);
+                    buildingManagementIntent.putExtra("userType", "admin");
+                    startActivity(buildingManagementIntent);
                 }
             }
         });
