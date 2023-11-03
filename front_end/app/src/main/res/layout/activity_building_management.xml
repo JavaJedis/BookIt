@@ -73,8 +73,7 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/remove_building_assignment_button"
             android:textAllCaps="false"
-            android:visibility="gone"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/remove_admin_button"
@@ -85,8 +84,7 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/remove_admin_assignment_button"
             android:textAllCaps="false"
-            android:visibility="gone"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/add_room_button"
@@ -97,8 +95,7 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/add_room_button"
             android:textAllCaps="false"
-            android:visibility="gone"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/modify_room_button"
@@ -109,8 +106,7 @@
             android:fontFamily="@font/roboto_slab"
             android:text="@string/modify_room_button"
             android:textAllCaps="false"
-            android:visibility="gone"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:visibility="gone" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

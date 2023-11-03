@@ -17,6 +17,9 @@ import com.javajedis.bookit.R;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -107,6 +110,8 @@ public class AddNewBuildingActivity extends AppCompatActivity {
                     Toast.makeText(AddNewBuildingActivity.this, "building code contains capital letters only", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, MainActivity.class);
+//                    ArrayList<String> openTimesList = (ArrayList<String>) Arrays.asList(openTimes);
+//                    ArrayList<String> closeTimesList = (ArrayList<String>) Arrays.asList(closeTimes);
                     ServerRequests.requestAddBuilding(buildingName, buildingCode, address, openTimes, closeTimes, AddNewBuildingActivity.this, mainActivityIntent);
                 }
             }

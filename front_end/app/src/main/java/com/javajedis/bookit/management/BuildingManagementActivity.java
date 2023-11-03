@@ -138,16 +138,28 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     String responseBody = response.body().string();
+                    JSONObject responseObject = null;
+                    String currentUserType;
+                    try {
+                        responseObject = new JSONObject(responseBody);
+                        currentUserType = responseObject.getString("data");
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
 
-                    String currentUserType = getIntent().getStringExtra("userType");
-                    if (Objects.equals(currentUserType, "admin")) {
-                        showAdminView();
-                    } else if (Objects.equals(currentUserType, "superadmin")) {
-                        showSuperAdminView();
-                    } else if (Objects.equals(currentUserType, "user")) {
-                        Log.e (TAG, "Error, normal user shouldn't be able to see this page: " + responseBody);
-                    } else {
-                        Log.e(TAG, "Error: unknown user type : " + responseBody);
+                    switch (currentUserType) {
+                        case "admin":
+                            showAdminView();
+                            break;
+                        case "superadmin":
+                            showSuperAdminView();
+                            break;
+                        case "user":
+                            Log.e(TAG, "Error, normal user shouldn't be able to see this page: " + responseBody);
+                            break;
+                        default:
+                            Log.e(TAG, "Error: unknown user type : " + responseBody);
+                            break;
                     }
                 } else {
                     Log.e(TAG, "Request was not successful. Response code: " + response.code());
@@ -213,6 +225,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                     @Override
                     public void onClick(View v) {
                         Intent buildingManagementIntent = new Intent(BuildingManagementActivity.this, BuildingManagementActivity.class);
+                        buildingManagementIntent.putExtra("AdminEmail", regularAdminEmail);
                         ServerRequests.requestDeleteBuildingFromAdmin(regularAdminEmail, selectedBuilding, BuildingManagementActivity.this, buildingManagementIntent);
                     }
                 });

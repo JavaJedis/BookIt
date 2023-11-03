@@ -9,6 +9,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,6 +18,7 @@ import com.javajedis.bookit.model.TimeSlotsModel;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.TimeSlots_RecyclerViewAdapter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -239,12 +242,36 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                         assert response.body() != null;
                         String responseBody = response.body().string();
                         Log.d(TAG, responseBody);
-                        Intent bookingsIntent = new Intent(ListTimeSlotsActivity.this, BookingsActivity.class);
-                        startActivity(bookingsIntent);
+                        String message = "";
+                        try {
+                            JSONObject responseObject = new JSONObject(responseBody);
+                            message = responseObject.getString("data");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (message.equals("Successfully added to the waitlist")) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(ListTimeSlotsActivity.this, "You have been added to the wait-list!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Intent bookingsIntent = new Intent(ListTimeSlotsActivity.this, BookingsActivity.class);
+                            startActivity(bookingsIntent);
+                        }
                     } else {
                         Log.e(TAG, "POST request failed with code: " + response.code());
                         assert response.body() != null;
                         System.out.println(response.body().string());
+                        if (response.code() == 400) {
+                            runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(ListTimeSlotsActivity.this, "You have already booked this room!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        }
                     }
                 }
             });

@@ -41,17 +41,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
-            android:id="@+id/modify_time_slots_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/top_button"
-            android:fontFamily="@font/roboto_slab"
-            android:text="@string/modify_time_slots_button"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:enabled="false"/>
+<!--        <Button-->
+<!--            android:id="@+id/modify_time_slots_button"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:background="@drawable/top_button"-->
+<!--            android:fontFamily="@font/roboto_slab"-->
+<!--            android:text="@string/modify_time_slots_button"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:textSize="20sp"-->
+<!--            android:enabled="false"/>-->
 
         <Button
             android:id="@+id/delete_study_room_button"

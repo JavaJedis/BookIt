@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,8 +54,11 @@ public class ServerRequests {
                     assert response.body() != null;
                     String responseBody = response.body().string();
                     Log.d("AssignBuildingAdmin", responseBody);
-
+                    System.out.println("created admin");
                     requestAddBuildingToAdmin(adminEmail, buildingCode, context, onResponseRedirectIntent);
+                } else {
+                    assert response.body() != null;
+                    Log.e("AssignBuildingAdmin Error", response.body().toString() + response.code());
                 }
             }
         });
@@ -181,7 +185,8 @@ public class ServerRequests {
             jsonRequest.put("token", adminToken);
             jsonRequest.put("room_no", roomNumber);
             jsonRequest.put("capacity", capacity);
-            jsonRequest.put("features", features.toArray());
+            JSONArray featuresArray = new JSONArray(features);
+            jsonRequest.put("features", featuresArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -250,8 +255,18 @@ public class ServerRequests {
             jsonRequest.put("building_code", buildingCode);
             jsonRequest.put("building_name", buildingName);
             jsonRequest.put("building_address", buildingAddress);
-            jsonRequest.put("open_times", openTimes);
-            jsonRequest.put("close_times", closeTimes);
+            JSONArray openTimesArray = new JSONArray();
+            JSONArray closeTimesArray = new JSONArray();
+
+            for (String openTime : openTimes) {
+                openTimesArray.put(openTime);
+            }
+
+            for (String closeTime : closeTimes) {
+                closeTimesArray.put(closeTime);
+            }
+            jsonRequest.put("open_times", openTimesArray);
+            jsonRequest.put("close_times", closeTimesArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }

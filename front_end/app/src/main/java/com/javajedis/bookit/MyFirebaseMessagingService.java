@@ -55,17 +55,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         sendNotification(remoteMessage.getNotification().getBody());
     }
 
-    private void sendNotification(String from, String body) {
-
-        Toast.makeText(MyFirebaseMessagingService.this.getApplication(), from + " -> " + body, Toast.LENGTH_SHORT).show();
-//        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//    private void sendNotification(String from, String body) {
 //
-//            @Override
-//            public void run() {
-//                Toast.makeText(MyFirebaseMessagingService.this.getApplication(), from + " -> " + body, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-    }
+//        Toast.makeText(MyFirebaseMessagingService.this.getApplication(), from + " -> " + body, Toast.LENGTH_SHORT).show();
+////        new Handler(Looper.getMainLooper()).post(new Runnable() {
+////
+////            @Override
+////            public void run() {
+////                Toast.makeText(MyFirebaseMessagingService.this.getApplication(), from + " -> " + body, Toast.LENGTH_SHORT).show();
+////            }
+////        });
+//    }
 
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
@@ -78,7 +78,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_stat_notification)
-                        .setContentTitle("FCM Message")
+//                        .setContentTitle("FCM Message")
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
