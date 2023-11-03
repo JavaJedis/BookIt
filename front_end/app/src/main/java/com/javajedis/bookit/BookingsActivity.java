@@ -1,5 +1,6 @@
 package com.javajedis.bookit;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -69,6 +71,15 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Intent intent = new Intent(BookingsActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        };
 
         getBookings();
     }
@@ -462,7 +473,12 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                     Log.e(TAG, "No response.");
                     assert response.body() != null;
                     System.out.println(response.body().string());
-                    Toast.makeText(BookingsActivity.this, "Unable to cancel booking. Oops!", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(BookingsActivity.this, "Unable to cancel booking. Oops!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         }));
