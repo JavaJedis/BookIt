@@ -23,11 +23,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.javajedis.bookit.model.RoomModel;
 import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.util.Constant;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,6 +73,8 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private double lat;
     private double lon;
+    TextView filterInfoTextView;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +133,11 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 //                }
             }
         });
+
+        filterInfoTextView = findViewById(R.id.filter_info_textView);
+        filterInfoTextView.setText(Constant.FILTER_GUILD_TEXT);
+
+        recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
     }
 
     private void getLocationInfo() {
@@ -310,7 +319,6 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         return startTime;
     }
 
-
     // pop-up menu for days of the week and duration: https://chat.openai.com/share/021b3349-433a-4ded-bb34-3d2e23c61bf8
     public void showDayMenu(View view) {
 //        final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
@@ -350,6 +358,14 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     }
 
     private void getStudyRooms(String date, String startTime, double durationDouble) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                filterInfoTextView.setText(Constant.FILTER_LOAD_TEXT);
+                filterInfoTextView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+        });
         OkHttpClient client = new OkHttpClient();
 
         String getUrl = "https://bookit.henrydhc.me/filter";
@@ -373,6 +389,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
+                filterInfoTextView.setText(Constant.FILTER_ERROR_TEXT);
                 Log.e("FilterActivity", "GET request failed: " + e.getMessage());
             }
 
@@ -387,6 +404,17 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                         JSONObject responseObject = new JSONObject(jsonResponse);
 //                        JSONArray roomsArray = new JSONArray(jsonResponse);
                         JSONArray roomsArray = responseObject.getJSONArray("data");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (roomsArray.length() == 0) {
+                                    filterInfoTextView.setText(Constant.FILTER_NO_MATCHING_TEXT);
+                                } else {
+                                    filterInfoTextView.setVisibility(View.GONE);
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
                         for (int i = 0; i < roomsArray.length(); i++) {
                             JSONObject roomInfo = roomsArray.getJSONObject(i);
 
@@ -429,7 +457,6 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                RecyclerView recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
                                 RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(FilterActivity.this));
@@ -443,6 +470,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                 } else {
                     Log.e("FilterActivity", "Response not successful");
                     assert response.body() != null;
+                    filterInfoTextView.setText(Constant.FILTER_ERROR_TEXT);
                     System.out.println(response.body().toString());
                 }
             }

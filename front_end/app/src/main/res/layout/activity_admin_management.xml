@@ -15,21 +15,21 @@
         app:iconifiedByDefault="false"
         app:layout_constraintBottom_toTopOf="@+id/admin_user_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004"
-        app:queryHint="Type here to search"/>
+        app:layout_constraintVertical_bias="0.005"
+        app:queryHint="Type here to search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_user_recyclerView"
         android:layout_width="409dp"
-        android:layout_height="612dp"
-        app:layout_constraintBottom_toTopOf="@+id/admin_management_linearLayout"
+        android:layout_height="590dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/admin_user_searchView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/admin_management_linearLayout"
@@ -42,13 +42,14 @@
 
         <Button
             android:id="@+id/add_new_admin_button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bottom_button"
             android:fontFamily="@font/roboto_slab"
             android:text="@string/add_new_admin_button"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

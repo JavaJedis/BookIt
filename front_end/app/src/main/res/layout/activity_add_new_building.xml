@@ -25,14 +25,14 @@
         android:id="@+id/building_name_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/building_code_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.16">
 
         <TextView
             android:id="@+id/building_name_textView"
@@ -63,14 +63,14 @@
         android:id="@+id/building_code_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/address_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.32">
 
         <TextView
             android:id="@+id/building_code_textView"
@@ -102,14 +102,14 @@
         android:id="@+id/address_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/open_times_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.48">
 
         <TextView
             android:id="@+id/address_textView"
@@ -140,7 +140,7 @@
         android:id="@+id/open_times_textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@drawable/regular_button"
+        android:background="@drawable/regular_button_no_corner"
         android:fontFamily="@font/roboto_slab"
         android:gravity="center"
         android:text="@string/open_times_textView"
@@ -150,7 +150,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_linearLayout"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
@@ -158,10 +157,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/close_times_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.67">
         <Button
             android:id="@+id/open_time_monday_button"
             android:layout_width="0dp"
@@ -238,7 +238,7 @@
         android:id="@+id/close_times_textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:background="@drawable/regular_button"
+        android:background="@drawable/regular_button_no_corner"
         android:fontFamily="@font/roboto_slab"
         android:gravity="center"
         android:text="@string/close_times_textView"
@@ -248,7 +248,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/open_times_linearLayout"
         app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
@@ -256,10 +255,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_building_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.845">
         <Button
             android:id="@+id/close_time_monday_button"
             android:layout_width="0dp"

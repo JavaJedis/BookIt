@@ -6,29 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".FilterActivity">
 
-    <LinearLayout
+    <Button
+        android:id="@+id/day_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/top_button"
+        android:fontFamily="@font/roboto_slab"
+        android:onClick="showDayMenu"
+        android:text="@string/day_button"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-
-        <Button
-            android:id="@+id/day_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/top_button"
-            android:fontFamily="@font/roboto_slab"
-            android:text="@string/day_button"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.061"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.023"
-            android:onClick="showDayMenu"/>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/day_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/start_time_button"
@@ -52,8 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/top_button"
+            android:background="@drawable/regular_button_no_corner"
             android:fontFamily="@font/roboto_slab"
+            android:onClick="showDurationMenu"
             android:text="@string/hours_button"
             android:textAllCaps="false"
             android:textSize="20sp"
@@ -62,9 +63,34 @@
             app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.023"
-            android:onClick="showDurationMenu"/>
+            app:layout_constraintVertical_bias="0.023" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/study_rooms_filter_recycler_view"
+        android:layout_width="409dp"
+        android:layout_height="550dp"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_bottom_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/filter_info_textView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center"
+        android:text="@string/filter_info_textView"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_slab"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/filter_bottom_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
 
     <Button
         android:id="@+id/filter_bottom_button"
@@ -77,17 +103,7 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/study_rooms_filter_recycler_view"
-        android:layout_width="409dp"
-        android:layout_height="561dp"
-        app:layout_constraintBottom_toBottomOf="@+id/filter_bottom_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

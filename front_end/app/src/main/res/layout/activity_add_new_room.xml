@@ -25,14 +25,14 @@
         android:id="@+id/room_number_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/capacity_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.25">
 
         <TextView
             android:id="@+id/room_number_textView"
@@ -63,14 +63,14 @@
         android:id="@+id/capacity_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/features_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.5">
 
         <TextView
             android:id="@+id/capacity_textView"
@@ -101,14 +101,14 @@
         android:id="@+id/features_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="@drawable/regular_button"
-        app:layout_constraintBottom_toTopOf="@+id/add_room_linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.75">
 
         <TextView
             android:id="@+id/features_textView"
