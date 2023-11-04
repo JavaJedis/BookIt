@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
@@ -49,6 +51,9 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room_management);
+
+        OnBackPressedCallback callback = BackNavigation.backToBuildingManagement(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         building = getIntent().getStringExtra("building");
 

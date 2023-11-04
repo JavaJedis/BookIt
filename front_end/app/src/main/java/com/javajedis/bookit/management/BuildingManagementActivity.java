@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
 import com.javajedis.bookit.util.Authentication;
+import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
@@ -52,6 +54,9 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_building_management);
+
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         adminHeading = findViewById(R.id.admin_info_textView);
 

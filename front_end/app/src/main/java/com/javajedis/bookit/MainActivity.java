@@ -3,13 +3,22 @@ package com.javajedis.bookit;
 import androidx.activity.OnBackPressedCallback;
 //import androidx.activity.result.ActivityResultLauncher;
 //import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 //import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,37 +66,22 @@ public class MainActivity extends AppCompatActivity {
 
     private Button signOutButton;
 
+    private Boolean permissionPostNotification = false;
+
+    private String[] permissions;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO: implement onBackPressed on other activities as well
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-                finish();
-            }
+        permissions = new String[]{
+                Manifest.permission.POST_NOTIFICATIONS
         };
 
-//        FirebaseMessaging.getInstance().getToken()
-//                .addOnCompleteListener(new OnCompleteListener<String>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<String> task) {
-//                        if (!task.isSuccessful()) {
-//                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-//                            return;
-//                        }
-//
-//                        // Get new FCM registration token
-//                        deviceToken = task.getResult();
-//
-//                        Log.d("FCM TOKEN", deviceToken);
-////                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+        if (!permissionPostNotification) {
+            requestPermissionNotification();
+    }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("111894204425-9rmckprjgu7mgamsq6mdfum7m5jt1m0g.apps.googleusercontent.com")
@@ -158,6 +152,55 @@ public class MainActivity extends AppCompatActivity {
                 signOut();
             }
         });
+    }
+
+    private void requestPermissionNotification() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            permissionPostNotification = true;
+        } else {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                Log.d("Permission", "first else");
+                // debug if needed
+            } else {
+                Log.d("Permission", "second else");
+                // debug if needed
+            }
+            requestPermissionLauncherNotification.launch(permissions[0]);
+        }
+    }
+    
+    private ActivityResultLauncher<String> requestPermissionLauncherNotification =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted->{
+                if (isGranted) {
+                    permissionPostNotification = true;
+                } else {
+                    permissionPostNotification = false;
+                    showPermissionDialog("Notification Permission");
+                }
+            });
+
+    public void showPermissionDialog(String permission) {
+        new AlertDialog.Builder(
+                MainActivity.this
+        ).setTitle("Alert for Permission")
+                .setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 //    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(

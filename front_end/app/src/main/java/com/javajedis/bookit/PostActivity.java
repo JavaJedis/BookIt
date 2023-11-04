@@ -1,5 +1,6 @@
 package com.javajedis.bookit;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,6 +43,9 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         commenting = getIntent().getBooleanExtra("commenting", false);
 

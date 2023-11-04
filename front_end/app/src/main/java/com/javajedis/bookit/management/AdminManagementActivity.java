@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
 import com.javajedis.bookit.recyclerView.adapter.Admin_RecyclerViewAdapter;
+import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 
 import org.json.JSONArray;
@@ -42,6 +44,9 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_management);
+
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         initAdminData();
 

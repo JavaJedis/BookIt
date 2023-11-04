@@ -1,5 +1,6 @@
 package com.javajedis.bookit.management;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -109,7 +110,7 @@ public class AddNewBuildingActivity extends AppCompatActivity {
                 } else if (!buildingCode.matches("[0-9A-Z]+")) { // From https://stackoverflow.com/questions/5238491/check-if-string-contains-only-letters
                     Toast.makeText(AddNewBuildingActivity.this, "building code contains capital letters only", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, MainActivity.class);
+                    Intent mainActivityIntent = new Intent(AddNewBuildingActivity.this, DeleteBuildingActivity.class);
 //                    ArrayList<String> openTimesList = (ArrayList<String>) Arrays.asList(openTimes);
 //                    ArrayList<String> closeTimesList = (ArrayList<String>) Arrays.asList(closeTimes);
                     ServerRequests.requestAddBuilding(buildingName, buildingCode, address, openTimes, closeTimes, AddNewBuildingActivity.this, mainActivityIntent);
@@ -122,6 +123,7 @@ public class AddNewBuildingActivity extends AppCompatActivity {
         final int[] hour = new int[1];
         final int[] min = new int[1];
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
@@ -134,6 +136,10 @@ public class AddNewBuildingActivity extends AppCompatActivity {
                     openTimes[dayIndex] = formatTime(hour[0], min[0]);
                 } else {
                     closeTimes[dayIndex] = formatTime(hour[0], min[0]);
+                    if (formatTime(hour[0], min[0]).equals("0000")) {
+                        closeTimes[dayIndex] = "2400";
+                        button.setText("2400");
+                    }
                 }
             }
         };

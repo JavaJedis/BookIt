@@ -1,5 +1,6 @@
 package com.javajedis.bookit;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,7 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.javajedis.bookit.recyclerView.adapter.Comments_RecyclerViewAdapter;
+import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +45,9 @@ public class CommentsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
+
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         String codePlusNumber = getIntent().getStringExtra("codePlusNumber");
 

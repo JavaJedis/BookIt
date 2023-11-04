@@ -24,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.recyclerView.adapter.Bookings_RecyclerViewAdapter;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,14 +73,8 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bookings);
 
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                Intent intent = new Intent(BookingsActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        };
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         getBookings();
     }

@@ -2,6 +2,7 @@ package com.javajedis.bookit;
 
 import static okhttp3.MediaType.parse;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -29,6 +30,7 @@ import android.widget.TimePicker;
 import com.javajedis.bookit.model.RoomModel;
 import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
 import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 
 import org.json.JSONArray;
@@ -79,6 +81,9 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
+
+        OnBackPressedCallback callback = BackNavigation.backToMain(this);
+        this.getOnBackPressedDispatcher().addCallback(this, callback);
 
         roomNames = new ArrayList<>();
 
@@ -457,6 +462,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                RecyclerView recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
                                 RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(FilterActivity.this));
