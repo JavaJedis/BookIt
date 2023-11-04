@@ -1,8 +1,9 @@
 //Import necessary modules
 const admin = require('firebase-admin');
 const utils = require('./utils');
-const db_handler = require('./db_handler');
+const db_handler = require("./db_handler");
 const schedule = require('node-schedule');
+const serviceAccount = require('./firebase/firebase_key.json')
 
 
 
@@ -15,6 +16,10 @@ var reminderJobB;
 const FIREBASE_KEY_PATH = './firebase/firebase_key.json';
 const MODULE_NAME = 'NOTIFICATION-MANAGER';
 
+
+
+
+
 /**
  * Initialize notification manager
  */
@@ -22,13 +27,13 @@ function init() {
     //Init app
     app = admin.initializeApp(
         {
-            credential: admin.credential.applicationDefault()
+            credential: admin.credential.cert(serviceAccount)
         }
     );
     //Init schedulers
     try {
-        reminderJobA = schedule.scheduleJob('ReminderA', '50 * * * *', searchAndSendReminders);
-        reminderJobB = schedule.scheduleJob('ReminderB', '20 * * * *', searchAndSendReminders);
+        reminderJobA = schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
+        reminderJobB = schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to initialize scheduler.");
         utils.consoleMsg(MODULE_NAME, `ErrMsg:\n${err}`);
@@ -59,13 +64,16 @@ function deInit() {
  * @param {string} devToken Device Token
  * @returns true on success, false on failure
  */
-async function sendNotification(data, devToken) {
+async function sendNotification(title, body, devToken) {
 
     const messagingService = admin.messaging(app);
     try {
         await messagingService.send(
             {
-                data: data, 
+                notification: {
+                    title: title,
+                    body: body
+                },
                 token: devToken
             }
         );
@@ -97,20 +105,50 @@ async function searchAndSendReminders() {
     const currentDate = new Date();
     var bookingMin = currentDate.getMinutes();
     var bookingHour = currentDate.getHours();
+    var minStr;
+    var hourStr;
 
+    //Dealing with time and date string
     if (bookingMin > 30) {
         bookingMin = 0;
+        minStr = '00';
         bookingHour = bookingHour + 1;
+        hourStr = `${bookingHour}`;
     } else {
         bookingMin = 30;
+        minStr = '30';
+        hourStr = `${bookingHour}`;
     }
 
-    //Get date and time for the next reminder
-    const currentDateStr = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
-    const nextReminderTime = utils.militaryTimeToDecimal([0, 0]);
-    const booking = await db_handler.findBookingByDate(currentDateStr);
+    var date;
+    var month;
+    var year = currentDate.getFullYear();
+    if (currentDate.getDate() < 10) {
+        date = `${0}${currentDate.getDate()}`
+    } else {
+        date = `${currentDate.getDate()}`
+    }
 
-    
+    if (currentDate.getMonth() < 9) {
+        month = `${0}${currentDate.getMonth() + 1}`
+    } else {
+        month = `${currentDate.getMonth() + 1}`
+    }
+
+    utils.consoleMsg(MODULE_NAME, `Send reminders for bookings @ [${bookingHour}, ${bookingMin}]`);
+
+    //Get date and time for the next reminder
+
+
+
+
+
+    const currentDateStr = `${date}-${month}-${currentDate.getFullYear()}`;
+    const nextReminderTime = utils.militaryTimeToDecimal([bookingHour, bookingMin]);
+    const booking = await db_handler.findBookingByDate(currentDateStr);
+    if (booking == null) {
+        return;
+    }
     for (const [key, value] of Object.entries(booking)) {
         let updateList = [];
         let id;
@@ -124,28 +162,23 @@ async function searchAndSendReminders() {
 
         const user = await db_handler.checkUser(value[nextReminderTime]);
         if (user == null || user.tokens == null) {
-            continue;
-        } 
+            return;
+            console.log("No");
+        }
         for (const [tokenIndex, devToken] of Object.entries(user.tokens)) {
             if (devToken == null)
                 continue;
-            const result = await sendNotification(
-                {
-                    type: 'booking-reminder', 
-                    room: key, 
-                    date: currentDateStr, 
-                    hour: Number.toString(bookingHour), 
-                    min: Number.toString(bookingMin)
-                }, devToken
-            );
-            if (result) {
+            let success = await sendNotification("Booking Reminder",
+                `You have a booking on room ${key} at ${hourStr}:${minStr} today.`
+                , devToken);
+            if (success) {
                 updateList.push(devToken);
             }
+
         }
 
         //Update token list to remove useless tokens
-        db_handler.updateUserTokens(id, updateList);
-
+        await db_handler.updateUserTokens(id, updateList);
     }
 }
 
@@ -154,7 +187,7 @@ async function searchAndSendReminders() {
  * @param {Array} emails 
  * @param {string} msg 
  */
-async function sendBulkNotifications(emails, msg) {
+async function sendBulkNotifications(emails, title, msg) {
 
     /*
     1. Get user profiles for devtokens
@@ -163,39 +196,29 @@ async function sendBulkNotifications(emails, msg) {
 
     for (const email of emails) {
         let userDoc;
-
-        try { 
-            userDoc = await db_handler.checkUser(email);
-            if (userDoc == null) {
-                utils.consoleMsg(MODULE_NAME, `Could not find user ${email}'s profile`);
-                continue;
-            }
+        try {
+            userDoc = await db_handler.checkUser(email)
         } catch (err) {
             utils.consoleMsg(MODULE_NAME, `Could not find user ${email}'s profile`);
+            utils.consoleMsg(MODULE_NAME, `ErrMsg: ${err}`);
             continue;
         }
 
         const devTokens = userDoc.tokens;
-        for (devToken in devTokens) {
+        for (const devToken of devTokens) {
             if (devToken == null) {
                 continue;
             }
-            await sendNotification(
-                {
-                    type: 'Waitlist', 
-                    msg: msg
-                }, devToken
-            );
+            await sendNotification(title, msg, devToken);
         }
     }
 
 }
 
-
 module.exports = {
-    init, 
-    sendNotification, 
-    sendBulkNotifications, 
-    deInit
-};
+    init,
+    deInit,
+    sendNotification,
+    sendBulkNotifications
+}
 

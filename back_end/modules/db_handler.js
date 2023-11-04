@@ -196,13 +196,75 @@ async function bookStudyRooms(bookingData) {
 
     const result = await userBookingCollection.insertOne(userbookingdata)
 
-
-    var user = await userCollection.findOne({ _id: bookingData.email })
-    user.booking_ids.push(result.insertedId)
-    await userCollection.updateOne({ _id: bookingData.email }, { $set: user })
+    await userCollection.updateOne({ _id: bookingData.email }, { $push: { booking_ids: result.insertedId } })
 
 
     return "booked!"
+}
+
+async function waitlistStudyRooms(bookingData) {
+    const startTime = parseInt(bookingData.startTime)
+    const endTime = parseInt(bookingData.endTime)
+    const date = bookingData.date
+    const [validDate, day] = dateTimeValidator(date, bookingData.startTime)
+    var validTimes = timeValidator(startTime, endTime)
+
+    if ((!validDate) || (!validTimes)) {
+        var err = new Error("Invalid Date/Time")
+        err.statusCode = 404
+        throw err
+    }
+
+    const buildingCollection = client.db('study_room_db').collection(bookingData.buildingCode);
+    const room = await buildingCollection.findOne({ _id: bookingData.roomNo })
+    if (!room) {
+        var err = new Error("Room Not Found")
+        err.statusCode = 404
+        throw err
+    }
+
+    const bookingCollection = client.db('study_room_db').collection('bookings')
+    const userBookingCollection = client.db('users').collection('bookings')
+
+    var bookingsDate = await bookingCollection.findOne({ _id: date })
+
+    const roomCode = bookingData.buildingCode + " " + bookingData.roomNo
+
+    if (!bookingsDate || !(bookingsDate[roomCode])) {
+        var err = new Error("Booking Not Found")
+        err.statusCode = 404
+        throw err
+    }
+
+
+    const startIndex = Math.ceil(startTime / 50)
+    const endIndex = Math.ceil(endTime / 50)
+
+    for (let i = startIndex; i < endIndex; i++) {
+        if (bookingsDate[roomCode][i] === "0" || bookingsDate[roomCode][i] === "2" || bookingsDate[roomCode][i] === "3") {
+            var err = new Error("Booking is unavailable for waitlisting")
+            err.statusCode = 403
+            throw err
+        } else if (bookingsDate[roomCode][i] === bookingData.email) {
+            var err = new Error("This room has been booked by you")
+            err.statusCode = 400
+            throw err
+        }
+    }
+
+    try {
+        await userBookingCollection.updateOne({
+            roomCode: roomCode,
+            startIndex: startIndex,
+            endIndex: endIndex,
+            date: date,
+        }, { $addToSet: { waitlist: bookingData.email } })
+    } catch (error) {
+        var err = new Error("Unable to add user to waitlist")
+        err.statusCode = 403
+        throw err
+    }
+    return "Successfully added to the waitlist"
 }
 
 /**
@@ -293,7 +355,7 @@ async function userLogin(userInfo) {
 
 
 async function checkUser(userEmail) {
-    const users = client.db('users').collection('users');
+    const users = await client.db('users').collection('users');
     const user = await users.findOne({ _id: userEmail })
     if (user) {
         return user
@@ -358,20 +420,15 @@ async function cancelBooking(ID, user) {
     }
     try {
         await bookingCollection.updateOne(bookingsDateOriginal, { $set: bookingsDate })
+        await userBookingCollection.deleteOne({ _id: ID });
+        await userCollection.updateOne({ _id: user._id }, { $pull: { booking_ids: ID } })
     } catch (error) {
         var err = new Error("Could not complete request")
         err.statusCode = 404
         throw err
     }
 
-    await userBookingCollection.deleteOne({ _id: ID });
-
-    const user1 = await userCollection.findOne({ _id: user._id })
-    let filteredList = user1.booking_ids.filter(item => item.toHexString() !== ID.toHexString())
-    user1.booking_ids = filteredList
-    await userCollection.updateOne({ _id: user._id }, { $set: user1 })
-
-    return "Removed"
+    return [booking, "Removed"]
 }
 
 async function confirmBooking(confirmData) {
@@ -498,7 +555,6 @@ function submitReport(reportData) {
  * @returns {string} True on success, False on Failure.
  */
 async function addAdmin(email) {
-
     /*
     We assign admin permission to the user whose email match the email given.
     If there are no such a user, we just do nothing and return false.
@@ -506,14 +562,14 @@ async function addAdmin(email) {
 
     const collection = client.db('users').collection('users');
     const result = await collection.updateOne({ _id: email }, { $set: { type: 'admin' } });
-    return result.acknowledged && result.modifiedCount == 1;
+    return result.acknowledged
 
 }
 
 async function delAdmin(email) {
 
     const collection = client.db('users').collection('users');
-    const result = await collection.updateOne({ _id: email }, { $set: { type: 'user' } });
+    const result = await collection.updateOne({ _id: email }, { $set: { type: 'user' }, $unset: { adminBuildings: "" } });
     return result.acknowledged && result.modifiedCount == 1;
 }
 
@@ -521,7 +577,7 @@ async function addBuildingAdmin(email, building) {
 
     const collection = client.db('users').collection('users');
     try {
-        const result = await collection.updateOne({ _id: email }, { $push: { adminBuildings: building } });
+        const result = await collection.updateOne({ _id: email }, { $addToSet: { adminBuildings: building } });
         return result.acknowledged && result.modifiedCount == 1;
     } catch (err) {
         return false;
@@ -546,7 +602,7 @@ async function getAdminBuildings(email) {
     const collection = client.db('users').collection('users');
     try {
         const result = await collection.findOne({ _id: email });
-        if (result == null || result.type != 'admin') {
+        if (result === null || result.type !== 'admin') {
             return null;
         }
         return result.adminBuildings;
@@ -559,7 +615,6 @@ async function getAdminBuildings(email) {
 async function addBuilding(buildingData) {
     const buildingCollection = client.db("study_room_db").collection("building_all")
     const buildings = await buildingCollection.find().toArray()
-    const buildingList = buildings[0].buildings
 
     const coordinates = await getCoordinates(buildingData.building_address)
     buildingData.lat = parseFloat(coordinates.lat)
@@ -594,40 +649,16 @@ async function delBuilding(buildingCode) {
     try {
         await buildingCollection.updateOne({ _id: buildings._id }, { $pull: { buildings: target } });
         await client.db("study_room_db").collection(buildingCode).drop();
-        return "Successfully removed"
+
     } catch (err) {
         var error = new Error("Server error, please retry")
         error.statusCode = 403
         throw error
     }
 
-}
-
-async function addRoom(roomData) {
-    const buildingCollection = client.db("study_room_db").collection("building_all")
-    const buildings = await buildingCollection.find().toArray()
-    const buildingList = buildings[0].buildings
-    var buildingDetails = {}
-    for (let building in buildingList) {
-        if (building.building_code == roomData.building_code) {
-            buildingDetails = building
-        }
-    }
-
-    roomData.open_times = buildingDetails.open_times
-    roomData.close_times = buildingDetails.close_time
-    roomData.building_name = buildingDetails.building
-    roomData.building_address = buildingDetails.address
-    roomData.comments = []
-
-    try {
-        await client.db("study_room_db").collection(roomData.building_code).insertOne({ roomData });
-        return "Successfully added"
-    } catch (err) {
-        var error = new Error("Room number exists already")
-        error.statusCode = 400
-        throw error
-    }
+    const userCollection = client.db('users').collection('users');
+    await userCollection.updateMany({ type: 'admin' }, { $pull: { adminBuildings: buildingCode } });
+    return "Successfully removed";
 
 }
 
@@ -637,19 +668,20 @@ async function addRoom(roomData) {
     const buildingList = buildings[0].buildings
     var buildingDetails = {}
     for (let building in buildingList) {
-        if (building.building_code == roomData.building_code) {
-            buildingDetails = building
+        if (buildingList[building].building_code == roomData.building_code) {
+            buildingDetails = buildingList[building]
+            break
         }
     }
 
     roomData.open_times = buildingDetails.open_times
-    roomData.close_times = buildingDetails.close_time
-    roomData.building_name = buildingDetails.building
-    roomData.building_address = buildingDetails.address
+    roomData.close_times = buildingDetails.close_times
+    roomData.building_name = buildingDetails.building_name
+    roomData.building_address = buildingDetails.building_address
     roomData.comments = []
 
     try {
-        await client.db("study_room_db").collection(roomData.building_code).insertOne({ roomData });
+        await client.db("study_room_db").collection(roomData.building_code).insertOne(roomData);
         return "Successfully added"
     } catch (err) {
         var error = new Error("Room number exists already")
@@ -661,7 +693,7 @@ async function addRoom(roomData) {
 
 async function delRoom(roomData) {
     try {
-        await client.db("study_room_db").collection(roomData.building_code).deleteOne({ _id: roomData.roomNo });
+        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne({ _id: roomData.roomNo });
         return "Successfully removed"
     } catch (err) {
         var error = new Error("Room number does not exist")
@@ -695,9 +727,9 @@ async function findUserDevToken(email) {
 
 async function updateUserTokens(email, newTokens) {
 
-    const collection = client.db('users').collection('users');
+    const collection = await client.db('users').collection('users');
     try {
-        const result = collection.findOneAndUpdate(
+        const result = await collection.findOneAndUpdate(
             { _id: email },
             { $set: { tokens: newTokens } }
         );
@@ -718,13 +750,33 @@ async function updateUserTokens(email, newTokens) {
 async function findBookingByDate(date) {
     //Test required
 
-    const collection = client.db('study_room_db').collection('bookings');
+    const collection = await client.db('study_room_db').collection('bookings');
+    console.log(date);
     try {
         const booking = await collection.findOne({ _id: date });
         return booking;
     } catch (err) {
         return null;
     }
+
+}
+
+async function removeInvalidBookings(date, month, year) {
+    const collection = client.db('study_room_db').collection('bookings');
+    const docs = await collection.deleteMany({ _id: { $ne: `${date}-${month}-${year}` } });
+    return docs;
+}
+
+async function getAdminList() {
+
+    const collection = client.db('users').collection('users');
+    var result = []
+    const users = await collection.find({ type: 'admin' }).toArray();
+
+    for (admin in users) {
+        result.push(users[admin]._id)
+    }
+    return result;
 
 }
 
@@ -827,6 +879,7 @@ module.exports = {
     userLogin,
     checkUser,
     bookStudyRooms,
+    waitlistStudyRooms,
     filterRooms,
     confirmBooking,
     getSlots,
@@ -847,5 +900,7 @@ module.exports = {
     delBuilding,
     addBuilding,
     addRoom,
-    delRoom
+    delRoom,
+    getAdminList,
+    removeInvalidBookings
 };

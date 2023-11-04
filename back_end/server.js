@@ -25,6 +25,7 @@ const notif_manager = require('./modules/notification_manager');
 
 
 
+
 // Express configurations
 const app = express();
 const PORT = 443;
@@ -44,11 +45,12 @@ app.get('/user/bookings', user_manager.userBookings);
 app.delete('/user/bookings/:id', user_manager.cancelBooking);
 app.put('/user/bookings/:id', user_manager.userAuth, user_manager.confirmBooking);
 app.post('/studyroom/book', user_manager.userAuth, sroom_manager.bookStudyRooms);
+app.post('/studyroom/waitlist', user_manager.userAuth, sroom_manager.waitlistStudyRooms);
 app.post('/studyrooms/:building_code/:room_no/comments', user_manager.userAuth, cmt_manager.sendStudyRoomComment);
 app.get('/lecturehalls/:building_code', lhall_manager.listLectureHalls);
 
 //Administration Endpoints
-app.get('/user/admin', user_manager.userAuth);
+app.get('/user/admin', user_manager.listAdmins);
 app.post('/user/admin', user_manager.userAuth, user_manager.createAdmin);
 app.delete('/user/admin', user_manager.userAuth, user_manager.removeAdmin);
 app.get('/user/admin/:email/buildings', user_manager.getAdminBuildings);
@@ -56,12 +58,8 @@ app.post('/user/admin/:email/buildings', user_manager.userAuth, user_manager.add
 app.delete('/user/admin/:email/buildings', user_manager.userAuth, user_manager.removeBuildingAdmin);
 app.post('/studyrooms/building', user_manager.userAuth, sroom_manager.createBuilding)
 app.delete('/studyrooms/:building_code', user_manager.userAuth, sroom_manager.delBuilding)
-// app.post('/studyrooms/:building_code/', user_manager.userAuth, sroom_manager.createRoom)
-// app.delete('/studyrooms/:building_code/:room_no', user_manager.userAuth, sroom_manager.delRoom)
-// testing
-app.post('/studyrooms/:building_code/', sroom_manager.createRoom)
-app.delete('/studyrooms/:building_code/:room_no', sroom_manager.delRoom)
-
+app.post('/studyrooms/:building_code/', user_manager.userAuth, sroom_manager.createRoom)
+app.delete('/studyrooms/:building_code/:room_no', user_manager.userAuth, sroom_manager.delRoom)
 
 
 
@@ -69,7 +67,6 @@ app.delete('/studyrooms/:building_code/:room_no', sroom_manager.delRoom)
 db_handler.dbh_init();
 notif_manager.init();
 sroom_manager.initScheduler();
-
 
 
 // Express https listener
