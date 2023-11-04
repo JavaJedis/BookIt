@@ -2,6 +2,9 @@
 const db_handler = require("./db_handler");
 const axios = require('axios');
 const utils = require("./utils");
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
+const notification_manager = require('./notification_manager');
 
 
 //Global Definition
@@ -14,7 +17,7 @@ MODULE_NAME = "USER-MANAGER";
  * @param {*} res HTTPS response send to the client
  */
 async function userLogin(req, res) {
-    const token = req.body.token
+    const token = req.body.token;
     const devToken = req.body.device_token;
     try {
         const response = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}&key=${process.env.GOOGLE_OAUTH_TOKEN}`);
@@ -97,7 +100,16 @@ async function cancelBooking(req, res) {
         const userEmail = response.data.email
         var user = await db_handler.checkUser(userEmail)
 
-        const result = await db_handler.cancelBooking(id, user)
+        const [booking, result] = await db_handler.cancelBooking(id, user)
+        var startTime = (booking.startIndex * 50)
+        if (startTime % 100 === 50) {
+            startTime = startTime - 20
+        }
+
+        const notificationMessage = "This is slot just opened up: " + booking.roomCode + " " + booking.date + " " + startTime
+
+        await notification_manager.sendBulkNotifications(booking.waitlist, "A booking slot just opened up!!", notificationMessage)
+
         utils.onSuccess(res, result)
 
     } catch (error) {
@@ -202,6 +214,23 @@ function removeAdmin(req, res) {
             }
         }
     );
+
+}
+
+function listAdmins(req, res) {
+
+    db_handler.getAdminList().then(
+        result => {
+            res.status(200);
+            res.type('json');
+            res.send(JSON.stringify(
+                {
+                    status: 'ok',
+                    data: result
+                }));
+        }
+    );
+
 
 }
 
@@ -334,5 +363,6 @@ module.exports = {
     removeAdmin,
     addBuildingAdmin,
     removeBuildingAdmin,
-    getAdminBuildings
+    getAdminBuildings,
+    listAdmins
 };

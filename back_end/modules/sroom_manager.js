@@ -15,7 +15,7 @@ var sroomSchedulerB;
 function initScheduler() {
     try {
         sroomSchedulerA = schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
-        sroomSchedulerB = schedule.scheduleJob('sroomSchedulerB', '50 * * * *', removeExpiredBookings);
+        sroomSchedulerB = schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
         utils.consoleMsg(MODULE_NAME, "Study Room Scheduler Service Enabled");
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to enable studyroom scheduler service");
@@ -89,6 +89,34 @@ async function bookStudyRooms(req, res) {
         utils.onSuccess(res, result)
     } catch (err) {
         res.status(404);
+        res.type("json");
+        res.send(JSON.stringify(
+            {
+                status: "error",
+                data: err.message
+            }
+        ))
+    }
+}
+
+async function waitlistStudyRooms(req, res) {
+    const waitlistData = {
+        date: req.body.date,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        buildingCode: req.body.buildingCode,
+        roomNo: req.body.roomNo,
+        email: req.user._id
+    }
+    try {
+        const result = await db_handler.waitlistStudyRooms(waitlistData);
+        utils.onSuccess(res, result)
+    } catch (err) {
+        if (!err.statusCode) {
+            res.status(404);
+        } else {
+            res.status(err.statusCode);
+        }
         res.type("json");
         res.send(JSON.stringify(
             {
@@ -195,6 +223,7 @@ async function createBuilding(req, res) {
             statusCode: 401,
             message: "Unauthorized"
         });
+        return
     }
     var buildingData = {
         building_code: req.body.building_code,
@@ -218,6 +247,7 @@ async function delBuilding(req, res) {
             statusCode: 401,
             message: "Unauthorized"
         });
+        return
     }
     BuildingCode = req.params.building_code
 
@@ -235,6 +265,7 @@ async function createRoom(req, res) {
             statusCode: 401,
             message: "Unauthorized"
         });
+        return
     }
     var roomData = {
         building_code: req.params.building_code,
@@ -258,6 +289,7 @@ async function delRoom(req, res) {
             statusCode: 401,
             message: "Unauthorized"
         });
+        return
     }
     roomData = {
         buildingCode: req.params.building_code,
@@ -281,40 +313,25 @@ async function delRoom(req, res) {
 async function removeExpiredBookings() {
 
     //Get current time
-    const currentDate = new Date();
-    const currentDateStr = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
-    var currentHour = currentDate.getHours();
-    var currentMin = currentDate.getMinutes();
-
-    if (currentMin < 30) {
-        currentMin = 0;
+    const dateObj = new Date();
+    var date = dateObj.getDate();
+    var month = dateObj.getMonth() + 1;
+    var year = dateObj.getFullYear();
+    
+    //Process data
+    if (date < 10) {
+        date = `0${date}`;
     } else {
-        currrentMin = 30;
+        date = `${date}`;
     }
 
-    const deleteTime = utils.militaryTimeToDecimal([currentHour, currentMin]);
-    const bookingDoc = await db_handler.findBookingByDate(currentDateStr);
-
-    //Walk through database
-    if (bookingDoc == null) {   //No bookings today right now
-        return true;
+    if (month < 10) {
+        month = `0${month}`;
+    } else {
+        month = `${month}`;
     }
 
-    for (const [key, val] of Object.entries(bookingDoc)) {
-
-        if (key == '_id')
-            continue;
-
-        let roomCode = key;
-        let bookingData = val;
-        bookingData[deleteTime] = '0';
-        const updateResult = db_handler.updateBooking(currentDateStr, roomCode, bookingData);
-        if (updateResult == false) {
-            utils.consoleMsg(MODULE_NAME, `Failed to remove ${key}'s booking ${deleteTime} at ${currentDateStr}`);
-            throw Error("Database failure");
-        }
-    }
-    return;
+    await db_handler.removeInvalidBookings(date, month, year);
 }
 
 
@@ -336,5 +353,6 @@ module.exports = {
     createBuilding,
     delBuilding,
     createRoom,
-    delRoom
+    delRoom,
+    waitlistStudyRooms
 };
