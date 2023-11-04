@@ -51,6 +51,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+// comparing dates: https://chat.openai.com/share/f6cabbea-7068-4c51-8810-5ab58da8feff
+
 public class BookingsActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private final String TAG = "BookingsActivity";
@@ -220,6 +222,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
         }
     }
 
+    // ChatGPT Usage: Yes
     public static boolean isCurrentDateBefore(String inputDateStr) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
@@ -232,6 +235,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
         }
     }
 
+    // ChatGPT Usage: Yes
     public static boolean isCurrentDateEqual(String inputDateStr) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
@@ -245,14 +249,8 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
     }
 
     public static String getCurrentTime() {
-        // Get the current time
         LocalTime currentTime = LocalTime.now();
-
-        // Create a custom time format (HHmm)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-
-        // Format the current time as a string in the desired format
-
         return currentTime.format(formatter);
     }
 

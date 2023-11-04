@@ -37,7 +37,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-// concise way to request location permissions: https://chat.openai.com/share/26df5995-8f25-4a29-990e-f612ef9847d0
+// concise way to request location permissions: https://chat.openai.com/share/7d343f84-e7eb-4bff-81d0-d3fdfe68b2c2
 public class ExploreActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private final String TAG = "ExploreActivity";
@@ -136,12 +136,16 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         }
     }
 
+    // ChatGPT Usage: Yes
+
     // Check for location permissions
     private boolean checkLocationPermission() {
         int permissionState = ActivityCompat.checkSelfPermission(this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
         return permissionState == PackageManager.PERMISSION_GRANTED;
     }
+
+    // ChatGPT Usage: Yes
 
     // Request location permissions
     private void requestLocationPermission() {
@@ -150,6 +154,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                 LOCATION_PERMISSION_REQUEST_CODE);
     }
 
+    // ChatGPT Usage: Yes
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -169,13 +174,6 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
 
         // Enable My Location Layer on the map
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mMap.setMyLocationEnabled(true);

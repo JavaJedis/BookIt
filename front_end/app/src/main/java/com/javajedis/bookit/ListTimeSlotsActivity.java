@@ -37,6 +37,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+// understanding date formatting: https://chat.openai.com/share/809762e7-72d5-49c2-b2aa-c7b9234c3607
+
 public class ListTimeSlotsActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private final String TAG = "ListTimeSlotsActivity";
@@ -55,6 +57,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         getTimeSlots();
     }
 
+    // ChatGPT Usage: Partial
     private void getTimeSlots() {
         OkHttpClient client = new OkHttpClient();
         String url = "https://bookit.henrydhc.me/studyrooms/" + getIntent().getStringExtra("buildingCode") + "/" + getIntent().getStringExtra("roomNumber") + "/" + "slots";
@@ -150,6 +153,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         System.out.println(timeSlotModels.size());
     }
 
+    // ChatGPT Usage: Partial
     public static List<String> generateTimeIntervals() {
         List<String> intervals = new ArrayList<>();
 

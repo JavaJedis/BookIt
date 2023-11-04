@@ -324,22 +324,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
         return startTime;
     }
 
-    // pop-up menu for days of the week and duration: https://chat.openai.com/share/021b3349-433a-4ded-bb34-3d2e23c61bf8
     public void showDayMenu(View view) {
-//        final String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Select a Day")
-//                .setItems(days, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        String selectedDay = days[which];
-//                        // Update the day_button text
-//                        Button dayButton = findViewById(R.id.day_button);
-//                        dayButton.setText(selectedDay);
-//                        day = selectedDay;
-//                    }
-//                })
-//                .show();
         Intent calendarIntent = new Intent(FilterActivity.this, CalendarActivity.class);
         calendarIntent.putExtra("fromFilter", true);
         startActivity(calendarIntent);

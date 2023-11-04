@@ -203,34 +203,6 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-//    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(),
-//            result -> {
-//                if (result.getResultCode() == Activity.RESULT_OK) {
-//                    Intent data = result.getData();
-//                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-//                    handleSignInResult(task);
-//                }
-//            }
-//    );
-//
-//    private void signIn() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        signInLauncher.launch(signInIntent);
-//    }
-//
-//    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-//        try {
-//            Log.w(TAG, "Trying to get Google account");
-//            account = completedTask.getResult(ApiException.class);
-//        } catch (ApiException e) {
-//            // The ApiException status code indicates the detailed failure reason.
-//            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-//            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-//        }
-//    }
-
-    // GET request while sending info to BE: https://chat.openai.com/share/c6b266b7-c9c2-4cd7-91f2-7a307b4ecc45
     private void getUserTypeAndSetView() {
         OkHttpClient client = new OkHttpClient();
 
