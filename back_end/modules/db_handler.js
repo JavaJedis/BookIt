@@ -1,9 +1,6 @@
 //Import necessary modules
-const { cp } = require('fs');
 const { MongoClient, ObjectId } = require('mongodb');
-const mongo = require("mongodb");
 const utils = require("./utils");
-const { start, REPL_MODE_SLOPPY } = require('repl');
 var geolib = require('geolib');
 const axios = require('axios');
 
@@ -51,7 +48,7 @@ async function getRooms(building_code, dbName) {
         }
         return data
     }
-    var err = new Error("Not Found")
+    let err = new Error("Not Found")
     err.statusCode = 404
     throw err
 }
@@ -75,7 +72,7 @@ async function getSlots(slotsData) {
     const roomData = await collection.findOne({ _id: slotsData.roomNo })
 
     if (!roomData) {
-        var err = new Error("Room Not Found")
+        let err = new Error("Room Not Found")
         err.statusCode = 404
         throw err
     }
@@ -84,18 +81,19 @@ async function getSlots(slotsData) {
     const [validDate, day] = dateTimeValidator(slotsData.date, "2359")
 
     if (!validDate) {
-        var err = new Error("Invalid Date")
+        let err = new Error("Invalid Date")
         err.statusCode = 404
         throw err
     }
 
     const bookingData = await bookingCollection.findOne({ _id: slotsData.date })
     const roomCode = slotsData.buildingCode + " " + slotsData.roomNo
+    var data;
 
     if (!bookingData || !(bookingData[roomCode])) {
-        var data = createSlots(roomData.open_times[day], roomData.close_times[day])
+        data = createSlots(roomData.open_times[day], roomData.close_times[day])
     } else {
-        var data = bookingData[roomCode]
+        data = bookingData[roomCode]
         for (let i = 0; i < 48; i++) {
             if (data[i] != "2" && data[i] != "0") {
                 data[i] = "1"
@@ -115,7 +113,7 @@ async function bookStudyRooms(bookingData) {
     var validTimes = timeValidator(startTime, endTime)
 
     if ((!validDate) || (!validTimes)) {
-        var err = new Error("Invalid Date/Time")
+        let err = new Error("Invalid Date/Time")
         err.statusCode = 404
         throw err
     }
@@ -123,7 +121,7 @@ async function bookStudyRooms(bookingData) {
     const buildingCollection = client.db('study_room_db').collection(bookingData.buildingCode);
     const room = await buildingCollection.findOne({ _id: bookingData.roomNo })
     if (!room) {
-        var err = new Error("Room Not Found")
+        let err = new Error("Room Not Found")
         err.statusCode = 404
         throw err
     }
@@ -133,7 +131,7 @@ async function bookStudyRooms(bookingData) {
 
 
     if ((roomOpenTime > startTime) || (roomCloseTime < endTime)) {
-        var err = new Error("Invalid Timeslots")
+        let err = new Error("Invalid Timeslots")
         err.statusCode = 404
         throw err
     }
@@ -164,7 +162,7 @@ async function bookStudyRooms(bookingData) {
 
     for (let i = startIndex; i < endIndex; i++) {
         if (bookingsDate[roomCode][i] != "0") {
-            var err = new Error("Unavailable Timeslots")
+            let err = new Error("Unavailable Timeslots")
             err.statusCode = 403
             throw err
         }
@@ -181,16 +179,16 @@ async function bookStudyRooms(bookingData) {
             await bookingCollection.updateOne(bookingOriginal, { $set: bookingsDate })
         }
     } catch (error) {
-        var err = new Error("Unavailable Timeslots")
+        let err = new Error("Unavailable Timeslots")
         err.statusCode = 403
         throw err
     }
 
     var userbookingdata = {
-        roomCode: roomCode,
-        startIndex: startIndex,
-        endIndex: endIndex,
-        date: date,
+        roomCode,
+        startIndex,
+        endIndex,
+        date,
         waitlist: []
     }
 
@@ -210,7 +208,7 @@ async function waitlistStudyRooms(bookingData) {
     var validTimes = timeValidator(startTime, endTime)
 
     if ((!validDate) || (!validTimes)) {
-        var err = new Error("Invalid Date/Time")
+        let err = new Error("Invalid Date/Time")
         err.statusCode = 404
         throw err
     }
@@ -218,7 +216,7 @@ async function waitlistStudyRooms(bookingData) {
     const buildingCollection = client.db('study_room_db').collection(bookingData.buildingCode);
     const room = await buildingCollection.findOne({ _id: bookingData.roomNo })
     if (!room) {
-        var err = new Error("Room Not Found")
+        let err = new Error("Room Not Found")
         err.statusCode = 404
         throw err
     }
@@ -231,7 +229,7 @@ async function waitlistStudyRooms(bookingData) {
     const roomCode = bookingData.buildingCode + " " + bookingData.roomNo
 
     if (!bookingsDate || !(bookingsDate[roomCode])) {
-        var err = new Error("Booking Not Found")
+        let err = new Error("Booking Not Found")
         err.statusCode = 404
         throw err
     }
@@ -242,11 +240,11 @@ async function waitlistStudyRooms(bookingData) {
 
     for (let i = startIndex; i < endIndex; i++) {
         if (bookingsDate[roomCode][i] === "0" || bookingsDate[roomCode][i] === "2" || bookingsDate[roomCode][i] === "3") {
-            var err = new Error("Booking is unavailable for waitlisting")
+            let err = new Error("Booking is unavailable for waitlisting")
             err.statusCode = 403
             throw err
         } else if (bookingsDate[roomCode][i] === bookingData.email) {
-            var err = new Error("This room has been booked by you")
+            let err = new Error("This room has been booked by you")
             err.statusCode = 400
             throw err
         }
@@ -260,7 +258,7 @@ async function waitlistStudyRooms(bookingData) {
             date: date,
         }, { $addToSet: { waitlist: bookingData.email } })
     } catch (error) {
-        var err = new Error("Unable to add user to waitlist")
+        let err = new Error("Unable to add user to waitlist")
         err.statusCode = 403
         throw err
     }
@@ -278,7 +276,7 @@ async function updateBooking(date, roomCode, data) {
             { _id: date },
             { $set: { roomCode: data } }
         );
-        return result.ok == 1 && result.value != null;
+        return result.ok === 1 && result.value !== null;
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, 'Failed to update booking data');
         utils.consoleMsg(MODULE_NAME, `ErrMsg:\n${err}`);
@@ -289,7 +287,6 @@ async function updateBooking(date, roomCode, data) {
 
 async function filterRooms(filterData) {
     const roomdb = client.db('study_room_db')
-    const bookingRoomsdb = client.db('study_room_db')
 
     const buildings = await roomdb.collection('building_all').find().toArray()
 
@@ -311,18 +308,18 @@ async function filterRooms(filterData) {
         }, {
             latitude: filterData.lat,
             longitude: filterData.lon
-        }, accuracy = .1)
+        }, accuracy = 0.1)
 
         for (let j = 0; j < rooms.length; j++) {
             const slotsData = {
                 date: filterData.day,
-                buildingCode: buildingCode,
+                buildingCode,
                 roomNo: rooms[j]._id,
             }
             const slots = await getSlots(slotsData)
             var flag = true
             for (let k = startIndex; k < endIndex; k++) {
-                if (slots[k] != 0) {
+                if (slots[k] !== 0) {
                     flag = false
                     break
                 }
@@ -343,6 +340,7 @@ async function filterRooms(filterData) {
 async function userLogin(userInfo) {
     const users = client.db('users').collection('users');
     const user = await users.findOne({ _id: userInfo._id })
+    var data;
     if (user) {
         await users.updateOne({ _id: userInfo._id }, { $push: { tokens: userInfo.devToken } })
         data = 'User exists'
@@ -360,7 +358,7 @@ async function checkUser(userEmail) {
     if (user) {
         return user
     } else {
-        var err = new Error("Unauthorized")
+        let err = new Error("Unauthorized")
         err.statusCode = 401
         throw err
     }
@@ -375,10 +373,10 @@ async function getBookings(IDs) {
     for (let i = 0; i < documents.length; i++) {
         documents[i].startTime = documents[i].startIndex * 50
         documents[i].endTime = (documents[i].endIndex) * 50
-        if (documents[i].startIndex % 2 == 1) {
+        if (documents[i].startIndex % 2 === 1) {
             documents[i].startTime -= 20
         }
-        if ((documents[i].endIndex) % 2 == 1) {
+        if ((documents[i].endIndex) % 2 === 1) {
             documents[i].endTime -= 20
         }
         documents[i].startTime = timeConvertor(documents[i].startTime)
@@ -403,7 +401,7 @@ async function cancelBooking(ID, user) {
     }
 
     if (!(ID instanceof ObjectId)) {
-        var err = new Error("Booking not Found")
+        let err = new Error("Booking not Found")
         err.statusCode = 404
         throw err
     }
@@ -423,7 +421,7 @@ async function cancelBooking(ID, user) {
         await userBookingCollection.deleteOne({ _id: ID });
         await userCollection.updateOne({ _id: user._id }, { $pull: { booking_ids: ID } })
     } catch (error) {
-        var err = new Error("Could not complete request")
+        let err = new Error("Could not complete request")
         err.statusCode = 404
         throw err
     }
@@ -436,6 +434,7 @@ async function confirmBooking(confirmData) {
     const bookingCollection = client.db('study_room_db').collection('bookings');
     const roomdb = client.db('study_room_db')
     const user = confirmData.user
+    var ID
 
 
     for (let i = 0; i < user.booking_ids.length; i++) {
@@ -446,7 +445,7 @@ async function confirmBooking(confirmData) {
 
 
     if (!(ID instanceof ObjectId)) {
-        var err = new Error("Booking not Found")
+        let err = new Error("Booking not Found")
         err.statusCode = 404
         throw err
     }
@@ -468,10 +467,10 @@ async function confirmBooking(confirmData) {
         }
     }
 
-    dist = geolib.getDistance({
+    var dist = geolib.getDistance({
         latitude: confirmData.lat,
         longitude: confirmData.lon
-    }, end, accuracy = .1)
+    }, end, accuracy = 0.1)
 
     if (dist < 200) {
         const bookingsDateOriginal = await bookingCollection.findOne({ _id: booking.date })
@@ -486,7 +485,7 @@ async function confirmBooking(confirmData) {
         try {
             await bookingCollection.updateOne(bookingsDateOriginal, { $set: bookingsDate })
         } catch (error) {
-            var err = new Error("Could not complete request")
+            let err = new Error("Could not complete request")
             err.statusCode = 404
             throw err
         }
@@ -494,7 +493,7 @@ async function confirmBooking(confirmData) {
         await userBookingCollection.updateOne({ _id: ID }, { $set: { confirmed: true } })
         return "confirmed"
     } else {
-        var error = new Error("Looks like you are far away")
+        let error = new Error("Looks like you are far away")
         error.statusCode = 400
         throw error
     }
@@ -534,7 +533,6 @@ function submitReport(reportData) {
 
     const db = client.db('study_room_db');
     const collection = db.collection("room_reports");
-    var status;
     collection.insertOne(reportData).then(
         res => {
 
@@ -570,7 +568,7 @@ async function delAdmin(email) {
 
     const collection = client.db('users').collection('users');
     const result = await collection.updateOne({ _id: email }, { $set: { type: 'user' }, $unset: { adminBuildings: "" } });
-    return result.acknowledged && result.modifiedCount == 1;
+    return result.acknowledged && result.modifiedCount === 1;
 }
 
 async function addBuildingAdmin(email, building) {
@@ -624,7 +622,7 @@ async function addBuilding(buildingData) {
         await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData } });
         return "Successfully added"
     } catch (err) {
-        var error = new Error("Server error, please retry")
+        let error = new Error("Server error, please retry")
         error.statusCode = 403
         throw error
     }
@@ -641,7 +639,7 @@ async function delBuilding(buildingCode) {
     }
 
     if (!target) {
-        var error = new Error("No building found")
+        let error = new Error("No building found")
         error.statusCode = 404
         throw error
     }
@@ -651,7 +649,7 @@ async function delBuilding(buildingCode) {
         await client.db("study_room_db").collection(buildingCode).drop();
 
     } catch (err) {
-        var error = new Error("Server error, please retry")
+        let error = new Error("Server error, please retry")
         error.statusCode = 403
         throw error
     }
@@ -684,7 +682,7 @@ async function addRoom(roomData) {
         await client.db("study_room_db").collection(roomData.building_code).insertOne(roomData);
         return "Successfully added"
     } catch (err) {
-        var error = new Error("Room number exists already")
+        let error = new Error("Room number exists already")
         error.statusCode = 400
         throw error
     }
@@ -696,7 +694,7 @@ async function delRoom(roomData) {
         await client.db("study_room_db").collection(roomData.buildingCode).deleteOne({ _id: roomData.roomNo });
         return "Successfully removed"
     } catch (err) {
-        var error = new Error("Room number does not exist")
+        let error = new Error("Room number does not exist")
         error.statusCode = 400
         throw error
     }
@@ -773,7 +771,7 @@ async function getAdminList() {
     var result = []
     const users = await collection.find({ type: 'admin' }).toArray();
 
-    for (admin in users) {
+    for (let admin in users) {
         result.push(users[admin]._id)
     }
     return result;
@@ -820,8 +818,8 @@ function dateTimeValidator(date, startTime) {
 function timeValidator(startTime, endTime) {
     if ((endTime < startTime) || (((endTime - startTime) / 300) > 1)
         || (!(2400 >= endTime >= 0)) || (!(2400 >= startTime >= 0))
-        || ((endTime % 100 != 0) && (endTime % 100 != 30))
-        || ((startTime % 100 != 0) && (startTime % 100 != 30))) {
+        || ((endTime % 100 !== 0) && (endTime % 100 !== 30))
+        || ((startTime % 100 !== 0) && (startTime % 100 !== 30))) {
         return false
     } else {
         return true
