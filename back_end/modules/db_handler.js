@@ -817,7 +817,7 @@ function dateTimeValidator(date, startTime) {
 
 function timeValidator(startTime, endTime) {
     if ((endTime < startTime) || (((endTime - startTime) / 300) > 1)
-        || (!(endTime <= 2400 && endTime >= 0)) || (!(2400 >= startTime && startTime >= 0))
+        || (!(endTime <= 2400 && endTime >= 0)) || (!(startTime <= 2400 && startTime >= 0))
         || ((endTime % 100 !== 0) && (endTime % 100 !== 30))
         || ((startTime % 100 !== 0) && (startTime % 100 !== 30))) {
         return false
