@@ -70,12 +70,13 @@ function sendStudyRoomComment(req, res) {
  *                studyroom comment
  * @returns 
  */
-function studyRoomCommentReqCheck(req) {
 
-    /*
+/*function studyRoomCommentReqCheck(req) {
+
+    
     Check whether the body and its members are null
     or empty.
-    */
+    
     if (req.body == null) {
         console.log("fuck");
         return false;
@@ -84,11 +85,11 @@ function studyRoomCommentReqCheck(req) {
     var buildingCode = req.params.building_code;
     var roomNum = req.params.room_num;
     var cmtData = reqBody.comment;
-    /*
+    
     if (usrToken == null || usrToken == "") {
         return false;
     }
-    */
+    
 
     if (buildingCode == null || buildingCode == ""
         || buildingCode.length > MAX_BUILDING_CODE_LEN) {
@@ -108,6 +109,7 @@ function studyRoomCommentReqCheck(req) {
     return true;
 
 }
+*/
 
 
 //Export functions

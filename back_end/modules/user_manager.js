@@ -2,7 +2,6 @@
 const db_handler = require("./db_handler");
 const axios = require('axios');
 const utils = require("./utils");
-const { OAuth2Client } = require('google-auth-library');
 const notification_manager = require('./notification_manager');
 
 
