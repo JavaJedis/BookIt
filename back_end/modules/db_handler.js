@@ -612,23 +612,25 @@ async function getAdminBuildings(email) {
 }
 
 async function addBuilding(buildingData) {
-    const buildingCollection = client.db("study_room_db").collection("building_all")
-    const buildings = await buildingCollection.find().toArray()
+    const buildingCollection = client.db("study_room_db").collection("building_all");
+    const buildings = await buildingCollection.find().toArray();
 
-    const coordinates = await getCoordinates(buildingData.building_address)
-    buildingData.lat = parseFloat(coordinates.lat)
-    buildingData.lon = parseFloat(coordinates.lon)
-
+    const coordinates = await getCoordinates(buildingData.building_address);
+    buildingData.lat = parseFloat(coordinates.lat);
+    buildingData.lon = parseFloat(coordinates.lon);
+    
     try {
-        const change = { buildings: buildingData }
-        const result = await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: change });
-        delete result;
+        if (buildingData === null) {
+            throw new Error("Invalid Input Data");
+        }
+        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData }});
     } catch (err) {
-        let error = new Error("Server error, please retry")
-        error.statusCode = 403
-        throw error
+        let error = new Error("Server error, please retry");
+        error.statusCode = 403;
+        throw error;
     }
     return "Successfully added";
+    
 
 }
 
