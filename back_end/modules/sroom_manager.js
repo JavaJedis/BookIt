@@ -7,15 +7,13 @@ const schedule = require('node-schedule');
 const MODULE_NAME = "STUDYROOM-MANAGER";
 
 //Global variables
-var sroomSchedulerA;
-var sroomSchedulerB;
 
 //Scheduler functions
 
 function initScheduler() {
     try {
-        sroomSchedulerA = schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
-        sroomSchedulerB = schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
+        schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
+        schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
         utils.consoleMsg(MODULE_NAME, "Study Room Scheduler Service Enabled");
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to enable studyroom scheduler service");
@@ -234,7 +232,7 @@ async function createBuilding(req, res) {
     }
 
     try {
-        result = await db_handler.addBuilding(buildingData)
+        let result = await db_handler.addBuilding(buildingData);
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -249,10 +247,10 @@ async function delBuilding(req, res) {
         });
         return
     }
-    BuildingCode = req.params.building_code
+    let BuildingCode = req.params.building_code
 
     try {
-        result = await db_handler.delBuilding(BuildingCode)
+        let result = await db_handler.delBuilding(BuildingCode)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -275,7 +273,7 @@ async function createRoom(req, res) {
     }
 
     try {
-        result = await db_handler.addRoom(roomData)
+        let result = await db_handler.addRoom(roomData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -291,13 +289,13 @@ async function delRoom(req, res) {
         });
         return
     }
-    roomData = {
+    let roomData = {
         buildingCode: req.params.building_code,
         roomNo: req.params.room_no
     }
 
     try {
-        result = await db_handler.delRoom(roomData)
+        let result = await db_handler.delRoom(roomData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);

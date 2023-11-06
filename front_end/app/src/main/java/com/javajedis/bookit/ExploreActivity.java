@@ -1,6 +1,5 @@
 package com.javajedis.bookit;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -98,7 +97,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-        studyRoomsButton = findViewById(R.id.sutdy_rooms_button);
+        studyRoomsButton = findViewById(R.id.study_rooms_button);
         studyRoomsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

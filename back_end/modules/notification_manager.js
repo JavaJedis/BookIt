@@ -9,11 +9,8 @@ const serviceAccount = require('./firebase/firebase_key.json')
 
 //Global variables
 var app;
-var reminderJobA;
-var reminderJobB;
 
 //Global Definitions
-const FIREBASE_KEY_PATH = './firebase/firebase_key.json';
 const MODULE_NAME = 'NOTIFICATION-MANAGER';
 
 
@@ -32,8 +29,8 @@ function init() {
     );
     //Init schedulers
     try {
-        reminderJobA = schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
-        reminderJobB = schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to initialize scheduler.");
         utils.consoleMsg(MODULE_NAME, `ErrMsg:\n${err}`);
@@ -122,7 +119,6 @@ async function searchAndSendReminders() {
 
     var date;
     var month;
-    var year = currentDate.getFullYear();
     if (currentDate.getDate() < 10) {
         date = `${0}${currentDate.getDate()}`
     } else {
@@ -163,7 +159,6 @@ async function searchAndSendReminders() {
         const user = await db_handler.checkUser(value[nextReminderTime]);
         if (user == null || user.tokens == null) {
             return;
-            console.log("No");
         }
         for (const [tokenIndex, devToken] of Object.entries(user.tokens)) {
             if (devToken == null)
