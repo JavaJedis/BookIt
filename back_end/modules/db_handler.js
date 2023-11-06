@@ -848,13 +848,14 @@ function timeConvertor(time) {
 }
 
 async function getCoordinates(address) {
+    let data = {
+        params: {
+            q: address,
+            key: process.env.OPEN_CAGE_API_TOKEN
+        }
+    };
     try {
-        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-            params: {
-                q: address,
-                key: process.env.OPEN_CAGE_API_TOKEN
-            }
-        });
+        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, data);
 
         if (response.data.results.length > 0) {
             const location = response.data.results[0].geometry;
