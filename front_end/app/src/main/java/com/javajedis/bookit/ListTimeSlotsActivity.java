@@ -122,7 +122,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e(TAG, "No response.");

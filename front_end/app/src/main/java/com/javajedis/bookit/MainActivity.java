@@ -51,22 +51,26 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     final static String TAG = "MainActivity";
+
     TextView helloMessageTextView;
-    private String clientName;
-    private Button exploreButton;
-    private Button searchButton;
-    private Button filterButton;
-    private Button bookingsButton;
+
     private GoogleSignInClient mGoogleSignInClient;
+
     private GoogleSignInAccount account;
-
-    private String deviceToken;
-
-    private Button signOutButton;
 
     private Boolean permissionPostNotification = false;
 
     private String[] permissions;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncherNotification =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted->{
+                if (isGranted) {
+                    permissionPostNotification = true;
+                } else {
+                    permissionPostNotification = false;
+                    showPermissionDialog("Notification Permission");
+                }
+            });
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         getUserTypeAndSetView();
 
-        exploreButton = findViewById(R.id.explore_button);
+        Button exploreButton = findViewById(R.id.explore_button);
         exploreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        searchButton = findViewById(R.id.search_button);
+        Button searchButton = findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        filterButton = findViewById(R.id.filter_button);
+        Button filterButton = findViewById(R.id.filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bookingsButton = findViewById(R.id.bookings_button);
+        Button bookingsButton = findViewById(R.id.bookings_button);
         bookingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        signOutButton = findViewById(R.id.sign_out_button);
+        Button signOutButton = findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,16 +170,6 @@ public class MainActivity extends AppCompatActivity {
             requestPermissionLauncherNotification.launch(permissions[0]);
         }
     }
-    
-    private ActivityResultLauncher<String> requestPermissionLauncherNotification =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted->{
-                if (isGranted) {
-                    permissionPostNotification = true;
-                } else {
-                    permissionPostNotification = false;
-                    showPermissionDialog("Notification Permission");
-                }
-            });
 
     public void showPermissionDialog(String permission) {
         new AlertDialog.Builder(
@@ -258,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                             }
                         } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            e.printStackTrace();
                         }
                     } else {
                         Log.e(TAG, "Request was not successful. Response code: " + response.code());
@@ -303,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateHelloMessage(GoogleSignInAccount account) {
-        clientName = account.getGivenName();
+        String clientName = account.getGivenName();
 
         if (clientName == null) {
             clientName = "Guest";

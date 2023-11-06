@@ -19,16 +19,24 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class AddNewRoomActivity extends AppCompatActivity {
-    private final String TAG = "AddNewRoomActivity";
-    private TextView topTextView;
+//    private final String TAG = "AddNewRoomActivity";
+
     private String selectedBuilding;
+
     private EditText roomNumberEditText;
+
     private String roomNumber;
+
     private EditText capacityEditText;
+
     private int capacity;
+
     private EditText fearturesEditText;
+
     private String features;
+
     private String adminEmail;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +45,7 @@ public class AddNewRoomActivity extends AppCompatActivity {
         selectedBuilding = getIntent().getStringExtra("building");
         adminEmail = getIntent().getStringExtra("AdminEmail");
 
-        topTextView = findViewById(R.id.add_room_building_name_textView);
+        TextView topTextView = findViewById(R.id.add_room_building_name_textView);
         String message = "Add study room to building: " + selectedBuilding;
         topTextView.setText(message);
 

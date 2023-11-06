@@ -58,23 +58,30 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private boolean locationPermissionGranted = false;
 
-    private int hour, min;
-    private String day;
+    private int hour;
+
+    private int min;
+
     private String duration;
+
     private String startTime;
 
-    private Button filterButton;
-    private Button dayButton;
     private String date;
 
     List<String> roomNames;
+
     ArrayList<RoomModel> roomModels = new ArrayList<>();
-    private Map<String, Map<String, String>> roomDictionary = new HashMap<>();
+
+    private final Map<String, Map<String, String>> roomDictionary = new HashMap<>();
 
     private double lat;
+
     private double lon;
+
     TextView filterInfoTextView;
+
     RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +92,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
         roomNames = new ArrayList<>();
 
-        dayButton = findViewById(R.id.day_button);
+        Button dayButton = findViewById(R.id.day_button);
         date = getIntent().getStringExtra("date");
 
         if (date != null) {
@@ -100,7 +107,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
             }
         });
 
-        filterButton = findViewById(R.id.filter_bottom_button);
+        Button filterButton = findViewById(R.id.filter_bottom_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,7 +191,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
 //                endTime = addHoursToTime(militaryTime, duration);
             } catch (ParseException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
 
             double durationDouble = 0.5;
@@ -306,19 +313,20 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private String formatTime(int hour, int min) {
         String amPm;
+        int textHour = hour;
         if (hour >= 12) {
             amPm = "PM";
             if (hour > 12) {
-                hour -= 12;
+                textHour = hour - 12;
             }
         } else {
             amPm = "AM";
             if (hour == 0) {
-                hour = 12;
+                textHour = 12;
             }
         }
 
-        startTime = String.format(Locale.getDefault(), "%02d:%02d %s", hour, min, amPm);
+        startTime = String.format(Locale.getDefault(), "%02d:%02d %s", textHour, min, amPm);
         return startTime;
     }
 

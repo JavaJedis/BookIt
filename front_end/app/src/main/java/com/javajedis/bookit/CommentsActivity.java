@@ -35,8 +35,6 @@ public class CommentsActivity extends AppCompatActivity {
     private String buildingCode;
     private String roomNumber;
 
-    private Button postComment;
-
     ArrayList<String> commentsList = new ArrayList<>();
 
     @Override
@@ -56,7 +54,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         getComments();
 
-        postComment = findViewById(R.id.post_comment_button);
+        Button postComment = findViewById(R.id.post_comment_button);
         postComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +114,7 @@ public class CommentsActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }
             }

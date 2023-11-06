@@ -167,7 +167,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e(TAG, "No response.");
@@ -238,13 +238,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
     public static boolean isCurrentDateEqual(String inputDateStr) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
-        try {
-            Date inputDate = dateFormat.parse(inputDateStr);
-            return dateFormat.format(currentDate).equals(inputDateStr);
-        } catch (ParseException e) {
-            System.err.println("Error parsing the input date");
-            return false;
-        }
+        return dateFormat.format(currentDate).equals(inputDateStr);
     }
 
     public static String getCurrentTime() {

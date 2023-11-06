@@ -108,6 +108,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             case "lecturehalls":
                 dynamiBuildingIntent.putExtra("type", Constant.TYPE_LECTURE_HALL);
                 break;
+            default:
+                Log.e(TAG, "Error: invalid BuildingType in the database");
+                break;
         }
 
         dynamiBuildingIntent.putExtra("buildingName", showingBuildingNames.get(position));
@@ -246,6 +249,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                 case "lecturehalls":
                     lectureHallBuildingCodes.add(buildingCode);
                     lectureHallBuildingNames.add(srBuildingName);
+                    break;
+                default:
+                    Log.e(TAG, "Error: invalid input for initData");
                     break;
             }
         }

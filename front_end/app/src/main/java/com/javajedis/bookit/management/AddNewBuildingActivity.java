@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class AddNewBuildingActivity extends AppCompatActivity {
-    private final String TAG = "AddNewRoomActivity";
+//    private final String TAG = "AddNewRoomActivity";
     private EditText buildingNameEditText;
     private String buildingName;
     private EditText buildingCodeEditText;
