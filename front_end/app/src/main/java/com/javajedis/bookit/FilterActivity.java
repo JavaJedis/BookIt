@@ -1,7 +1,5 @@
 package com.javajedis.bookit;
 
-import static okhttp3.MediaType.parse;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

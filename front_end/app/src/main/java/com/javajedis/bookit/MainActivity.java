@@ -1,6 +1,5 @@
 package com.javajedis.bookit;
 
-import androidx.activity.OnBackPressedCallback;
 //import androidx.activity.result.ActivityResultLauncher;
 //import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.activity.result.ActivityResultLauncher;
@@ -33,7 +32,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 //import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.javajedis.bookit.management.AdminManagementActivity;
 import com.javajedis.bookit.management.BuildingManagementActivity;
 import com.javajedis.bookit.management.DeleteBuildingActivity;

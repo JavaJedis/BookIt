@@ -36,7 +36,7 @@
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/sutdy_rooms_button"
+            android:id="@+id/study_rooms_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

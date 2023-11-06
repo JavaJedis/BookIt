@@ -1,7 +1,5 @@
 package com.javajedis.bookit.model;
 
-import android.widget.Button;
-
 public class BookingsModel {
     String room;
     int image;
