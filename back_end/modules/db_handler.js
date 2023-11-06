@@ -272,9 +272,10 @@ async function updateBooking(date, roomCode, data) {
 
     const collection = client.db('study_room_db').collection('bookings');
     try {
+        const change = { roomCode: data }
         const result = await collection.findOneAndUpdate(
             { _id: date },
-            { $set: { roomCode: data } }
+            { $set: change }
         );
         return result.ok === 1 && result.value !== null;
     } catch (err) {
@@ -619,7 +620,8 @@ async function addBuilding(buildingData) {
     buildingData.lon = parseFloat(coordinates.lon)
 
     try {
-        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData } });
+        const change = { buildings: buildingData }
+        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: change });
         return "Successfully added"
     } catch (err) {
         let error = new Error("Server error, please retry")
@@ -727,9 +729,10 @@ async function updateUserTokens(email, newTokens) {
 
     const collection = await client.db('users').collection('users');
     try {
+        const change = { tokens: newTokens }
         const result = await collection.findOneAndUpdate(
             { _id: email },
-            { $set: { tokens: newTokens } }
+            { $set: change }
         );
         return result.ok === 1 && result.value !== null;
     } catch (err) {
@@ -855,9 +858,8 @@ async function getCoordinates(address) {
 
         if (response.data.results.length > 0) {
             const location = response.data.results[0].geometry;
-            const lat = location.lat;
-            const lon = location.lng;
-            return { lat, lon };
+            const result = { lat: location.lat, lon: location.lng }
+            return result;
         } else {
             throw new Error('No results found');
         }

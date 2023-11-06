@@ -65,15 +65,14 @@ async function sendNotification(title, body, devToken) {
 
     const messagingService = admin.messaging(app);
     try {
-        await messagingService.send(
-            {
-                notification: {
-                    title,
-                    body
-                },
-                token: devToken
-            }
-        );
+        const msg = {
+            notification: {
+                title,
+                body
+            },
+            token: devToken
+        }
+        await messagingService.send(msg);
         utils.consoleMsg(MODULE_NAME, `Notification sent to ${devToken}`);
         return true;
     } catch (err) {
