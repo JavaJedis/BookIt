@@ -691,8 +691,9 @@ async function addRoom(roomData) {
 }
 
 async function delRoom(roomData) {
+    let filter = { _id: roomData.roomNo };
     try {
-        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne({ _id: roomData.roomNo });
+        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne(filter);
         return "Successfully removed"
     } catch (err) {
         let error = new Error("Room number does not exist")
