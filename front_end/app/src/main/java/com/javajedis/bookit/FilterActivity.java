@@ -462,7 +462,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                     } catch (IOException e) {
                         Log.e("FilterActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e("FilterActivity", "Response not successful");
