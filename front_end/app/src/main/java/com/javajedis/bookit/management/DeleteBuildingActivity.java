@@ -44,8 +44,6 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
 
     private final Set<String> allBuildingSet = new HashSet<>();
 
-    private BuildingSelectionRecyclerViewAdapter adapter;
-
     private String selectedBuilding;
 
     @Override
@@ -166,7 +164,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         Collections.sort(allBuildings);
 
         // Create a new adapter and set it to the RecyclerView
-        adapter = new BuildingSelectionRecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+        BuildingSelectionRecyclerViewAdapter adapter = new BuildingSelectionRecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
         RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));

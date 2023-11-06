@@ -59,7 +59,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
 //            }
 //        };
 
-        com.javajedis.bookit.databinding.ActivityExploreBinding binding = ActivityExploreBinding.inflate(getLayoutInflater());
+        ActivityExploreBinding binding = ActivityExploreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
