@@ -4,10 +4,10 @@ const utils = require('./utils');
 
 
 //Global Definitions
-MODULE_NAME = 'COMMENT-MANAGER';
-MAX_BUILDING_CODE_LEN = 4;
-MAX_ROOM_NUM = 4;
-MAX_COMMENT_LEN = 600;
+const MODULE_NAME = 'COMMENT-MANAGER';
+const MAX_BUILDING_CODE_LEN = 4;
+const MAX_ROOM_NUM = 4;
+const MAX_COMMENT_LEN = 600;
 
 
 //Show necessary info when required
@@ -70,26 +70,26 @@ function sendStudyRoomComment(req, res) {
  *                studyroom comment
  * @returns 
  */
-function studyRoomCommentReqCheck(req) {
 
-    /*
+/*function studyRoomCommentReqCheck(req) {
+
+    
     Check whether the body and its members are null
     or empty.
-    */
+    
     if (req.body == null) {
         console.log("fuck");
         return false;
     }
     var reqBody = req.body;
-    var usrToken = reqBody.token;
     var buildingCode = req.params.building_code;
     var roomNum = req.params.room_num;
     var cmtData = reqBody.comment;
-    /*
+    
     if (usrToken == null || usrToken == "") {
         return false;
     }
-    */
+    
 
     if (buildingCode == null || buildingCode == ""
         || buildingCode.length > MAX_BUILDING_CODE_LEN) {
@@ -109,6 +109,7 @@ function studyRoomCommentReqCheck(req) {
     return true;
 
 }
+*/
 
 
 //Export functions

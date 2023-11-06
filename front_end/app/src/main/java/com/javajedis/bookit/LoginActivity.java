@@ -42,9 +42,20 @@ public class LoginActivity extends AppCompatActivity {
     final static String TAG = "LoginActivity";
 
     private GoogleSignInClient mGoogleSignInClient;
-    private Button guestButton;
 
     private String deviceToken;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                Log.d(TAG,"Login result code: " + result.getResultCode());
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        guestButton = findViewById(R.id.guest_button);
+        Button guestButton = findViewById(R.id.guest_button);
         guestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,18 +109,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    private ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                Log.d(TAG,"Login result code: " + result.getResultCode());
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                    handleSignInResult(task);
-                }
-            }
-    );
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

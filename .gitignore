@@ -1,3 +1,5 @@
 *.pem
 *.txt
 back_end/node_modules
+back_end/certs
+back_end/modules/firebase/firebase_key.json

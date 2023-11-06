@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.javajedis.bookit.recyclerView.adapter.Comments_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.adapter.CommentsRecyclerViewAdapter;
 import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONArray;
@@ -35,8 +35,6 @@ public class CommentsActivity extends AppCompatActivity {
     private String buildingCode;
     private String roomNumber;
 
-    private Button postComment;
-
     ArrayList<String> commentsList = new ArrayList<>();
 
     @Override
@@ -56,7 +54,7 @@ public class CommentsActivity extends AppCompatActivity {
 
         getComments();
 
-        postComment = findViewById(R.id.post_comment_button);
+        Button postComment = findViewById(R.id.post_comment_button);
         postComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +106,7 @@ public class CommentsActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.comments_recycler_view);
-                                Comments_RecyclerViewAdapter adapter = new Comments_RecyclerViewAdapter(CommentsActivity.this, commentsList);
+                                CommentsRecyclerViewAdapter adapter = new CommentsRecyclerViewAdapter(CommentsActivity.this, commentsList);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
                             }
@@ -116,7 +114,7 @@ public class CommentsActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }
             }

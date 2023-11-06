@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BuildingSelectionRecyclerViewAdapter;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
@@ -43,8 +43,6 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
     private ArrayList<String> allBuildings = new ArrayList<>();
 
     private final Set<String> allBuildingSet = new HashSet<>();
-
-    private Building_Selection_RecyclerViewAdapter adapter;
 
     private String selectedBuilding;
 
@@ -166,7 +164,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         Collections.sort(allBuildings);
 
         // Create a new adapter and set it to the RecyclerView
-        adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+        BuildingSelectionRecyclerViewAdapter adapter = new BuildingSelectionRecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
         RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));

@@ -45,26 +45,28 @@ import java.util.Objects;
 public class DynamicRoomActivity extends AppCompatActivity {
 
     private final String TAG = "LoginActivity";
-    private ImageView roomImage;
-    private TextView roomName;
-    private TextView address;
-    private TextView capacity;
-    private TextView description;
-
-    private TextView hours;
-
-    private Button directionsButton;
-    private Button bookNowButton;
-
-    private Button viewCommentsButton;
-    private Button reportButton;
 
     private boolean locationPermissionGranted = false;
+
     private boolean isMapsRunning = false;
+
     private String cityGeo;
 
     private GoogleSignInClient mGoogleSignInClient;
+
     private GoogleSignInAccount account;
+
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                    handleSignInResult(task);
+                }
+            }
+    );
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
 
         // load image from URL: https://youtu.be/V1uxaRfSqu8?si=lW-nzkUHVHw870iW
 
-        roomImage = findViewById(R.id.room_imageView);
+        ImageView roomImage = findViewById(R.id.room_imageView);
 
         if (getIntent().getStringExtra("image_url") != null) {
             Picasso.get()
@@ -95,16 +97,16 @@ public class DynamicRoomActivity extends AppCompatActivity {
             roomImage.setImageResource(R.drawable.general_study_room);
         }
 
-        roomName = findViewById(R.id.room_name_textView);
+        TextView roomName = findViewById(R.id.room_name_textView);
         roomName.setText(getIntent().getStringExtra("roomName"));
 
-        address = findViewById(R.id.address_textView);
+        TextView address = findViewById(R.id.address_textView);
         address.setText("Address: " + getIntent().getStringExtra("address"));
 
-        capacity = findViewById(R.id.capacity_textView);
+        TextView capacity = findViewById(R.id.capacity_textView);
         capacity.setText("Capacity: " + getIntent().getStringExtra("capacity"));
 
-        description = findViewById(R.id.description_textView);
+        TextView description = findViewById(R.id.description_textView);
         description.setText(getIntent().getStringExtra("description"));
 
         if (Objects.equals(getIntent().getStringExtra("type"), "lecture")) {
@@ -123,17 +125,17 @@ public class DynamicRoomActivity extends AppCompatActivity {
                 try {
                     availability.append(day).append(": ").append(unavailable.getString(day)).append("\n");
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
 
-            hours = findViewById(R.id.hours_textView);
+            TextView hours = findViewById(R.id.hours_textView);
             hours.setText(availability);
         }
 
-        bookNowButton = findViewById(R.id.book_now_button);
-        viewCommentsButton = findViewById(R.id.view_comments_button);
-        reportButton = findViewById(R.id.report_button);
+        Button bookNowButton = findViewById(R.id.book_now_button);
+        Button viewCommentsButton = findViewById(R.id.view_comments_button);
+        Button reportButton = findViewById(R.id.report_button);
 
         if (Objects.equals(getIntent().getStringExtra("type"), "study")) {
             bookNowButton.setVisibility(View.VISIBLE);
@@ -184,7 +186,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
             }
         });
 
-        directionsButton = findViewById(R.id.directions_button);
+        Button directionsButton = findViewById(R.id.directions_button);
         directionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,17 +202,6 @@ public class DynamicRoomActivity extends AppCompatActivity {
             }
         });
     }
-
-    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            result -> {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                    handleSignInResult(task);
-                }
-            }
-    );
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

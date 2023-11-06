@@ -1,4 +1,4 @@
-package com.javajedis.bookit.recyclerView.adapter;
+package com.javajedis.bookit.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,32 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.model.RoomModel;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class RN_RecyclerViewAdapter extends RecyclerView.Adapter<RN_RecyclerViewAdapter.MyViewHolder> {
+public class RNRecyclerViewAdapter extends RecyclerView.Adapter<RNRecyclerViewAdapter.MyViewHolder> {
 
     private final RecyclerViewInterface recyclerViewInterface;
     Context context;
     ArrayList<RoomModel> roomModels;
 
-    public RN_RecyclerViewAdapter(Context context, ArrayList<RoomModel> roomModels, RecyclerViewInterface recyclerViewInterface) {
+    public RNRecyclerViewAdapter(Context context, ArrayList<RoomModel> roomModels, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.roomModels = roomModels;
         this.recyclerViewInterface = recyclerViewInterface;
     }
     @NonNull
     @Override
-    public RN_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RNRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
-        return new RN_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
+        return new RNRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RN_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RNRecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values to each row
         holder.roomName.setText(roomModels.get(position).getRoomName());
         holder.roomPlaceholder.setImageResource(roomModels.get(position).getImage());
