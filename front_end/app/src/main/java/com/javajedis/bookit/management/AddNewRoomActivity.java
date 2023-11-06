@@ -25,15 +25,11 @@ public class AddNewRoomActivity extends AppCompatActivity {
 
     private EditText roomNumberEditText;
 
-    private String roomNumber;
-
     private EditText capacityEditText;
 
     private int capacity;
 
     private EditText fearturesEditText;
-
-    private String features;
 
     private String adminEmail;
 
@@ -60,9 +56,9 @@ public class AddNewRoomActivity extends AppCompatActivity {
         addRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                roomNumber = roomNumberEditText.getText().toString();
+                String roomNumber = roomNumberEditText.getText().toString();
                 String capacityText = capacityEditText.getText().toString();
-                features = fearturesEditText.getText().toString();
+                String features = fearturesEditText.getText().toString();
                 // parse
                 String[] parts = features.split(",");
                 ArrayList<String> featuresList = new ArrayList<>(Arrays.asList(parts));
