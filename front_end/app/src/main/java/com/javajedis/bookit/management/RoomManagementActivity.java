@@ -125,7 +125,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e(TAG, "Response not successful");

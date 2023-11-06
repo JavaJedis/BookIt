@@ -249,7 +249,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                             JSONObject responseObject = new JSONObject(responseBody);
                             message = responseObject.getString("data");
                         } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                            e.printStackTrace();
                         }
                         if (message.equals("Successfully added to the waitlist")) {
                             runOnUiThread(new Runnable() {
