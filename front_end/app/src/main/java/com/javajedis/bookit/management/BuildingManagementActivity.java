@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BuildingSelectionRecyclerViewAdapter;
 import com.javajedis.bookit.util.Authentication;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
@@ -42,7 +42,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
     private final String TAG = "BuildingManagementActivity";
     private final ArrayList<String> managedBuildings = new ArrayList<>();
 
-    private Building_Selection_RecyclerViewAdapter adapter;
+    private BuildingSelectionRecyclerViewAdapter adapter;
 
     private String selectedBuilding;
 
@@ -105,7 +105,7 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new Building_Selection_RecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
+                                adapter = new BuildingSelectionRecyclerViewAdapter(BuildingManagementActivity.this, managedBuildings, BuildingManagementActivity.this);
                                 RecyclerView recyclerView = findViewById(R.id.building_management_recyclerView);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(BuildingManagementActivity.this));

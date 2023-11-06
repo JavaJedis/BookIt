@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Admin_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.AdminRecyclerViewAdapter;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 
@@ -39,7 +39,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
     private final String TAG = "AdminManagementActivity";
     private final ArrayList<String> allAdmins = new ArrayList<>();
 //    private ArrayList<String> showingAdminList;
-    private Admin_RecyclerViewAdapter adapter;
+    private AdminRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,7 +133,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new Admin_RecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
+                                adapter = new AdminRecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
                                 RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
                                 adapter.setAdminEmails(allAdmins);
                                 recyclerView.setAdapter(adapter);

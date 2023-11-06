@@ -1,4 +1,4 @@
-package com.javajedis.bookit.recyclerView.adapter;
+package com.javajedis.bookit.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,32 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class Bookings_RecyclerViewAdapter extends RecyclerView.Adapter<Bookings_RecyclerViewAdapter.MyViewHolder> {
+public class BookingsRecyclerViewAdapter extends RecyclerView.Adapter<BookingsRecyclerViewAdapter.MyViewHolder> {
 
     private final RecyclerViewInterface recyclerViewInterface;
     Context context;
     ArrayList<BookingsModel> bookingsModels;
 
-    public Bookings_RecyclerViewAdapter(Context context, ArrayList<BookingsModel> bookingsModels, RecyclerViewInterface recyclerViewInterface) {
+    public BookingsRecyclerViewAdapter(Context context, ArrayList<BookingsModel> bookingsModels, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.bookingsModels = bookingsModels;
         this.recyclerViewInterface = recyclerViewInterface;
     }
     @NonNull
     @Override
-    public Bookings_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BookingsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.bookings_recycler_view_row, parent, false);
-        return new Bookings_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
+        return new BookingsRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Bookings_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BookingsRecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values to each row
         holder.room.setText(bookingsModels.get(position).getRoom());
         holder.image.setImageResource(bookingsModels.get(position).getImage());

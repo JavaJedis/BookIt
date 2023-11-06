@@ -1,4 +1,4 @@
-package com.javajedis.bookit.recyclerView.adapter;
+package com.javajedis.bookit.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,54 +10,55 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class Admin_RecyclerViewAdapter extends RecyclerView.Adapter<Buildings_RecyclerViewAdapter.MyViewHolder>{
-    ArrayList<String> adminEmails;
+public class BuildingsRecyclerViewAdapter extends RecyclerView.Adapter<BuildingsRecyclerViewAdapter.MyViewHolder> {
+
+    ArrayList<String> buildingNames;
     Context context;
 
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public Admin_RecyclerViewAdapter(Context context, ArrayList<String> adminEmails, RecyclerViewInterface recyclerViewInterface) {
-        this.adminEmails = adminEmails;
+    public BuildingsRecyclerViewAdapter(Context context, ArrayList<String> buildingNames, RecyclerViewInterface recyclerViewInterface) {
+        this.buildingNames = buildingNames;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
-    public Admin_RecyclerViewAdapter(Context context, RecyclerViewInterface recyclerViewInterface) {
-        this.adminEmails = new ArrayList<>();
+    public BuildingsRecyclerViewAdapter(Context context, RecyclerViewInterface recyclerViewInterface) {
+        this.buildingNames = new ArrayList<>();
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
     }
 
     public void setFilterList(ArrayList<String> filterList) {
-        this.adminEmails = filterList;
+        this.buildingNames = filterList;
         notifyDataSetChanged();
     }
 
-    public void setAdminEmails(ArrayList<String> adminEmails) {
-        this.adminEmails = adminEmails;
+    public void setBuildingNames(ArrayList<String> buildingNames) {
+        this.buildingNames = buildingNames;
     }
     @NonNull
     @Override
-    public Buildings_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BuildingsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.building_recycler_view_row, parent, false);
-        return new Buildings_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
+        return new MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Buildings_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BuildingsRecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values to each row
-        holder.buildingNames.setText(adminEmails.get(position));
+        holder.buildingNames.setText(buildingNames.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return adminEmails.size();
+        return buildingNames.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -65,9 +66,7 @@ public class Admin_RecyclerViewAdapter extends RecyclerView.Adapter<Buildings_Re
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
-
-            buildingNames = itemView.findViewById(R.id.admin_user_row_textView);
-
+            buildingNames = itemView.findViewById(R.id.building_name_row_textView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -26,8 +26,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.javajedis.bookit.model.RoomModel;
-import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.RNRecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 
@@ -446,7 +446,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
-                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
+                                RNRecyclerViewAdapter adapter = new RNRecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(FilterActivity.this));
                             }
