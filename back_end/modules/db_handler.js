@@ -308,7 +308,7 @@ async function filterRooms(filterData) {
         }, {
             latitude: filterData.lat,
             longitude: filterData.lon
-        }, accuracy = 0.1)
+        }, 0.1)
 
         for (let j = 0; j < rooms.length; j++) {
             const slotsData = {
@@ -470,7 +470,7 @@ async function confirmBooking(confirmData) {
     var dist = geolib.getDistance({
         latitude: confirmData.lat,
         longitude: confirmData.lon
-    }, end, accuracy = 0.1)
+    }, end, 0.1)
 
     if (dist < 200) {
         const bookingsDateOriginal = await bookingCollection.findOne({ _id: booking.date })
