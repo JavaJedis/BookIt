@@ -14,8 +14,8 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.javajedis.bookit.model.TimeSlotsModel;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.TimeSlots_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.TimeSlotsRecyclerViewAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,7 +114,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.timeslots_recycler_view);
-                                TimeSlots_RecyclerViewAdapter adapter = new TimeSlots_RecyclerViewAdapter(ListTimeSlotsActivity.this, timeSlotModels, ListTimeSlotsActivity.this);
+                                TimeSlotsRecyclerViewAdapter adapter = new TimeSlotsRecyclerViewAdapter(ListTimeSlotsActivity.this, timeSlotModels, ListTimeSlotsActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(ListTimeSlotsActivity.this));
                             }

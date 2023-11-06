@@ -1,4 +1,4 @@
-package com.javajedis.bookit.recyclerView.adapter;
+package com.javajedis.bookit.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,32 +12,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
 import com.javajedis.bookit.model.TimeSlotsModel;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class TimeSlots_RecyclerViewAdapter extends RecyclerView.Adapter<TimeSlots_RecyclerViewAdapter.MyViewHolder> {
+public class TimeSlotsRecyclerViewAdapter extends RecyclerView.Adapter<TimeSlotsRecyclerViewAdapter.MyViewHolder> {
 
     private final RecyclerViewInterface recyclerViewInterface;
     Context context;
     ArrayList<TimeSlotsModel> timeSlotsModels;
 
-    public TimeSlots_RecyclerViewAdapter(Context context, ArrayList<TimeSlotsModel> timeSlotsModels, RecyclerViewInterface recyclerViewInterface) {
+    public TimeSlotsRecyclerViewAdapter(Context context, ArrayList<TimeSlotsModel> timeSlotsModels, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.timeSlotsModels = timeSlotsModels;
         this.recyclerViewInterface = recyclerViewInterface;
     }
     @NonNull
     @Override
-    public TimeSlots_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TimeSlotsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.timeslot_recycler_view_row, parent, false);
-        return new TimeSlots_RecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
+        return new TimeSlotsRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TimeSlots_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TimeSlotsRecyclerViewAdapter.MyViewHolder holder, int position) {
         // assign values to each row
         holder.timeSlot.setText(timeSlotsModels.get(position).getTimeInterval());
         holder.clockImage.setImageResource(timeSlotsModels.get(position).getImage());

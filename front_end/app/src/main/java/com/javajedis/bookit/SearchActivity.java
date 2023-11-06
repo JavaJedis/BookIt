@@ -15,8 +15,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Buildings_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BuildingsRecyclerViewAdapter;
 import com.javajedis.bookit.util.Constant;
 
 import org.json.JSONArray;
@@ -54,7 +54,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
     TextView guideText;
-    private Buildings_RecyclerViewAdapter adapter;
+    private BuildingsRecyclerViewAdapter adapter;
 
 //    private boolean showFullName = false;
 
@@ -81,7 +81,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             }
         });
 
-        adapter = new Buildings_RecyclerViewAdapter(SearchActivity.this,SearchActivity.this);
+        adapter = new BuildingsRecyclerViewAdapter(SearchActivity.this,SearchActivity.this);
         RecyclerView recyclerView = findViewById(R.id.building_recyclerView);
 
         guideText = findViewById(R.id.guide_text);

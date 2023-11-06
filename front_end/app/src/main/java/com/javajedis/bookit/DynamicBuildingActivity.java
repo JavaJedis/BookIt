@@ -10,8 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.javajedis.bookit.model.RoomModel;
-import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.RNRecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -121,7 +121,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
-                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
+                                RNRecyclerViewAdapter adapter = new RNRecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(DynamicBuildingActivity.this));
                             }
@@ -207,7 +207,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
-                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
+                                RNRecyclerViewAdapter adapter = new RNRecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(DynamicBuildingActivity.this));
                             }
@@ -284,7 +284,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
-                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
+                                RNRecyclerViewAdapter adapter = new RNRecyclerViewAdapter(DynamicBuildingActivity.this, roomModels, DynamicBuildingActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(DynamicBuildingActivity.this));
                             }
