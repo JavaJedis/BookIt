@@ -106,8 +106,8 @@ async function getSlots(slotsData) {
 
 // book room request database handling function
 async function bookStudyRooms(bookingData) {
-    const startTime = parseInt(bookingData.startTime)
-    const endTime = parseInt(bookingData.endTime)
+    const startTime = parseInt(bookingData.startTime, 10)
+    const endTime = parseInt(bookingData.endTime, 10)
     const date = bookingData.date
     const [validDate, day] = dateTimeValidator(date, bookingData.startTime)
     var validTimes = timeValidator(startTime, endTime)
@@ -201,13 +201,13 @@ async function bookStudyRooms(bookingData) {
 }
 
 async function waitlistStudyRooms(bookingData) {
-    const startTime = parseInt(bookingData.startTime)
-    const endTime = parseInt(bookingData.endTime)
+    const startTime = parseInt(bookingData.startTime, 10)
+    const endTime = parseInt(bookingData.endTime, 10)
     const date = bookingData.date
-    const [validDate, day] = dateTimeValidator(date, bookingData.startTime)
+    const validDate = dateTimeValidator(date, bookingData.startTime)
     var validTimes = timeValidator(startTime, endTime)
 
-    if ((!validDate) || (!validTimes)) {
+    if ((!validDate[0]) || (!validTimes)) {
         let err = new Error("Invalid Date/Time")
         err.statusCode = 404
         throw err
@@ -252,10 +252,10 @@ async function waitlistStudyRooms(bookingData) {
 
     try {
         await userBookingCollection.updateOne({
-            roomCode: roomCode,
-            startIndex: startIndex,
-            endIndex: endIndex,
-            date: date,
+            roomCode,
+            startIndex,
+            endIndex,
+            date,
         }, { $addToSet: { waitlist: bookingData.email } })
     } catch (error) {
         let err = new Error("Unable to add user to waitlist")
@@ -296,7 +296,7 @@ async function filterRooms(filterData) {
     }
 
     const startIndex = Math.ceil((filterData.startTime) / 50)
-    const endIndex = parseInt(startIndex + (parseFloat(filterData.duration) * 2))
+    const endIndex = parseInt(startIndex + (parseFloat(filterData.duration) * 2), 10)
 
     for (let i = 0; i < buildings[0].buildings.length; i++) {
         const rooms = await roomdb.collection(buildings[0].buildings[i].building_code).find().toArray()
@@ -576,7 +576,7 @@ async function addBuildingAdmin(email, building) {
     const collection = client.db('users').collection('users');
     try {
         const result = await collection.updateOne({ _id: email }, { $addToSet: { adminBuildings: building } });
-        return result.acknowledged && result.modifiedCount == 1;
+        return result.acknowledged && result.modifiedCount === 1;
     } catch (err) {
         return false;
     }
@@ -731,7 +731,7 @@ async function updateUserTokens(email, newTokens) {
             { _id: email },
             { $set: { tokens: newTokens } }
         );
-        return result.ok == 1 && result.value != null;
+        return result.ok === 1 && result.value !== null;
     } catch (err) {
         utils.serverLog(MODULE_NAME, `Failed to update user ${email}'s tokens!`);
         utils.serverLog(MODULE_NAME, `ErrMessage:\n${err}`);
@@ -794,8 +794,8 @@ function dateTimeValidator(date, startTime) {
     var currentDateTime = new Date(currentDate);
 
     // Convert startTime to hours and minutes
-    var inputHours = parseInt(startTime.slice(0, 2));
-    var inputMinutes = parseInt(startTime.slice(2));
+    var inputHours = parseInt(startTime.slice(0, 2), 10);
+    var inputMinutes = parseInt(startTime.slice(2), 10);
 
     // Set the hours and minutes of the inputDate
     inputDate.setHours(inputHours);
@@ -817,7 +817,7 @@ function dateTimeValidator(date, startTime) {
 
 function timeValidator(startTime, endTime) {
     if ((endTime < startTime) || (((endTime - startTime) / 300) > 1)
-        || (!(2400 >= endTime >= 0)) || (!(2400 >= startTime >= 0))
+        || (!(2400 >= endTime && endTime >= 0)) || (!(2400 >= startTime && startTime >= 0))
         || ((endTime % 100 !== 0) && (endTime % 100 !== 30))
         || ((startTime % 100 !== 0) && (startTime % 100 !== 30))) {
         return false
