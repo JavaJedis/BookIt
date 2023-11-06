@@ -618,17 +618,16 @@ async function addBuilding(buildingData) {
     const coordinates = await getCoordinates(buildingData.building_address);
     buildingData.lat = parseFloat(coordinates.lat);
     buildingData.lon = parseFloat(coordinates.lon);
-    
+    let findFilter = { _id: buildings[0]._id };
+    let pushData = { $push: { buildings: buildingData }};
     try {
-        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData }});
+        await buildingCollection.updateOne(findFilter, pushData);
     } catch (err) {
         let error = new Error("Server error, please retry");
         error.statusCode = 403;
         throw error;
     }
     return "Successfully added";
-    
-
 }
 
 async function delBuilding(buildingCode) {
