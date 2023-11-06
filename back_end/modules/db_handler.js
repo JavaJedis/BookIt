@@ -622,12 +622,12 @@ async function addBuilding(buildingData) {
     try {
         const change = { buildings: buildingData }
         await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: change });
-        return "Successfully added"
     } catch (err) {
         let error = new Error("Server error, please retry")
         error.statusCode = 403
         throw error
     }
+    return "Successfully added";
 
 }
 
