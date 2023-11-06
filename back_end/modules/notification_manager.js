@@ -68,8 +68,8 @@ async function sendNotification(title, body, devToken) {
         await messagingService.send(
             {
                 notification: {
-                    title: title,
-                    body: body
+                    title,
+                    body
                 },
                 token: devToken
             }

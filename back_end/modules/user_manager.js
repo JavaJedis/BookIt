@@ -23,7 +23,7 @@ async function userLogin(req, res) {
             _id: response.data.email,
             type: 'user',
             booking_ids: [],
-            devToken: devToken
+            devToken
         }
         const result = await db_handler.userLogin(userInfo);
         utils.consoleMsg(MODULE_NAME, `${response.data.email} logged in with device token ${devToken}`);
