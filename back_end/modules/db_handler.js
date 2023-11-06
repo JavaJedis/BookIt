@@ -620,9 +620,6 @@ async function addBuilding(buildingData) {
     buildingData.lon = parseFloat(coordinates.lon);
     
     try {
-        if (buildingData === null) {
-            throw new Error("Invalid Input Data");
-        }
         await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData }});
     } catch (err) {
         let error = new Error("Server error, please retry");
