@@ -85,7 +85,7 @@ process.on("SIGTERM", function () {
     notif_manager.deInit();
     db_handler.dbh_deinit().then(() => {
         utils.serverLog(MODULE_NAME, "Backend Closed.");
-        process.exit(0);
+        throw new Error("Forced Exit");
     }
     );
 });
@@ -96,7 +96,7 @@ process.on("SIGINT", function () {
     notif_manager.deInit();
     db_handler.dbh_deinit().then(() => {
         utils.serverLog(MODULE_NAME, "Backend Closed.");
-        process.exit(0);
+        throw new Error("Forced Exit");
     }
     );
 });
