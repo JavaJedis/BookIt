@@ -588,7 +588,7 @@ async function delBuildingAdmin(email, building) {
     const collection = client.db('users').collection('users');
     try {
         const result = await collection.updateOne({ _id: email }, { $pull: { adminBuildings: building } });
-        return result.acknowledged && result.modifiedCount == 1;
+        return result.acknowledged && result.modifiedCount === 1;
     } catch (err) {
         return false;
     }
@@ -817,7 +817,7 @@ function dateTimeValidator(date, startTime) {
 
 function timeValidator(startTime, endTime) {
     if ((endTime < startTime) || (((endTime - startTime) / 300) > 1)
-        || (!(2400 >= endTime && endTime >= 0)) || (!(2400 >= startTime && startTime >= 0))
+        || (!(endTime <= 2400 && endTime >= 0)) || (!(2400 >= startTime && startTime >= 0))
         || ((endTime % 100 !== 0) && (endTime % 100 !== 30))
         || ((startTime % 100 !== 0) && (startTime % 100 !== 30))) {
         return false

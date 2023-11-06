@@ -160,14 +160,14 @@ async function searchAndSendReminders() {
         if (user == null || user.tokens == null) {
             return;
         }
-        for (const [tokenIndex, devToken] of Object.entries(user.tokens)) {
-            if (devToken == null)
+        for (const devToken of Object.entries(user.tokens)) {
+            if (devToken[1] == null)
                 continue;
             let success = await sendNotification("Booking Reminder",
                 `You have a booking on room ${key} at ${hourStr}:${minStr} today.`
-                , devToken);
+                , devToken[1]);
             if (success) {
-                updateList.push(devToken);
+                updateList.push(devToken[1]);
             }
 
         }
