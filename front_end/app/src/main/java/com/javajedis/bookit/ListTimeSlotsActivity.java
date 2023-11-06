@@ -21,8 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -141,19 +144,25 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         int image = R.drawable.clock;
 
         for (int i = 0; i < binarySlots.length(); i++) {
-            if (binarySlots.charAt(i) == '0') {
-                timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "book now"));
-            }
-            if (binarySlots.charAt(i) == '1') {
-                timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "get on wait-list"));
+            try {
+                if (binarySlots.charAt(i) == '0') {
+                    timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "book now"));
+                }
+                if (binarySlots.charAt(i) == '1') {
+                    timeSlotModels.add(new TimeSlotsModel(timeSlots.get(i), image, "get on wait-list"));
+                }
+            } catch (IndexOutOfBoundsException e) {
+                // don't do it
             }
         }
         System.out.println(timeSlotModels.size());
     }
 
     // ChatGPT Usage: Partial
-    public static List<String> generateTimeIntervals() {
+    public List<String> generateTimeIntervals() {
         List<String> intervals = new ArrayList<>();
+
+        String currentTime = getCurrentTime();
 
         for (int hour = 0; hour < 24; hour++) {
             for (int minute = 0; minute < 60; minute += 30) {
@@ -168,11 +177,26 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
                 if (start.equals("2330") && end.equals("0000")) {
                     end = "2400";
                 }
-                intervals.add(start + "-" + end);
+
+                if (!isCurrentDateEqual(outputDate) || (isCurrentDateEqual(outputDate) && Integer.parseInt(currentTime) < Integer.parseInt(end))) {
+                    intervals.add(start + "-" + end);
+                }
             }
         }
 
         return intervals;
+    }
+
+    public static boolean isCurrentDateEqual(String inputDateStr) {
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date currentDate = new Date();
+        return dateFormat.format(currentDate).equals(inputDateStr);
+    }
+
+    public static String getCurrentTime() {
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        return currentTime.format(formatter);
     }
 
     @Override
