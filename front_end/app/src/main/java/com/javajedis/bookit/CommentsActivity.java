@@ -12,9 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.javajedis.bookit.recyclerView.adapter.Comments_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.adapter.CommentsRecyclerViewAdapter;
 import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONArray;
@@ -110,7 +108,7 @@ public class CommentsActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.comments_recycler_view);
-                                Comments_RecyclerViewAdapter adapter = new Comments_RecyclerViewAdapter(CommentsActivity.this, commentsList);
+                                CommentsRecyclerViewAdapter adapter = new CommentsRecyclerViewAdapter(CommentsActivity.this, commentsList);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(CommentsActivity.this));
                             }
