@@ -110,11 +110,11 @@ public class DynamicRoomActivity extends AppCompatActivity {
         description.setText(getIntent().getStringExtra("description"));
 
         if (Objects.equals(getIntent().getStringExtra("type"), "lecture")) {
-            JSONObject unavailable;
+            JSONObject unavailable = new JSONObject();
             try {
                 unavailable = new JSONObject(Objects.requireNonNull(getIntent().getStringExtra("unavailableTimes")));
             } catch (JSONException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
 
             StringBuilder availability = new StringBuilder("Building Availability: " + getIntent().getStringExtra("hours") + "\n");

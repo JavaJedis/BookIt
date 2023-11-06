@@ -40,6 +40,7 @@ import okhttp3.Response;
 
 public class BuildingManagementActivity extends AppCompatActivity implements RecyclerViewInterface {
     private final String TAG = "BuildingManagementActivity";
+
     private final ArrayList<String> managedBuildings = new ArrayList<>();
 
     private BuildingSelectionRecyclerViewAdapter adapter;
@@ -142,13 +143,13 @@ public class BuildingManagementActivity extends AppCompatActivity implements Rec
                 if (response.isSuccessful()) {
                     assert response.body() != null;
                     String responseBody = response.body().string();
-                    JSONObject responseObject = null;
-                    String currentUserType;
+                    JSONObject responseObject;
+                    String currentUserType = "";
                     try {
                         responseObject = new JSONObject(responseBody);
                         currentUserType = responseObject.getString("data");
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
 
                     switch (currentUserType) {

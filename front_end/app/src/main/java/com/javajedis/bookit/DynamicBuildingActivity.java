@@ -215,7 +215,7 @@ public class DynamicBuildingActivity extends AppCompatActivity implements Recycl
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 }
             }
