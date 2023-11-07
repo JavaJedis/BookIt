@@ -187,6 +187,7 @@ public class ListTimeSlotsActivity extends AppCompatActivity implements Recycler
         return intervals;
     }
 
+    // ChatGPT Usage: Yes
     public static boolean isCurrentDateEqual(String inputDateStr) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
