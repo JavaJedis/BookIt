@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BuildingSelectionRecyclerViewAdapter;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
@@ -42,7 +42,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
 
     private final ArrayList<String> showingList = new ArrayList<>();
 
-    private Building_Selection_RecyclerViewAdapter adapter;
+    private BuildingSelectionRecyclerViewAdapter adapter;
 
     private String selectedRoom;
     private String building;
@@ -117,7 +117,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.room_names_recyclerview);
-                                adapter = new Building_Selection_RecyclerViewAdapter(RoomManagementActivity.this, showingList, RoomManagementActivity.this);
+                                adapter = new BuildingSelectionRecyclerViewAdapter(RoomManagementActivity.this, showingList, RoomManagementActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(RoomManagementActivity.this));
                             }
@@ -125,7 +125,7 @@ public class RoomManagementActivity extends AppCompatActivity implements Recycle
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e(TAG, "Response not successful");

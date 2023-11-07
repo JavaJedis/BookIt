@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
-import com.javajedis.bookit.recyclerView.adapter.Building_Selection_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BuildingSelectionRecyclerViewAdapter;
 import com.javajedis.bookit.util.Constant;
 import com.javajedis.bookit.util.ServerRequests;
 
@@ -39,7 +39,7 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
     private final String TAG = "AssignBuildingAdminActivity";
     private ArrayList<String> allBuildings = new ArrayList<>();
     private ArrayList<String> showingList = new ArrayList<>();
-    private Building_Selection_RecyclerViewAdapter adapter;
+    private BuildingSelectionRecyclerViewAdapter adapter;
     private EditText editText;
     private String newAdminEmail;
     private String selectedBuilding;
@@ -141,7 +141,7 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
                                     }
                                     // setup adapter when data is ready
                                     showingList = allBuildings;
-                                    adapter = new Building_Selection_RecyclerViewAdapter(AssignBuildingAdminActivity.this, showingList, AssignBuildingAdminActivity.this);
+                                    adapter = new BuildingSelectionRecyclerViewAdapter(AssignBuildingAdminActivity.this, showingList, AssignBuildingAdminActivity.this);
                                     RecyclerView recyclerView = findViewById(R.id.assign_building_recyclerView);
                                     recyclerView.setAdapter(adapter);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(AssignBuildingAdminActivity.this));

@@ -1,6 +1,5 @@
 package com.javajedis.bookit;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -41,14 +40,10 @@ import okhttp3.Response;
 public class ExploreActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private final String TAG = "ExploreActivity";
+
     private GoogleMap mMap;
-    private ActivityExploreBinding binding;
 
     private String buildings;
-
-    private Button ilsButton;
-    private Button lectureHallsButton;
-    private Button studyRoomsButton;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
@@ -64,7 +59,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
 //            }
 //        };
 
-        binding = ActivityExploreBinding.inflate(getLayoutInflater());
+        ActivityExploreBinding binding = ActivityExploreBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -73,7 +68,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
 
-        ilsButton = findViewById(R.id.ils_button);
+        Button ilsButton = findViewById(R.id.ils_button);
         ilsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +78,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-        lectureHallsButton = findViewById(R.id.lecture_halls_button);
+        Button lectureHallsButton = findViewById(R.id.lecture_halls_button);
         lectureHallsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +93,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
             }
         });
 
-        studyRoomsButton = findViewById(R.id.sutdy_rooms_button);
+        Button studyRoomsButton = findViewById(R.id.study_rooms_button);
         studyRoomsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

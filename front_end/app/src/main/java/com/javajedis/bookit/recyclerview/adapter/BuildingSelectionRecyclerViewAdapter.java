@@ -1,4 +1,4 @@
-package com.javajedis.bookit.recyclerView.adapter;
+package com.javajedis.bookit.recyclerview.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,19 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
 // From https://droidbyme.medium.com/android-recyclerview-with-single-and-multiple-selection-5d50c0c4c739
-public class Building_Selection_RecyclerViewAdapter extends RecyclerView.Adapter<Building_Selection_RecyclerViewAdapter.MyViewHolder> {
+public class BuildingSelectionRecyclerViewAdapter extends RecyclerView.Adapter<BuildingSelectionRecyclerViewAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<String> buildings;
     private int checkedPosition = -1; // no default selection
 
     private final RecyclerViewInterface recyclerViewInterface;
 
-    public Building_Selection_RecyclerViewAdapter(Context context, ArrayList<String> buildings, RecyclerViewInterface recyclerViewInterface) {
+    public BuildingSelectionRecyclerViewAdapter(Context context, ArrayList<String> buildings, RecyclerViewInterface recyclerViewInterface) {
         this.context = context;
         this.buildings = buildings;
         this.recyclerViewInterface = recyclerViewInterface;
@@ -44,15 +44,15 @@ public class Building_Selection_RecyclerViewAdapter extends RecyclerView.Adapter
 
     @NonNull
     @Override
-    public Building_Selection_RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BuildingSelectionRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.assign_buiding_recycler_view_row, parent, false);
-        return new MyViewHolder(view, recyclerViewInterface);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Building_Selection_RecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BuildingSelectionRecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.bind(buildings.get(position));
     }
     @Override
@@ -70,7 +70,7 @@ public class Building_Selection_RecyclerViewAdapter extends RecyclerView.Adapter
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView buildingNames;
         private ImageView checkMark;
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             buildingNames = itemView.findViewById(R.id.building_name_row_textView);
             checkMark = itemView.findViewById(R.id.checkMark_imageView);

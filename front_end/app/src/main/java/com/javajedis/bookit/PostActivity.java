@@ -32,11 +32,15 @@ import okhttp3.Response;
 public class PostActivity extends AppCompatActivity {
 
     private final String TAG = "PostActivity";
+
     private EditText mEditTextMessage;
-    private Button postCommentButton;
+
     private String post;
+
     private Boolean commenting;
+
     private String messageType;
+
     private String postURL;
 
     @Override
@@ -51,7 +55,7 @@ public class PostActivity extends AppCompatActivity {
 
         mEditTextMessage = findViewById(R.id.edit_text_message);
 
-        postCommentButton = findViewById(R.id.post_comment_bottom_button);
+        Button postCommentButton = findViewById(R.id.post_comment_bottom_button);
         postCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

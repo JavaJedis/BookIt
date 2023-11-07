@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -22,8 +21,8 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.javajedis.bookit.model.BookingsModel;
-import com.javajedis.bookit.recyclerView.adapter.Bookings_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.BookingsRecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 import com.javajedis.bookit.util.BackNavigation;
 
 import org.json.JSONArray;
@@ -159,7 +158,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.bookings_recyclerView);
-                                Bookings_RecyclerViewAdapter adapter = new Bookings_RecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
+                                BookingsRecyclerViewAdapter adapter = new BookingsRecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(BookingsActivity.this));
                                 System.out.println(adapter.getItemCount());
@@ -168,7 +167,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                     } catch (IOException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e(TAG, "No response.");
@@ -239,13 +238,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
     public static boolean isCurrentDateEqual(String inputDateStr) {
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
-        try {
-            Date inputDate = dateFormat.parse(inputDateStr);
-            return dateFormat.format(currentDate).equals(inputDateStr);
-        } catch (ParseException e) {
-            System.err.println("Error parsing the input date");
-            return false;
-        }
+        return dateFormat.format(currentDate).equals(inputDateStr);
     }
 
     public static String getCurrentTime() {
@@ -394,7 +387,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                                 bookingsModels.clear();
                                 setUpBookingModels();
                                 RecyclerView recyclerView = findViewById(R.id.bookings_recyclerView);
-                                Bookings_RecyclerViewAdapter adapter = new Bookings_RecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
+                                BookingsRecyclerViewAdapter adapter = new BookingsRecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(BookingsActivity.this));
                                 System.out.println(adapter.getItemCount());
@@ -456,7 +449,7 @@ public class BookingsActivity extends AppCompatActivity implements RecyclerViewI
                             bookingsModels.clear();
                             setUpBookingModels();
                             RecyclerView recyclerView = findViewById(R.id.bookings_recyclerView);
-                            Bookings_RecyclerViewAdapter adapter = new Bookings_RecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
+                            BookingsRecyclerViewAdapter adapter = new BookingsRecyclerViewAdapter(BookingsActivity.this, bookingsModels, BookingsActivity.this);
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(new LinearLayoutManager(BookingsActivity.this));
                             System.out.println(adapter.getItemCount());

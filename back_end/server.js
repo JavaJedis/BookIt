@@ -1,5 +1,5 @@
 //Server startup
-const utils = require("/home/dev/bookit_backend/modules/utils");
+const utils = require("./modules/utils");
 
 //Global definitions
 const MODULE_NAME = "SERVER-WORKER";
@@ -12,7 +12,7 @@ utils.serverLog(MODULE_NAME, "Starting Backend Server");
 require('dotenv').config({ path: '.env.backend' });
 const https = require('https');
 const fs = require('fs');
-const db_handler = require("/home/dev/bookit_backend/modules/db_handler");
+const db_handler = require("./modules/db_handler");
 const user_manager = require("./modules/user_manager");
 const ils_manager = require("./modules/ils_manager");
 const sroom_manager = require("./modules/sroom_manager");
@@ -85,7 +85,7 @@ process.on("SIGTERM", function () {
     notif_manager.deInit();
     db_handler.dbh_deinit().then(() => {
         utils.serverLog(MODULE_NAME, "Backend Closed.");
-        process.exit();
+        throw new Error("Forced Exit");
     }
     );
 });
@@ -96,7 +96,7 @@ process.on("SIGINT", function () {
     notif_manager.deInit();
     db_handler.dbh_deinit().then(() => {
         utils.serverLog(MODULE_NAME, "Backend Closed.");
-        process.exit();
+        throw new Error("Forced Exit");
     }
     );
 });

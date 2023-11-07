@@ -9,11 +9,8 @@ const serviceAccount = require('./firebase/firebase_key.json')
 
 //Global variables
 var app;
-var reminderJobA;
-var reminderJobB;
 
 //Global Definitions
-const FIREBASE_KEY_PATH = './firebase/firebase_key.json';
 const MODULE_NAME = 'NOTIFICATION-MANAGER';
 
 
@@ -32,8 +29,8 @@ function init() {
     );
     //Init schedulers
     try {
-        reminderJobA = schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
-        reminderJobB = schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to initialize scheduler.");
         utils.consoleMsg(MODULE_NAME, `ErrMsg:\n${err}`);
@@ -68,15 +65,14 @@ async function sendNotification(title, body, devToken) {
 
     const messagingService = admin.messaging(app);
     try {
-        await messagingService.send(
-            {
-                notification: {
-                    title: title,
-                    body: body
-                },
-                token: devToken
-            }
-        );
+        const msg = {
+            notification: {
+                title,
+                body
+            },
+            token: devToken
+        }
+        await messagingService.send(msg);
         utils.consoleMsg(MODULE_NAME, `Notification sent to ${devToken}`);
         return true;
     } catch (err) {
@@ -122,7 +118,6 @@ async function searchAndSendReminders() {
 
     var date;
     var month;
-    var year = currentDate.getFullYear();
     if (currentDate.getDate() < 10) {
         date = `${0}${currentDate.getDate()}`
     } else {
@@ -163,16 +158,15 @@ async function searchAndSendReminders() {
         const user = await db_handler.checkUser(value[nextReminderTime]);
         if (user == null || user.tokens == null) {
             return;
-            console.log("No");
         }
-        for (const [tokenIndex, devToken] of Object.entries(user.tokens)) {
-            if (devToken == null)
+        for (const devToken of Object.entries(user.tokens)) {
+            if (devToken[1] == null)
                 continue;
             let success = await sendNotification("Booking Reminder",
                 `You have a booking on room ${key} at ${hourStr}:${minStr} today.`
-                , devToken);
+                , devToken[1]);
             if (success) {
-                updateList.push(devToken);
+                updateList.push(devToken[1]);
             }
 
         }

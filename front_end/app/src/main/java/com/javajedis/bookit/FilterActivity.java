@@ -1,7 +1,5 @@
 package com.javajedis.bookit;
 
-import static okhttp3.MediaType.parse;
-
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,8 +26,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.javajedis.bookit.model.RoomModel;
-import com.javajedis.bookit.recyclerView.adapter.RN_RecyclerViewAdapter;
-import com.javajedis.bookit.recyclerView.RecyclerViewInterface;
+import com.javajedis.bookit.recyclerview.adapter.RNRecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 import com.javajedis.bookit.util.BackNavigation;
 import com.javajedis.bookit.util.Constant;
 
@@ -60,23 +58,30 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private boolean locationPermissionGranted = false;
 
-    private int hour, min;
-    private String day;
+    private int hour;
+
+    private int min;
+
     private String duration;
+
     private String startTime;
 
-    private Button filterButton;
-    private Button dayButton;
     private String date;
 
     List<String> roomNames;
+
     ArrayList<RoomModel> roomModels = new ArrayList<>();
-    private Map<String, Map<String, String>> roomDictionary = new HashMap<>();
+
+    private final Map<String, Map<String, String>> roomDictionary = new HashMap<>();
 
     private double lat;
+
     private double lon;
+
     TextView filterInfoTextView;
+
     RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +92,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
         roomNames = new ArrayList<>();
 
-        dayButton = findViewById(R.id.day_button);
+        Button dayButton = findViewById(R.id.day_button);
         date = getIntent().getStringExtra("date");
 
         if (date != null) {
@@ -102,7 +107,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
             }
         });
 
-        filterButton = findViewById(R.id.filter_bottom_button);
+        Button filterButton = findViewById(R.id.filter_bottom_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,7 +191,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
 //                endTime = addHoursToTime(militaryTime, duration);
             } catch (ParseException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
 
             double durationDouble = 0.5;
@@ -308,19 +313,20 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
     private String formatTime(int hour, int min) {
         String amPm;
+        int textHour = hour;
         if (hour >= 12) {
             amPm = "PM";
             if (hour > 12) {
-                hour -= 12;
+                textHour = hour - 12;
             }
         } else {
             amPm = "AM";
             if (hour == 0) {
-                hour = 12;
+                textHour = 12;
             }
         }
 
-        startTime = String.format(Locale.getDefault(), "%02d:%02d %s", hour, min, amPm);
+        startTime = String.format(Locale.getDefault(), "%02d:%02d %s", textHour, min, amPm);
         return startTime;
     }
 
@@ -448,7 +454,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                             @Override
                             public void run() {
                                 RecyclerView recyclerView = findViewById(R.id.study_rooms_filter_recycler_view);
-                                RN_RecyclerViewAdapter adapter = new RN_RecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
+                                RNRecyclerViewAdapter adapter = new RNRecyclerViewAdapter(FilterActivity.this, roomModels, FilterActivity.this);
                                 recyclerView.setAdapter(adapter);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(FilterActivity.this));
                             }
@@ -456,7 +462,7 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
                     } catch (IOException e) {
                         Log.e("FilterActivity", "Error reading response: " + e.getMessage());
                     } catch (JSONException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } else {
                     Log.e("FilterActivity", "Response not successful");

@@ -2,13 +2,11 @@
 const db_handler = require("./db_handler");
 const axios = require('axios');
 const utils = require("./utils");
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client();
 const notification_manager = require('./notification_manager');
 
 
 //Global Definition
-MODULE_NAME = "USER-MANAGER";
+const MODULE_NAME = "USER-MANAGER";
 
 
 /**
@@ -25,7 +23,7 @@ async function userLogin(req, res) {
             _id: response.data.email,
             type: 'user',
             booking_ids: [],
-            devToken: devToken
+            devToken
         }
         const result = await db_handler.userLogin(userInfo);
         utils.consoleMsg(MODULE_NAME, `${response.data.email} logged in with device token ${devToken}`);

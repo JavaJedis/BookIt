@@ -12,14 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.javajedis.bookit.recyclerView.adapter.Calendar_RecyclerViewAdapter;
+import com.javajedis.bookit.recyclerview.adapter.CalendarRecyclerViewAdapter;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class CalendarActivity extends AppCompatActivity implements Calendar_RecyclerViewAdapter.OnItemListener{
+public class CalendarActivity extends AppCompatActivity implements CalendarRecyclerViewAdapter.OnItemListener{
 
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -71,7 +71,7 @@ public class CalendarActivity extends AppCompatActivity implements Calendar_Recy
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
-        Calendar_RecyclerViewAdapter calendarRecyclerViewAdapter = new Calendar_RecyclerViewAdapter(daysInMonth, this);
+        CalendarRecyclerViewAdapter calendarRecyclerViewAdapter = new CalendarRecyclerViewAdapter(daysInMonth, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarRecyclerViewAdapter);
