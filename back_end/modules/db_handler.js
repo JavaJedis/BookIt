@@ -618,17 +618,16 @@ async function addBuilding(buildingData) {
     const coordinates = await getCoordinates(buildingData.building_address);
     buildingData.lat = parseFloat(coordinates.lat);
     buildingData.lon = parseFloat(coordinates.lon);
-    
+    let findFilter = { _id: buildings[0]._id };
+    let pushData = { $push: { buildings: buildingData }};
     try {
-        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData }});
+        await buildingCollection.updateOne(findFilter, pushData);
     } catch (err) {
         let error = new Error("Server error, please retry");
         error.statusCode = 403;
         throw error;
     }
     return "Successfully added";
-    
-
 }
 
 async function delBuilding(buildingCode) {
@@ -692,8 +691,9 @@ async function addRoom(roomData) {
 }
 
 async function delRoom(roomData) {
+    let filter = { _id: roomData.roomNo };
     try {
-        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne({ _id: roomData.roomNo });
+        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne(filter);
         return "Successfully removed"
     } catch (err) {
         let error = new Error("Room number does not exist")
@@ -848,13 +848,14 @@ function timeConvertor(time) {
 }
 
 async function getCoordinates(address) {
+    let data = {
+        params: {
+            q: address,
+            key: process.env.OPEN_CAGE_API_TOKEN
+        }
+    };
     try {
-        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-            params: {
-                q: address,
-                key: process.env.OPEN_CAGE_API_TOKEN
-            }
-        });
+        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, data);
 
         if (response.data.results.length > 0) {
             const location = response.data.results[0].geometry;
