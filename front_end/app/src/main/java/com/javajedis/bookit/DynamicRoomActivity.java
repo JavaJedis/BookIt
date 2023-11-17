@@ -206,6 +206,7 @@ public class DynamicRoomActivity extends AppCompatActivity {
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         signInLauncher.launch(signInIntent);
+        account = GoogleSignIn.getLastSignedInAccount(this);
     }
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
