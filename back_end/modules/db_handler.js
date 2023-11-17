@@ -272,9 +272,10 @@ async function updateBooking(date, roomCode, data) {
 
     const collection = client.db('study_room_db').collection('bookings');
     try {
+        const change = { roomCode: data }
         const result = await collection.findOneAndUpdate(
             { _id: date },
-            { $set: { roomCode: data } }
+            { $set: change }
         );
         return result.ok === 1 && result.value !== null;
     } catch (err) {
@@ -611,22 +612,22 @@ async function getAdminBuildings(email) {
 }
 
 async function addBuilding(buildingData) {
-    const buildingCollection = client.db("study_room_db").collection("building_all")
-    const buildings = await buildingCollection.find().toArray()
+    const buildingCollection = client.db("study_room_db").collection("building_all");
+    const buildings = await buildingCollection.find().toArray();
 
-    const coordinates = await getCoordinates(buildingData.building_address)
-    buildingData.lat = parseFloat(coordinates.lat)
-    buildingData.lon = parseFloat(coordinates.lon)
-
+    const coordinates = await getCoordinates(buildingData.building_address);
+    buildingData.lat = parseFloat(coordinates.lat);
+    buildingData.lon = parseFloat(coordinates.lon);
+    let findFilter = { _id: buildings[0]._id };
+    let pushData = { $push: { buildings: buildingData }};
     try {
-        await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: { buildings: buildingData } });
-        return "Successfully added"
+        await buildingCollection.updateOne(findFilter, pushData);
     } catch (err) {
-        let error = new Error("Server error, please retry")
-        error.statusCode = 403
-        throw error
+        let error = new Error("Server error, please retry");
+        error.statusCode = 403;
+        throw error;
     }
-
+    return "Successfully added";
 }
 
 async function delBuilding(buildingCode) {
@@ -690,8 +691,9 @@ async function addRoom(roomData) {
 }
 
 async function delRoom(roomData) {
+    let filter = { _id: roomData.roomNo };
     try {
-        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne({ _id: roomData.roomNo });
+        await client.db("study_room_db").collection(roomData.buildingCode).deleteOne(filter);
         return "Successfully removed"
     } catch (err) {
         let error = new Error("Room number does not exist")
@@ -727,9 +729,10 @@ async function updateUserTokens(email, newTokens) {
 
     const collection = await client.db('users').collection('users');
     try {
+        const change = { tokens: newTokens }
         const result = await collection.findOneAndUpdate(
             { _id: email },
-            { $set: { tokens: newTokens } }
+            { $set: change }
         );
         return result.ok === 1 && result.value !== null;
     } catch (err) {
@@ -845,19 +848,19 @@ function timeConvertor(time) {
 }
 
 async function getCoordinates(address) {
+    let data = {
+        params: {
+            q: address,
+            key: process.env.OPEN_CAGE_API_TOKEN
+        }
+    };
     try {
-        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-            params: {
-                q: address,
-                key: process.env.OPEN_CAGE_API_TOKEN
-            }
-        });
+        const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, data);
 
         if (response.data.results.length > 0) {
             const location = response.data.results[0].geometry;
-            const lat = location.lat;
-            const lon = location.lng;
-            return { lat, lon };
+            const result = { lat: location.lat, lon: location.lng }
+            return result;
         } else {
             throw new Error('No results found');
         }
