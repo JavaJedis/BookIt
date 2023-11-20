@@ -7,7 +7,6 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -33,14 +32,14 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BookCancelStudyRoomSuccessTestyo {
+public class BookStudyRoomFailure2ATest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void bookCancelStudyRoomSuccessTestyo() {
+    public void bookStudyRoomFailure2ATest() {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
@@ -102,94 +101,26 @@ public class BookCancelStudyRoomSuccessTestyo {
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 2)));
-        recyclerView3.perform(actionOnItemAtPosition(22, click()));
-
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(R.id.timeslots_recycler_view),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup2 = onView(
-                allOf(withParent(allOf(withId(R.id.timeslots_recycler_view),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup2.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup3 = onView(
-                allOf(withParent(allOf(withId(R.id.timeslots_recycler_view),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup3.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup4 = onView(
-                allOf(withParent(allOf(withId(R.id.timeslots_recycler_view),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup4.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup5 = onView(
-                allOf(withParent(allOf(withId(R.id.timeslots_recycler_view),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup5.check(matches(isDisplayed()));
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_status_textView), withText("book now"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("book now")));
+        recyclerView3.perform(actionOnItemAtPosition(32, click()));
 
         ViewInteraction recyclerView4 = onView(
+                allOf(withId(R.id.timeslots_recycler_view),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        recyclerView4.check(matches(isDisplayed()));
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.timeslot_status_textView), withText("get on wait-list"),
+                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
+                        isDisplayed()));
+        textView.check(matches(withText("get on wait-list")));
+
+        ViewInteraction recyclerView5 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        recyclerView4.perform(actionOnItemAtPosition(1, click()));
-
-        ViewInteraction recyclerView5 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        recyclerView5.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup6 = onView(
-                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup6.check(matches(isDisplayed()));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.action_bookings_textView), withText("click to cancel"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView2.check(matches(withText("click to cancel")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.timeslot_bookings_textView), withText("1300-1330"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText("1300-1330")));
-
-//        ViewInteraction textView4 = onView(
-//                allOf(withId(com.android.systemui.R.id.clock), withText("12:43"), withContentDescription("12:43 PM"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_status_bar_system_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView4.check(matches(withText("12:43")));
-
-        ViewInteraction recyclerView6 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView6.perform(actionOnItemAtPosition(0, click()));
-
-        ViewInteraction recyclerView7 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        recyclerView7.check(matches(isDisplayed()));
+        recyclerView5.perform(actionOnItemAtPosition(46, click()));
     }
 
     private static Matcher<View> childAtPosition(
