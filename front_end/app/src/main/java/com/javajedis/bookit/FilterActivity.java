@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.javajedis.bookit.model.RoomModel;
 import com.javajedis.bookit.recyclerview.adapter.RNRecyclerViewAdapter;
@@ -175,6 +176,12 @@ public class FilterActivity extends AppCompatActivity  implements RecyclerViewIn
 
         if (date == null || startTime == null || duration == null) {
             Log.d("FilterActivity", "Please select an appropriate date, start time, and duration");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(FilterActivity.this, "Please select an appropriate date, start time, and duration", Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
 //            System.out.println(date);
 //            System.out.println(startTime);
