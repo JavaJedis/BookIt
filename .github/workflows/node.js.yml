@@ -24,6 +24,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 20.x
-    - run: cd back_end
     - run: npm install
+      working-directory: back_end
     - run: npm test
+      working-directory: back_end
+
