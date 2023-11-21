@@ -152,7 +152,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarRecyc
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("") && !dayText.equals("X")) {
             String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
             if (fromFilter) {
                 Intent filterIntent = new Intent(CalendarActivity.this, FilterActivity.class);
