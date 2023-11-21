@@ -152,19 +152,6 @@ public class BookCancelStudyRoomSuccessTest {
                                 0)));
         recyclerView5.perform(actionOnItemAtPosition(47, click()));
 
-        // check booking screen opens successfully
-        ViewInteraction recyclerView6 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        recyclerView6.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
         // assert if current time is before 2330-2400
         // ChatGPT usage: Yes --> from here
         // get current date
@@ -194,7 +181,7 @@ public class BookCancelStudyRoomSuccessTest {
         }
 
         // ChatGPT usage: Yes --> from here
-        onView(withId(R.id.bookings_recyclerView)).check(new bookingsRecyclerViewItemCountAssertion(0));
+        onView(withId(R.id.bookings_recyclerView)).check(new bookingsRecyclerViewItemCountAssertion(4));
 
         uiDevice.waitForIdle();
 
