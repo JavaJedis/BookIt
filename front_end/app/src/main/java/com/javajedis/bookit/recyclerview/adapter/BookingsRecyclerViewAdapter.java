@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.R;
+import com.javajedis.bookit.model.TimeSlotsModel;
 import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
@@ -50,6 +51,10 @@ public class BookingsRecyclerViewAdapter extends RecyclerView.Adapter<BookingsRe
     public int getItemCount() {
         // returns how many items
         return bookingsModels.size();
+    }
+
+    public BookingsModel getItemAtPosition(int position) {
+        return bookingsModels.get(position);
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
