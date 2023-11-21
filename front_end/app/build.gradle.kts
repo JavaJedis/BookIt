@@ -38,45 +38,19 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
-//    implementation("com.google.firebase:firebase-inappmessaging:20.4.0"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
-//    implementation("com.google.firebase:firebase-messaging:23.3.1"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01")
-//    androidTestImplementation("androidx.test.ext:junit:1.2.0-alpha01"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0-alpha01")
-//    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.0-alpha01"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     androidTestImplementation("androidx.test:runner:1.5.2")
-//    androidTestImplementation("androidx.test:runner:1.5.2"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     androidTestImplementation("androidx.test:rules:1.6.0-alpha01")
-//    androidTestImplementation("androidx.test:rules:1.6.0-alpha01"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     androidTestImplementation ("com.android.support.test.espresso:espresso-intents:3.0.2")
-//    androidTestImplementation ("com.android.support.test.espresso:espresso-intents:3.0.2"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0")
-//    androidTestImplementation ("androidx.test.espresso:espresso-contrib:3.4.0"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     implementation ("com.google.android.gms:play-services-auth:20.7.0")
     implementation ("com.squareup.okhttp3:okhttp:4.11.0")
     implementation ("com.google.code.gson:gson:2.9.0")
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
     implementation ("com.squareup.picasso:picasso:2.71828")
-//    implementation ("com.google.firebase:firebase-messaging-directboot:23.3.1"){
-//        exclude(group = "com.google.protobuf", module = "protobuf-lite")
-//    }
     implementation ("androidx.tracing:tracing:1.1.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0-alpha01")
+    androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0-alpha03")
 }

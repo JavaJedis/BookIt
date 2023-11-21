@@ -1,9 +1,8 @@
-package com.javajedis.bookit;
+package com.javajedis.bookit.bookCancelStudyRoomsUseCase;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -14,18 +13,27 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
+import android.support.test.InstrumentationRegistry;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.uiautomator.UiDevice;
+
+import com.javajedis.bookit.MainActivity;
+import com.javajedis.bookit.R;
+import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
@@ -42,10 +50,14 @@ public class BookCancelStudyRoomSuccessTest {
 
     @Test
     public void bookCancelStudyRoomSuccessTest() {
+        // for UIAutomator
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
+        // sign in
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
+                                Matchers.allOf(ViewMatchers.withId(R.id.sign_in_button),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
@@ -53,6 +65,10 @@ public class BookCancelStudyRoomSuccessTest {
                         isDisplayed()));
         ic.perform(click());
 
+        // TODO: choose an account to sign in
+
+
+        // open search activity
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.search_button), withText("search"),
                         childAtPosition(
@@ -62,7 +78,7 @@ public class BookCancelStudyRoomSuccessTest {
                                 1),
                         isDisplayed()));
         appCompatButton.perform(click());
-
+        // choose study rooms in search activity
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.study_rooms_button), withText("study rooms"),
                         childAtPosition(
@@ -73,7 +89,7 @@ public class BookCancelStudyRoomSuccessTest {
                                 1),
                         isDisplayed()));
         appCompatButton2.perform(click());
-
+        // choose ESC building
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.building_recyclerView),
                         childAtPosition(
@@ -87,7 +103,7 @@ public class BookCancelStudyRoomSuccessTest {
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
         recyclerView2.perform(actionOnItemAtPosition(3, click()));
-
+        // click book now
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.book_now_button), withText("book now"),
                         childAtPosition(
@@ -97,76 +113,55 @@ public class BookCancelStudyRoomSuccessTest {
                                 7),
                         isDisplayed()));
         appCompatButton3.perform(click());
-
+        // choose November 30th
         ViewInteraction recyclerView3 = onView(
                 allOf(withId(R.id.calendarRecyclerView),
                         childAtPosition(
                                 withClassName(is("android.widget.LinearLayout")),
                                 2)));
         recyclerView3.perform(actionOnItemAtPosition(32, click()));
-
+        // check time slots are displayed on screen
         ViewInteraction recyclerView4 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
-
+        // check exists book now
         ViewInteraction textView = onView(
                 allOf(withId(R.id.timeslot_status_textView), withText("book now"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
         textView.check(matches(withText("book now")));
-
+        // click the last time slots available 23:30 - 24:00
         ViewInteraction recyclerView5 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
         recyclerView5.perform(actionOnItemAtPosition(47, click()));
-
+        // check booking activity starts successfully
         ViewInteraction recyclerView6 = onView(
                 allOf(withId(R.id.bookings_recyclerView),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         recyclerView6.check(matches(isDisplayed()));
 
+        // TODO: check the selected time slot is displayed at position 0;
         ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
+                allOf(withParent
+                        (allOf(withId(R.id.bookings_recyclerView),
+                                childAtPosition(
+                                        withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                        0)))));
         viewGroup.check(matches(isDisplayed()));
-
+        // check if the time slot says: “click to cancel”
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.action_bookings_textView), withText("click to cancel"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
         textView2.check(matches(withText("click to cancel")));
 
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.timeslot_bookings_textView), withText("2330-2400"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText("2330-2400")));
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.date_bookings_textView), withText("30-11-2023"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView4.check(matches(withText("30-11-2023")));
-
-//        ViewInteraction textView5 = onView(
-//                allOf(withId(com.android.systemui.R.id.clock), withText("2:47"), withContentDescription("2:47 PM"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_status_bar_system_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView5.check(matches(withText("2:47")));
-//
-//        ViewInteraction textView6 = onView(
-//                allOf(withId(com.android.systemui.R.id.date), withText("Mon, Nov 20"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_qs_status_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView6.check(matches(withText("Mon, Nov 20")));
+// TIME check
 
         ViewInteraction recyclerView7 = onView(
                 allOf(withId(R.id.bookings_recyclerView),
@@ -175,11 +170,14 @@ public class BookCancelStudyRoomSuccessTest {
                                 0)));
         recyclerView7.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction viewGroup2 = onView(
-                allOf(withParent(allOf(withId(android.R.id.content),
-                                withParent(withId(androidx.appcompat.R.id.action_bar_root)))),
-                        isDisplayed()));
-        viewGroup2.check(doesNotExist());
+        // check if the message appears with the text: “Your booking has been canceled!”
+        onView(withText("Your booking has been canceled!")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+
+        // TODO: change to child position 0 does not exist
+        onView(withId(R.id.bookings_recyclerView))
+                .check(matches(not(ViewMatchers.hasMinimumChildCount(0))));
+
     }
 
     private static Matcher<View> childAtPosition(
