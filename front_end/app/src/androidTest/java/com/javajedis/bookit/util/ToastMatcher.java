@@ -19,12 +19,10 @@ public class ToastMatcher extends TypeSafeMatcher<Root> {
     @Override
     public boolean matchesSafely(Root root) {
         int type = root.getWindowLayoutParams().get().type;
-        if ((type == WindowManager.LayoutParams.TYPE_TOAST)) {
+        if (type == WindowManager.LayoutParams.TYPE_TOAST) {
             IBinder windowToken = root.getDecorView().getWindowToken();
             IBinder appToken = root.getDecorView().getApplicationWindowToken();
-            if (windowToken == appToken) {
-                return true;
-            }
+            return windowToken == appToken;
         }
         return false;
     }
