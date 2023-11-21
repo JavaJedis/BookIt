@@ -9,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.javajedis.bookit.ListTimeSlotsActivity.getCurrentTime;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
@@ -73,7 +74,7 @@ public class BookCancelStudyRoomSuccessTest {
         uiDevice.waitForIdle();
 
         // Click on the first Google account in the account picker
-        UiObject2 googleAccount = uiDevice.findObject(By.textContains("gmail")); // Modify the selector as needed
+        UiObject2 googleAccount = uiDevice.findObject(By.textContains("@")); // Modify the selector as needed
 
         // Click on the Google account
         if (googleAccount != null) {
@@ -228,11 +229,5 @@ public class BookCancelStudyRoomSuccessTest {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
-    }
-
-    public static String getCurrentTime() {
-        LocalTime currentTime = LocalTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-        return currentTime.format(formatter);
     }
 }

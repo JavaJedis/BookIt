@@ -26,6 +26,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
@@ -65,6 +68,20 @@ public class FilterStudyRoomsSuccessTest {
                                 0),
                         isDisplayed()));
         ic.perform(click());
+
+        // ChatGPT usage: Yes --> from here
+        // Initialize UiDevice instance
+        UiDevice uiDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation());
+        // Wait for the Google Sign-In screen to appear
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 googleAccount = uiDevice.findObject(By.textContains("@")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (googleAccount != null) {
+            googleAccount.click();
+        }
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.filter_button), withText("filter study rooms"),
@@ -161,6 +178,17 @@ public class FilterStudyRoomsSuccessTest {
                         isDisplayed()));
         linearLayout3.check(matches(isDisplayed()));
 
+        // click 12:00 PM
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 PM = uiDevice.findObject(By.textContains("PM")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (PM != null) {
+            PM.click();
+        }
+
         ViewInteraction appCompatButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
                         childAtPosition(
@@ -172,14 +200,14 @@ public class FilterStudyRoomsSuccessTest {
         appCompatButton4.perform(click());
 
         ViewInteraction button5 = onView(
-                allOf(withId(R.id.start_time_button), withText("04:00 PM"),
+                allOf(withId(R.id.start_time_button), withText("12:00 PM"),
                         withParent(allOf(withId(R.id.linearLayout),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button5.check(matches(isDisplayed()));
 
         ViewInteraction appCompatButton5 = onView(
-                allOf(withId(R.id.start_time_button), withText("04:00 PM"),
+                allOf(withId(R.id.start_time_button), withText("12:00 PM"),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout),
                                         childAtPosition(
@@ -188,6 +216,17 @@ public class FilterStudyRoomsSuccessTest {
                                 0),
                         isDisplayed()));
         appCompatButton5.perform(click());
+
+        // click 12:00 AM
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 AM = uiDevice.findObject(By.textContains("AM")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (AM != null) {
+            AM.click();
+        }
 
         ViewInteraction appCompatButton6 = onView(
                 allOf(withId(android.R.id.button1), withText("OK"),
@@ -200,7 +239,7 @@ public class FilterStudyRoomsSuccessTest {
         appCompatButton6.perform(click());
 
         ViewInteraction button6 = onView(
-                allOf(withId(R.id.start_time_button), withText("07:30 PM"),
+                allOf(withId(R.id.start_time_button), withText("12:00 AM"),
                         withParent(allOf(withId(R.id.linearLayout),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
@@ -252,6 +291,7 @@ public class FilterStudyRoomsSuccessTest {
                         isDisplayed()));
         recyclerView2.check(matches(isDisplayed()));
 
+        // TODO: may be not work, need to be tested
         ViewInteraction recyclerView3 = onView(
                 allOf(withId(R.id.study_rooms_filter_recycler_view),
                         childAtPosition(
@@ -295,10 +335,10 @@ public class FilterStudyRoomsSuccessTest {
         viewGroup4.check(matches(isDisplayed()));
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("1930-2000"),
+                allOf(withId(R.id.timeslot_name_textView), withText("1200-1230"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView.check(matches(withText("1930-2000")));
+        textView.check(matches(withText("1200-1230")));
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.timeslot_status_textView), withText("book now"),
@@ -313,10 +353,10 @@ public class FilterStudyRoomsSuccessTest {
         viewGroup5.check(matches(isDisplayed()));
 
         ViewInteraction textView3 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("2000-2030"),
+                allOf(withId(R.id.timeslot_name_textView), withText("1230-1300"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView3.check(matches(withText("2000-2030")));
+        textView3.check(matches(withText("1230-1300")));
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.timeslot_status_textView), withText("book now"),
@@ -331,10 +371,10 @@ public class FilterStudyRoomsSuccessTest {
         viewGroup6.check(matches(isDisplayed()));
 
         ViewInteraction textView5 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("2030-2100"),
+                allOf(withId(R.id.timeslot_name_textView), withText("1300-1330"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView5.check(matches(withText("2030-2100")));
+        textView5.check(matches(withText("1300-1330")));
 
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.timeslot_status_textView), withText("book now"),
@@ -349,10 +389,10 @@ public class FilterStudyRoomsSuccessTest {
         viewGroup7.check(matches(isDisplayed()));
 
         ViewInteraction textView7 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("2100-2130"),
+                allOf(withId(R.id.timeslot_name_textView), withText("1330-1400"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView7.check(matches(withText("2100-2130")));
+        textView7.check(matches(withText("1330-1400")));
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.timeslot_status_textView), withText("book now"),

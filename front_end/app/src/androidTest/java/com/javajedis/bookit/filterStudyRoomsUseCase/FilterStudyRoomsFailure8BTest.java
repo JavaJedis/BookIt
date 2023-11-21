@@ -23,9 +23,13 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
+import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -62,6 +66,20 @@ public class FilterStudyRoomsFailure8BTest {
                                 0),
                         isDisplayed()));
         ic.perform(click());
+
+        // ChatGPT usage: Yes --> from here
+        // Initialize UiDevice instance
+        UiDevice uiDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation());
+        // Wait for the Google Sign-In screen to appear
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 googleAccount = uiDevice.findObject(By.textContains("@")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (googleAccount != null) {
+            googleAccount.click();
+        }
 
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.filter_button), withText("filter study rooms"),
@@ -125,6 +143,11 @@ public class FilterStudyRoomsFailure8BTest {
                                 4),
                         isDisplayed()));
         appCompatButton3.perform(click());
+
+        // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
+        // check if the message appears with the text: “Your booking has been canceled!”
+        onView(withText("Please select an appropriate date, start time, and duration")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

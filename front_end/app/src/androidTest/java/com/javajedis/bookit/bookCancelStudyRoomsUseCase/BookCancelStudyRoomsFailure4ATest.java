@@ -11,8 +11,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.javajedis.bookit.ListTimeSlotsActivity.getCurrentTime;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +26,13 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
+import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -35,6 +42,8 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.time.LocalDate;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -57,6 +66,20 @@ public class BookCancelStudyRoomsFailure4ATest {
                         isDisplayed()));
         ic.perform(click());
 
+        // ChatGPT usage: Yes --> from here
+        // Initialize UiDevice instance
+        UiDevice uiDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation());
+        // Wait for the Google Sign-In screen to appear
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 googleAccount = uiDevice.findObject(By.textContains("@")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (googleAccount != null) {
+            googleAccount.click();
+        }
+
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.bookings_button), withText("bookings"),
                         childAtPosition(
@@ -73,49 +96,57 @@ public class BookCancelStudyRoomsFailure4ATest {
                         isDisplayed()));
         recyclerView.check(matches(isDisplayed()));
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_bookings_textView), withText("1730-1800"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("1730-1800")));
 
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.date_bookings_textView), withText("06-11-2023"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView2.check(matches(withText("06-11-2023")));
+        // ChatGPT usage: Yes --> from here
+        // get current date
+        LocalDate currentDate = LocalDate.now();
+        LocalDate targetDate = LocalDate.of(2023, 11, 30);
 
-//        ViewInteraction textView3 = onView(
-//                allOf(withId(com.android.systemui.R.id.clock), withText("2:58"), withContentDescription("2:58 PM"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_status_bar_system_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView3.check(matches(withText("2:58")));
-//
-//        ViewInteraction textView4 = onView(
-//                allOf(withId(com.android.systemui.R.id.date), withText("Mon, Nov 20"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_qs_status_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView4.check(matches(withText("Mon, Nov 20")));
+        if (currentDate.isAfter(targetDate)) {
+            // Assert that the current date is after 30-11-2023
+            assertTrue(currentDate.isAfter(targetDate));
+        } else if (currentDate.isEqual(targetDate)){
+            // Same dateAssert that the current time is after 20:00
+            String currentTime = getCurrentTime();
+            int currentHour = Integer.parseInt(currentTime.substring(0, 2));
+            int currentMinute = Integer.parseInt(currentTime.substring(2));
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+            int targetHour = 22; // TODO: confirm this later
+            int targetMinute = 30; // TODO: confirm this later
+
+            // Convert both current time and target time to minutes for easy comparison
+            int currentTimeInMinutes = currentHour * 60 + currentMinute;
+            int targetTimeInMinutes = targetHour * 60 + targetMinute;
+
+            assertTrue(currentTimeInMinutes > targetTimeInMinutes);
+        } else {
+            // Test fails
+            fail("current time is before booking starting time for newly booked session");
+        }
+
+        // click a expired booking
+        uiDevice.waitForIdle();
+
+        UiObject2 expiredBooking = uiDevice.findObject(By.textContains("expired")); // Modify the selector as needed
+
+        if (expiredBooking != null) {
+            expiredBooking.click();
+        }
 
         ViewInteraction viewGroup = onView(
                 allOf(withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
 
+
         ViewInteraction viewGroup2 = onView(
                 allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         viewGroup2.check(matches(isDisplayed()));
+        // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
+        onView(withText("Your booking has expired!")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

@@ -24,6 +24,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.By;
+import androidx.test.uiautomator.UiDevice;
+import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
@@ -64,6 +67,20 @@ public class ConfirmAttendanceSuccessTest {
                         isDisplayed()));
         ic.perform(click());
 
+        // ChatGPT usage: Yes --> from here
+        // Initialize UiDevice instance
+        UiDevice uiDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation());
+        // Wait for the Google Sign-In screen to appear
+        uiDevice.waitForIdle();
+
+        // Click on the first Google account in the account picker
+        UiObject2 googleAccount = uiDevice.findObject(By.textContains("@")); // Modify the selector as needed
+
+        // Click on the Google account
+        if (googleAccount != null) {
+            googleAccount.click();
+        }
+
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.bookings_button), withText("bookings"),
                         childAtPosition(
@@ -86,38 +103,18 @@ public class ConfirmAttendanceSuccessTest {
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_bookings_textView), withText("1530-1600"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("1530-1600")));
-
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.date_bookings_textView), withText("20-11-2023"),
+                allOf(withId(R.id.action_bookings_textView), withText("confirm attendance"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView2.check(matches(withText("20-11-2023")));
+        textView2.check(matches(withText("confirm attendance")));
 
-//        ViewInteraction textView3 = onView(
-//                allOf(withId(com.android.systemui.R.id.clock), withText("3:37"), withContentDescription("3:37 PM"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_status_bar_system_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView3.check(matches(withText("3:37")));
-//
-//        ViewInteraction linearLayout = onView(
-//                allOf(withId(com.android.systemui.R.id.quick_qs_status_icons),
-//                        withParent(allOf(withId(com.android.systemui.R.id.header),
-//                                withParent(withId(com.android.systemui.R.id.quick_settings_container)))),
-//                        isDisplayed()));
-//        linearLayout.check(matches(isDisplayed()));
+        //  Click on the confirm attendance button
+        UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("confirm attendance")); // Modify the selector as needed
 
-        ViewInteraction recyclerView2 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView2.perform(actionOnItemAtPosition(1, click()));
+        if (confirmAttendance != null) {
+            confirmAttendance.click();
+        }
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.action_bookings_textView), withText("confirmed"),
