@@ -1,6 +1,5 @@
 package com.javajedis.bookit.bookCancelStudyRoomsUseCase;
 
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -10,7 +9,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
@@ -18,9 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -31,13 +26,11 @@ import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.model.TimeSlotsModel;
-import com.javajedis.bookit.recyclerview.adapter.TimeSlotsRecyclerViewAdapter;
-import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,13 +42,13 @@ import java.time.LocalDate;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.javajedis.bookit.model.BookingsModel;
-import com.javajedis.bookit.recyclerview.adapter.BookingsRecyclerViewAdapter;
+import com.javajedis.bookit.util.ToastMatcher;
+import com.javajedis.bookit.util.bookingsRecyclerViewItemCountAssertion;
+import com.javajedis.bookit.util.timeSlotsRecyclerViewItemCountAssertion;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class BookCancelStudyRoomSuccessTest {
-
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
@@ -73,7 +66,6 @@ public class BookCancelStudyRoomSuccessTest {
                         isDisplayed()));
         ic.perform(click());
 
-        // TODO: need to be tested
         // ChatGPT usage: Yes --> from here
         // Initialize UiDevice instance
         UiDevice uiDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation());
@@ -133,6 +125,7 @@ public class BookCancelStudyRoomSuccessTest {
                                 7),
                         isDisplayed()));
         appCompatButton3.perform(click());
+
         // choose November 30th
         ViewInteraction recyclerView3 = onView(
                 allOf(withId(R.id.calendarRecyclerView),
@@ -140,6 +133,7 @@ public class BookCancelStudyRoomSuccessTest {
                                 withClassName(is("android.widget.LinearLayout")),
                                 2)));
         recyclerView3.perform(actionOnItemAtPosition(32, click()));
+
         // check time slots are displayed on screen
         ViewInteraction recyclerView4 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
@@ -147,7 +141,7 @@ public class BookCancelStudyRoomSuccessTest {
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
 
-        onView(withId(R.id.timeslots_recycler_view)).check(new recyclerViewItemCountAssertion(47));
+        onView(withId(R.id.timeslots_recycler_view)).check(new timeSlotsRecyclerViewItemCountAssertion(47));
 
         // click the last time slots 23:30 - 24:00
         ViewInteraction recyclerView5 = onView(
@@ -157,24 +151,18 @@ public class BookCancelStudyRoomSuccessTest {
                                 0)));
         recyclerView5.perform(actionOnItemAtPosition(47, click()));
 
-//        ViewInteraction textView2 = onView(
-//                allOf(withId(R.id.action_bookings_textView), withText("click to cancel"),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView2.check(matches(withText("click to cancel")));
-//
-//        ViewInteraction textView3 = onView(
-//                allOf(withId(R.id.timeslot_bookings_textView), withText("2330-2400"),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView3.check(matches(withText("2330-2400")));
-//
-//        ViewInteraction textView4 = onView(
-//                allOf(withId(R.id.date_bookings_textView), withText("30-11-2023"),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView4.check(matches(withText("30-11-2023")));
+        // check booking screen opens successfully
+        ViewInteraction recyclerView6 = onView(
+                allOf(withId(R.id.bookings_recyclerView),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        recyclerView6.check(matches(isDisplayed()));
 
+        ViewInteraction viewGroup = onView(
+                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
+                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                        isDisplayed()));
+        viewGroup.check(matches(isDisplayed()));
 
         // assert if current time is before 2330-2400
         // ChatGPT usage: Yes --> from here
@@ -205,10 +193,8 @@ public class BookCancelStudyRoomSuccessTest {
         }
 
         // ChatGPT usage: Yes --> from here
-
         onView(withId(R.id.bookings_recyclerView)).check(new bookingsRecyclerViewItemCountAssertion(0));
 
-        // TODO: need to be tested
         uiDevice.waitForIdle();
 
         // Click on the first bookings in the bookings page
@@ -219,72 +205,10 @@ public class BookCancelStudyRoomSuccessTest {
             firstBooking.click();
         }
 
-//        // click cancel booking
-//        ViewInteraction recyclerView7 = onView(
-//                allOf(withId(R.id.bookings_recyclerView),
-//                        childAtPosition(
-//                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-//                                0)));
-//        recyclerView7.perform(actionOnItemAtPosition(0, click()));
-
         // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
         // check if the message appears with the text: “Your booking has been canceled!”
-        onView(withText("Your booking has been canceled!")).inRoot(new ToastMatcher())
+        onView(withText("Your booking has been cancelled!")).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
-    }
-
-    // ChatGPT usage: Yes
-    public static class recyclerViewItemCountAssertion implements ViewAssertion {
-        private final int position;
-
-        public recyclerViewItemCountAssertion(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (view instanceof RecyclerView) {
-                RecyclerView recyclerView = (RecyclerView) view;
-                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                // Assuming your adapter is YourAdapter
-                assert adapter != null;
-                TimeSlotsModel item = ((TimeSlotsRecyclerViewAdapter) adapter).getItemAtPosition(position);
-
-                // Now you can perform assertions or actions based on the data in the item
-                // For example, you can check a specific property of the item
-                assertThat(item.getStatus(), is("book now"));
-            } else {
-                throw noViewFoundException;
-            }
-        }
-    }
-
-    // ChatGPT usage: Yes
-    public static class bookingsRecyclerViewItemCountAssertion implements ViewAssertion {
-        private final int position;
-
-        public bookingsRecyclerViewItemCountAssertion(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (view instanceof RecyclerView) {
-                RecyclerView recyclerView = (RecyclerView) view;
-                RecyclerView.Adapter adapter = recyclerView.getAdapter();
-
-                // Assuming your adapter is YourAdapter
-                assert adapter != null;
-                BookingsModel item = ((BookingsRecyclerViewAdapter) adapter).getItemAtPosition(position);
-
-                // Now you can perform assertions or actions based on the data in the item
-                // For example, you can check a specific property of the item
-                assertThat(item.getAction(), is("click to cancel"));
-            } else {
-                throw noViewFoundException;
-            }
-        }
     }
 
     private static Matcher<View> childAtPosition(
