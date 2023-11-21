@@ -1,26 +1,103 @@
-node:events:492
-      throw er; // Unhandled 'error' event
-      ^
+/home/dev/bookit_backend/modules/notification_manager.js:160
+        if (value[nextReminderTime].length < 10)
+                                    ^
 
-Error: listen EADDRINUSE: address already in use :::443
-    at Server.setupListenHandle [as _listen2] (node:net:1872:16)
-    at listenInCluster (node:net:1920:12)
-    at Server.listen (node:net:2008:7)
-    at Object.<anonymous> (/home/dev/bookit_backend/server.js:80:9)
-    at Module._compile (node:internal/modules/cjs/loader:1241:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
-    at Module.load (node:internal/modules/cjs/loader:1091:32)
-    at Module._load (node:internal/modules/cjs/loader:938:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
-    at node:internal/main/run_main_module:23:47
-Emitted 'error' event on Server instance at:
-    at emitErrorNT (node:net:1899:8)
-    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '::',
-  port: 443
+TypeError: Cannot read properties of undefined (reading 'length')
+    at Job.searchAndSendReminders [as job] (/home/dev/bookit_backend/modules/notification_manager.js:160:37)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+Emitted 'error' event on Job instance at:
+    at /home/dev/bookit_backend/node_modules/node-schedule/lib/Invocation.js:277:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+Node.js v20.8.1
+ress (/home/dev/bookit_backend/node_modules/mongodb/lib/utils.js:770:19)
+      at fromString (/home/dev/bookit_backend/node_modules/mongodb/lib/utils.js:815:16)
+      at Array.map (<anonymous>)
+      at parseOptions (/home/dev/bookit_backend/node_modules/mongodb/lib/connection_string.js:194:45)
+      at new MongoClient (/home/dev/bookit_backend/node_modules/mongodb/lib/mongo_client.js:51:63)
+      at Object.dbh_init (/home/dev/bookit_backend/modules/db_handler.js:28:14)
+      at Object.<anonymous> (/home/dev/bookit_backend/server.js:69:12)
+      at Module._compile (node:internal/modules/cjs/loader:1241:14)
+      at Module._extensions..js (node:internal/modules/cjs/loader:1295:10) {
+    code: 'ERR_INVALID_URL',
+    input: 'iLoveJS://localhost:undefined'
+  },
+  [Symbol(errorLabels)]: Set(0) {}
+}
+
+Node.js v20.8.1
+bject.onceWrapper (node:events:629:26)
+            at Socket.emit (node:events:514:28)
+            at Socket.emit (node:domain:488:12)
+            at emitErrorNT (node:internal/streams/destroy:151:8)
+            at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+            at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+          [Symbol(errorLabels)]: Set(1) { 'ResetPool' },
+          [cause]: AggregateError
+              at internalConnectMultiple (node:net:1114:18)
+              at afterConnectMultiple (node:net:1667:5) {
+            code: 'ECONNREFUSED',
+            [errors]: [Array]
+          }
+        },
+        topologyVersion: null,
+        setName: null,
+        setVersion: null,
+        electionId: null,
+        logicalSessionTimeoutMinutes: null,
+        primary: null,
+        me: null,
+        '$clusterTime': null
+      }
+    },
+    stale: false,
+    compatible: true,
+    heartbeatFrequencyMS: 10000,
+    localThresholdMS: 15,
+    setName: null,
+    maxElectionId: null,
+    maxSetVersion: null,
+    commonWireVersion: 0,
+    logicalSessionTimeoutMinutes: null
+  },
+  code: undefined,
+  [Symbol(errorLabels)]: Set(0) {},
+  [cause]: MongoNetworkError: connect ECONNREFUSED ::1:25565, connect ECONNREFUSED 127.0.0.1:25565
+      at connectionFailureError (/home/dev/bookit_backend/node_modules/mongodb/lib/cmap/connect.js:379:20)
+      at Socket.<anonymous> (/home/dev/bookit_backend/node_modules/mongodb/lib/cmap/connect.js:285:22)
+      at Object.onceWrapper (node:events:629:26)
+      at Socket.emit (node:events:514:28)
+      at Socket.emit (node:domain:488:12)
+      at emitErrorNT (node:internal/streams/destroy:151:8)
+      at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+      at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+    [Symbol(errorLabels)]: Set(1) { 'ResetPool' },
+    [cause]: AggregateError
+        at internalConnectMultiple (node:net:1114:18)
+        at afterConnectMultiple (node:net:1667:5) {
+      code: 'ECONNREFUSED',
+      [errors]: [
+        Error: connect ECONNREFUSED ::1:25565
+            at createConnectionError (node:net:1634:14)
+            at afterConnectMultiple (node:net:1664:40) {
+          errno: -111,
+          code: 'ECONNREFUSED',
+          syscall: 'connect',
+          address: '::1',
+          port: 25565
+        },
+        Error: connect ECONNREFUSED 127.0.0.1:25565
+            at createConnectionError (node:net:1634:14)
+            at afterConnectMultiple (node:net:1664:40) {
+          errno: -111,
+          code: 'ECONNREFUSED',
+          syscall: 'connect',
+          address: '127.0.0.1',
+          port: 25565
+        }
+      ]
+    }
+  }
 }
 
 Node.js v20.8.1

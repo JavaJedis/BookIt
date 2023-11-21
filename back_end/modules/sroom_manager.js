@@ -7,13 +7,15 @@ const schedule = require('node-schedule');
 const MODULE_NAME = "STUDYROOM-MANAGER";
 
 //Global variables
+var sroomSchedulerA;
+var sroomSchedulerB;
 
 //Scheduler functions
 
 function initScheduler() {
     try {
-        schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
-        schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
+        sroomSchedulerA = schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
+        sroomSchedulerB = schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
         utils.consoleMsg(MODULE_NAME, "Study Room Scheduler Service Enabled");
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to enable studyroom scheduler service");
@@ -45,7 +47,9 @@ async function listStudyRooms(req, res) {
         const result = await db_handler.getRooms(buildingCode, 'study_room_db')
         utils.onSuccess(res, result)
     } catch (error) {
-        utils.onFailure(res, error)
+        utils.serverLog(MODULE_NAME, error);
+        error.message = "Failed to list study rooms";
+        utils.onFailure(res, error);
     }
 }
 
@@ -232,7 +236,7 @@ async function createBuilding(req, res) {
     }
 
     try {
-        let result = await db_handler.addBuilding(buildingData);
+        result = await db_handler.addBuilding(buildingData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -247,10 +251,10 @@ async function delBuilding(req, res) {
         });
         return
     }
-    let BuildingCode = req.params.building_code
+    BuildingCode = req.params.building_code
 
     try {
-        let result = await db_handler.delBuilding(BuildingCode)
+        result = await db_handler.delBuilding(BuildingCode)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -273,7 +277,7 @@ async function createRoom(req, res) {
     }
 
     try {
-        let result = await db_handler.addRoom(roomData)
+        result = await db_handler.addRoom(roomData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -289,13 +293,13 @@ async function delRoom(req, res) {
         });
         return
     }
-    let roomData = {
+    roomData = {
         buildingCode: req.params.building_code,
         roomNo: req.params.room_no
     }
 
     try {
-        let result = await db_handler.delRoom(roomData)
+        result = await db_handler.delRoom(roomData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);

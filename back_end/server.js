@@ -11,6 +11,7 @@ utils.serverLog(MODULE_NAME, "Starting Backend Server");
 // Import necessary modules
 require('dotenv').config({ path: '.env.backend' });
 const https = require('https');
+//const http = require('http');
 const fs = require('fs');
 const db_handler = require("./modules/db_handler");
 const user_manager = require("./modules/user_manager");
@@ -21,6 +22,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cmt_manager = require("./modules/comment_manager");
 const notif_manager = require('./modules/notification_manager');
+let server;
 
 
 
@@ -70,34 +72,30 @@ sroom_manager.initScheduler();
 
 
 // Express https listener
-https.createServer({
+server = https.createServer({
     key: fs.readFileSync("/home/dev/bookit_backend/certs/private.pem"),
     cert: fs.readFileSync("/home/dev/bookit_backend/certs/fullchain.crt")
 }, app).listen(PORT, () => {
     utils.serverLog(MODULE_NAME, `Server is running on https://localhost:${PORT}`);
 });
 
+async function shutDown(){
+    utils.serverLog(MODULE_NAME, "Shutting down backend service...");
+    sroom_manager.deinitScheduler();
+    notif_manager.deInit();
+    await db_handler.dbh_deinit();
+    await server.close();
+    utils.serverLog(MODULE_NAME, "Backend Closed.");
+    //process.exit();
+}
 
 // Close connection to database and terminate
-process.on("SIGTERM", function () {
-    utils.serverLog(MODULE_NAME, "Shutting down backend service...");
-    sroom_manager.deinitScheduler();
-    notif_manager.deInit();
-    db_handler.dbh_deinit().then(() => {
-        utils.serverLog(MODULE_NAME, "Backend Closed.");
-        throw new Error("Forced Exit");
-    }
-    );
-});
+process.on("SIGTERM", shutDown);
 
-process.on("SIGINT", function () {
-    utils.serverLog(MODULE_NAME, "Shutting down backend service...");
-    sroom_manager.deinitScheduler();
-    notif_manager.deInit();
-    db_handler.dbh_deinit().then(() => {
-        utils.serverLog(MODULE_NAME, "Backend Closed.");
-        throw new Error("Forced Exit");
-    }
-    );
-});
+process.on("SIGINT", shutDown);
 
+module.exports = {
+    shutDown,
+    app,
+    db_handler,
+}

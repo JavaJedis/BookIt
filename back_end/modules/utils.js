@@ -88,15 +88,13 @@ function onFailure(res, err) {
  */
 function militaryTimeToDecimal(time) {
 
-    if (time === null || !(time instanceof Array) || time.length !== 2) {
+    if (time == null || !(time instanceof Array) || time.length != 2) {
         throw Error("Invalid Arguments");
     }
 
     
     const hour = time[0];
     const min = time[1];
-    console.log(hour);
-    console.log(min);
 
     if (hour == null || min == null) {
         throw Error("Invalid hour or min");
@@ -106,7 +104,7 @@ function militaryTimeToDecimal(time) {
         throw Error("Invalid hour or min");
     }
 
-    if (min % 30 !== 0) {
+    if (min % 30 != 0) {
         throw Error("Invalid hour or min");
     }
 

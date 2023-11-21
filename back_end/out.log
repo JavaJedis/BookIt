@@ -1,34 +1,2167 @@
-[2023-11-01T00:34:50.204Z][SERVER-WORKER] Starting Backend Server
-[2023-11-01T00:34:50.374Z][COMMENT-MANAGER] ==========COMMENT MANAGER==========
-[2023-11-01T00:34:50.374Z][COMMENT-MANAGER] Setting building code limit to 4 characters.
-[2023-11-01T00:34:50.374Z][COMMENT-MANAGER] Setting room number limit to 4 characters.
-[2023-11-01T00:34:50.374Z][COMMENT-MANAGER] Setting comment limit to 600 characters.
-[2023-11-01T00:34:50.374Z][COMMENT-MANAGER] ===================================
-[2023-11-01T00:34:50.384Z][DBHandler] Initializing Database Handler
-[2023-11-01T00:34:50.416Z][NOTIFICATION-MANAGER] Notification Service Enabled.
-[2023-11-01T00:34:50.420Z][STUDYROOM-MANAGER] Study Room Scheduler Service Enabled
-[2023-11-01T00:34:50.445Z][SERVER-WORKER] Server is running on https://localhost:443
-[2023-11-01T00:34:50.452Z][DBHandler] Initialization successful
-[2023-11-01T00:37:22.661Z][SERVER-WORKER] Shutting down backend service...
-[2023-11-01T00:37:22.662Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
-[2023-11-01T00:37:22.663Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-01T00:37:22.666Z][DBHandler] Connection closed
-[2023-11-01T00:37:22.666Z][SERVER-WORKER] Backend Closed.
-uYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTI5NTIxNDk1MTc4MTY2NzM1NjAiLCJlbWFpbCI6ImRpZXNoZW5rZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkhvdWNodWFuIERvbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEZkSk9kWFdpR3plRUFTa2JvdFd3M2VXakRrNEdmeXNOb0VPUnFydDZkPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkhvdWNodWFuIiwiZmFtaWx5X25hbWUiOiJEb25nIiwibG9jYWxlIjoiZW4tVVMiLCJpYXQiOjE2OTg4MjI4ODksImV4cCI6MTY5ODgyNjQ4OX0.i6XK2Yr6e2rH-eTBAw3f3OpVR7AjJzIU94ZK6B2esFri6OwcisMpZ2CsMfGqtNu8wsT-W5gnicyORdGTI-x5D-ZDHnPmsnrqj-p6sVAtMrdjgppdKXEBboHNJkwUMbkU9UX7e47RE9G-cSyCpBFxE3cBQhKhKF-cSGxMmCcp3rW0SoNvo7s6v7unY0XF9q5DojWEj9YtAeHRh55aJpJt1a4pwQWAz1_3tfyiqdMd7u-GAvgbsn9AwYVMRnbb1gfmlKxYHMVaq6eBIxr9KrYO4KS0IqPqym_gFInZP-kLLv8Xck9tGsUTw_s424oJfmOG_WVdiC7XxSAmqW70FpP7bA',
-  comment: 'This is another sample comment.'
-}
-This is another sample comment.
-[2023-11-01T00:26:10.693Z][SERVER-WORKER] Shutting down backend service...
-[2023-11-01T00:26:10.694Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
-[2023-11-01T00:26:10.695Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-01T00:26:10.699Z][DBHandler] Connection closed
-[2023-11-01T00:26:10.699Z][SERVER-WORKER] Backend Closed.
-yY29udGVudC5jb20iLCJzdWIiOiIxMTI5NTIxNDk1MTc4MTY2NzM1NjAiLCJlbWFpbCI6ImRpZXNoZW5rZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkhvdWNodWFuIERvbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTEZkSk9kWFdpR3plRUFTa2JvdFd3M2VXakRrNEdmeXNOb0VPUnFydDZkPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkhvdWNodWFuIiwiZmFtaWx5X25hbWUiOiJEb25nIiwibG9jYWxlIjoiZW4tVVMiLCJpYXQiOjE2OTg4MjI4ODksImV4cCI6MTY5ODgyNjQ4OX0.i6XK2Yr6e2rH-eTBAw3f3OpVR7AjJzIU94ZK6B2esFri6OwcisMpZ2CsMfGqtNu8wsT-W5gnicyORdGTI-x5D-ZDHnPmsnrqj-p6sVAtMrdjgppdKXEBboHNJkwUMbkU9UX7e47RE9G-cSyCpBFxE3cBQhKhKF-cSGxMmCcp3rW0SoNvo7s6v7unY0XF9q5DojWEj9YtAeHRh55aJpJt1a4pwQWAz1_3tfyiqdMd7u-GAvgbsn9AwYVMRnbb1gfmlKxYHMVaq6eBIxr9KrYO4KS0IqPqym_gFInZP-kLLv8Xck9tGsUTw_s424oJfmOG_WVdiC7XxSAmqW70FpP7bA',
-  comment: "This room is too small, and it's too old."
-}
-This room is too small, and it's too old.
-[2023-11-01T00:23:00.159Z][SERVER-WORKER] Shutting down backend service...
-[2023-11-01T00:23:00.160Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
-[2023-11-01T00:23:00.161Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-01T00:23:00.164Z][DBHandler] Connection closed
-[2023-11-01T00:23:00.165Z][SERVER-WORKER] Backend Closed.
+[2023-11-21T00:36:03.126Z][SERVER-WORKER] Starting Backend Server
+[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] ==========COMMENT MANAGER==========
+[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] Setting building code limit to 4 characters.
+[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] Setting room number limit to 4 characters.
+[2023-11-21T00:36:03.346Z][COMMENT-MANAGER] Setting comment limit to 600 characters.
+[2023-11-21T00:36:03.346Z][COMMENT-MANAGER] ===================================
+[2023-11-21T00:36:03.348Z][DBHandler] Initializing Database Handler
+[2023-11-21T00:36:03.420Z][NOTIFICATION-MANAGER] Notification Service Enabled.
+[2023-11-21T00:36:03.423Z][STUDYROOM-MANAGER] Study Room Scheduler Service Enabled
+[2023-11-21T00:36:03.447Z][SERVER-WORKER] Server is running on https://localhost:443
+[2023-11-21T00:36:03.469Z][DBHandler] Connected to database
+[2023-11-21T00:37:27.150Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:38:33.096Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:39:23.534Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:42:00.274Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:43:04.843Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:44:42.240Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:45:44.886Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T00:46:45.618Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+0T23:36:44.909Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-20T23:36:44.913Z][DBHandler] Connection closed
+[2023-11-20T23:36:44.913Z][SERVER-WORKER] Backend Closed.
+0]
+20-11-2023
+[2023-11-20T22:40:00.335Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T22:40:00.347Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T22:40:00.357Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T22:40:13.260Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-20T22:40:13.261Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-20T22:40:13.262Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-20T22:40:13.265Z][DBHandler] Connection closed
+[2023-11-20T22:40:13.265Z][SERVER-WORKER] Backend Closed.
+KhTuPygS-pNWvlelMKZwsqU4WHUBWb2h92JTrKK1_JvNsTwnDKXweg785dOtar
+[2023-11-20T18:14:59.214Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:15:54.714Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:16:33.724Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:18:25.821Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:19:01.872Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-20T18:20:24.139Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:22:31.461Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:24:03.844Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+20-11-2023
+[2023-11-20T18:27:26.647Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:28:17.885Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:29:20.845Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+20-11-2023
+[2023-11-20T18:36:11.116Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:37:02.665Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:37:44.090Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:38:33.622Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T18:38:33.637Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T18:38:33.647Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-20T18:42:16.960Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:43:38.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:44:21.741Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:46:40.940Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:47:19.113Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:52:39.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T18:53:47.663Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:02:17.013Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:03:33.330Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:08:25.971Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:13:42.116Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:14:39.363Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:22:47.307Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:25:33.730Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:27:00.016Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+20-11-2023
+[2023-11-20T19:35:50.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T19:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+20-11-2023
+[2023-11-20T20:02:27.390Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:09:26.049Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:10:04.084Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:11:02.053Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:16:52.182Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:18:42.460Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:19:17.777Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-20T20:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+20-11-2023
+[2023-11-20T20:28:39.127Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-20T20:28:39.128Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-20T20:28:39.128Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-20T20:28:39.132Z][DBHandler] Connection closed
+[2023-11-20T20:28:39.132Z][SERVER-WORKER] Backend Closed.
+gged in with device token cfUF0XaQSxCM98aUAr2Yjn:APA91bEBZ1uCTBd7vb_HtDk3q6uyKMVCIv3JjyEF_l989C27JaQhckSMM9ylBi8FZYb7zT2s-0H47rKPTLkq-xYR-6OiayNavT_zzU03tjXvntCDxd3ArnDYSYH7FePJ-alVMBmpHGjJ
+[2023-11-07T22:20:38.567Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token cfUF0XaQSxCM98aUAr2Yjn:APA91bEBZ1uCTBd7vb_HtDk3q6uyKMVCIv3JjyEF_l989C27JaQhckSMM9ylBi8FZYb7zT2s-0H47rKPTLkq-xYR-6OiayNavT_zzU03tjXvntCDxd3ArnDYSYH7FePJ-alVMBmpHGjJ
+[2023-11-07T22:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+07-11-2023
+[2023-11-07T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+07-11-2023
+[2023-11-07T23:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+07-11-2023
+[2023-11-07T23:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+07-11-2023
+[2023-11-08T00:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+07-11-2023
+[2023-11-08T00:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+07-11-2023
+[2023-11-08T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+08-11-2023
+[2023-11-08T01:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+08-11-2023
+[2023-11-08T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+08-11-2023
+[2023-11-08T02:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+08-11-2023
+[2023-11-08T03:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+08-11-2023
+[2023-11-08T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+08-11-2023
+[2023-11-08T04:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+08-11-2023
+[2023-11-08T04:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+08-11-2023
+[2023-11-08T05:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+08-11-2023
+[2023-11-08T05:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+08-11-2023
+[2023-11-08T06:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+08-11-2023
+[2023-11-08T06:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+08-11-2023
+[2023-11-08T07:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+08-11-2023
+[2023-11-08T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+08-11-2023
+[2023-11-08T08:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+08-11-2023
+[2023-11-08T08:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+08-11-2023
+[2023-11-08T09:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+08-11-2023
+[2023-11-08T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+08-11-2023
+[2023-11-08T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+08-11-2023
+[2023-11-08T10:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+08-11-2023
+[2023-11-08T11:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+08-11-2023
+[2023-11-08T11:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+08-11-2023
+[2023-11-08T12:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+08-11-2023
+[2023-11-08T12:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+08-11-2023
+[2023-11-08T13:04:35.220Z][COMMENT-MANAGER] cpen321ubc@gmail.com logged in with device token ezudZY_gSg-0_4zVvHVW8A:APA91bGD_KGMH0-nZTBIJEbvUnHv6ArfwRcb0ZzXtArcSjXrVnVOReM0n6zHefLj_F-HdWTBq-_Q4xt3xgb27O33iV5hvZq6vI7eRf6BGpndAVK9PbOubh0fknnT8sXJj-rB3q8KKRVk
+[2023-11-08T13:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+08-11-2023
+[2023-11-08T13:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+08-11-2023
+[2023-11-08T14:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+08-11-2023
+[2023-11-08T14:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+08-11-2023
+[2023-11-08T15:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+08-11-2023
+[2023-11-08T15:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+08-11-2023
+[2023-11-08T16:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+08-11-2023
+[2023-11-08T16:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+08-11-2023
+[2023-11-08T17:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+08-11-2023
+[2023-11-08T17:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+08-11-2023
+[2023-11-08T18:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+08-11-2023
+[2023-11-08T18:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+08-11-2023
+[2023-11-08T19:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+08-11-2023
+[2023-11-08T19:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+08-11-2023
+[2023-11-08T20:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+08-11-2023
+[2023-11-08T20:36:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+08-11-2023
+[2023-11-08T21:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+08-11-2023
+[2023-11-08T21:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+08-11-2023
+[2023-11-08T22:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+08-11-2023
+[2023-11-08T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+08-11-2023
+[2023-11-08T23:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+08-11-2023
+[2023-11-08T23:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+08-11-2023
+[2023-11-09T00:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+08-11-2023
+[2023-11-09T00:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+08-11-2023
+[2023-11-09T01:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+09-11-2023
+[2023-11-09T01:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+09-11-2023
+[2023-11-09T02:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+09-11-2023
+[2023-11-09T02:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+09-11-2023
+[2023-11-09T03:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+09-11-2023
+[2023-11-09T03:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+09-11-2023
+[2023-11-09T04:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+09-11-2023
+[2023-11-09T04:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+09-11-2023
+[2023-11-09T05:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+09-11-2023
+[2023-11-09T05:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+09-11-2023
+[2023-11-09T06:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+09-11-2023
+[2023-11-09T06:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+09-11-2023
+[2023-11-09T07:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+09-11-2023
+[2023-11-09T07:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+09-11-2023
+[2023-11-09T08:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+09-11-2023
+[2023-11-09T08:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+09-11-2023
+[2023-11-09T09:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+09-11-2023
+[2023-11-09T09:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+09-11-2023
+[2023-11-09T10:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+09-11-2023
+[2023-11-09T10:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+09-11-2023
+[2023-11-09T11:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+09-11-2023
+[2023-11-09T11:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+09-11-2023
+[2023-11-09T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+09-11-2023
+[2023-11-09T12:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+09-11-2023
+[2023-11-09T13:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+09-11-2023
+[2023-11-09T13:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+09-11-2023
+[2023-11-09T14:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+09-11-2023
+[2023-11-09T14:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+09-11-2023
+[2023-11-09T15:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+09-11-2023
+[2023-11-09T15:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+09-11-2023
+[2023-11-09T16:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+09-11-2023
+[2023-11-09T16:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+09-11-2023
+[2023-11-09T17:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+09-11-2023
+[2023-11-09T17:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+09-11-2023
+[2023-11-09T18:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+09-11-2023
+[2023-11-09T18:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+09-11-2023
+[2023-11-09T19:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+09-11-2023
+[2023-11-09T19:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+09-11-2023
+[2023-11-09T20:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+09-11-2023
+[2023-11-09T20:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+09-11-2023
+[2023-11-09T21:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+09-11-2023
+[2023-11-09T21:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+09-11-2023
+[2023-11-09T22:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+09-11-2023
+[2023-11-09T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+09-11-2023
+[2023-11-09T23:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+09-11-2023
+[2023-11-09T23:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+09-11-2023
+[2023-11-10T00:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+09-11-2023
+[2023-11-10T00:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+09-11-2023
+[2023-11-10T01:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+10-11-2023
+[2023-11-10T01:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+10-11-2023
+[2023-11-10T02:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+10-11-2023
+[2023-11-10T02:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+10-11-2023
+[2023-11-10T03:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+10-11-2023
+[2023-11-10T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+10-11-2023
+[2023-11-10T04:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+10-11-2023
+[2023-11-10T04:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+10-11-2023
+[2023-11-10T05:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+10-11-2023
+[2023-11-10T05:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+10-11-2023
+[2023-11-10T06:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+10-11-2023
+[2023-11-10T06:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+10-11-2023
+[2023-11-10T07:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+10-11-2023
+[2023-11-10T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+10-11-2023
+[2023-11-10T08:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+10-11-2023
+[2023-11-10T08:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+10-11-2023
+[2023-11-10T09:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+10-11-2023
+[2023-11-10T09:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+10-11-2023
+[2023-11-10T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+10-11-2023
+[2023-11-10T10:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+10-11-2023
+[2023-11-10T11:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+10-11-2023
+[2023-11-10T11:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+10-11-2023
+[2023-11-10T12:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+10-11-2023
+[2023-11-10T12:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+10-11-2023
+[2023-11-10T13:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+10-11-2023
+[2023-11-10T13:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+10-11-2023
+[2023-11-10T14:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+10-11-2023
+[2023-11-10T14:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+10-11-2023
+[2023-11-10T15:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+10-11-2023
+[2023-11-10T15:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+10-11-2023
+[2023-11-10T16:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+10-11-2023
+[2023-11-10T16:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+10-11-2023
+[2023-11-10T17:27:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+10-11-2023
+[2023-11-10T17:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+10-11-2023
+[2023-11-10T18:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+10-11-2023
+[2023-11-10T18:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+10-11-2023
+[2023-11-10T19:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+10-11-2023
+[2023-11-10T19:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+10-11-2023
+[2023-11-10T20:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+10-11-2023
+[2023-11-10T20:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+10-11-2023
+[2023-11-10T21:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+10-11-2023
+[2023-11-10T21:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+10-11-2023
+[2023-11-10T22:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+10-11-2023
+[2023-11-10T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+10-11-2023
+[2023-11-10T23:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+10-11-2023
+[2023-11-10T23:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+10-11-2023
+[2023-11-11T00:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+10-11-2023
+[2023-11-11T00:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+10-11-2023
+[2023-11-11T01:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+11-11-2023
+[2023-11-11T01:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+11-11-2023
+[2023-11-11T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+11-11-2023
+[2023-11-11T02:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+11-11-2023
+[2023-11-11T03:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+11-11-2023
+[2023-11-11T03:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+11-11-2023
+[2023-11-11T04:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+11-11-2023
+[2023-11-11T04:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+11-11-2023
+[2023-11-11T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+11-11-2023
+[2023-11-11T05:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+11-11-2023
+[2023-11-11T06:27:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+11-11-2023
+[2023-11-11T06:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+11-11-2023
+[2023-11-11T07:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+11-11-2023
+[2023-11-11T07:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+11-11-2023
+[2023-11-11T08:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+11-11-2023
+[2023-11-11T08:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+11-11-2023
+[2023-11-11T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+11-11-2023
+[2023-11-11T09:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+11-11-2023
+[2023-11-11T10:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+11-11-2023
+[2023-11-11T10:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+11-11-2023
+[2023-11-11T11:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+11-11-2023
+[2023-11-11T11:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+11-11-2023
+[2023-11-11T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+11-11-2023
+[2023-11-11T12:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+11-11-2023
+[2023-11-11T13:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+11-11-2023
+[2023-11-11T13:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+11-11-2023
+[2023-11-11T14:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+11-11-2023
+[2023-11-11T14:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+11-11-2023
+[2023-11-11T15:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+11-11-2023
+[2023-11-11T15:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+11-11-2023
+[2023-11-11T16:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+11-11-2023
+[2023-11-11T16:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+11-11-2023
+[2023-11-11T17:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+11-11-2023
+[2023-11-11T17:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+11-11-2023
+[2023-11-11T18:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+11-11-2023
+[2023-11-11T18:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+11-11-2023
+[2023-11-11T19:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+11-11-2023
+[2023-11-11T19:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+11-11-2023
+[2023-11-11T20:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+11-11-2023
+[2023-11-11T20:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+11-11-2023
+[2023-11-11T21:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+11-11-2023
+[2023-11-11T21:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+11-11-2023
+[2023-11-11T22:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+11-11-2023
+[2023-11-11T22:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+11-11-2023
+[2023-11-11T23:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+11-11-2023
+[2023-11-11T23:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+11-11-2023
+[2023-11-12T00:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+11-11-2023
+[2023-11-12T00:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+11-11-2023
+[2023-11-12T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+12-11-2023
+[2023-11-12T01:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+12-11-2023
+[2023-11-12T02:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+12-11-2023
+[2023-11-12T02:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+12-11-2023
+[2023-11-12T03:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+12-11-2023
+[2023-11-12T03:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+12-11-2023
+[2023-11-12T04:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+12-11-2023
+[2023-11-12T04:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+12-11-2023
+[2023-11-12T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+12-11-2023
+[2023-11-12T05:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+12-11-2023
+[2023-11-12T06:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+12-11-2023
+[2023-11-12T06:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+12-11-2023
+[2023-11-12T07:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+12-11-2023
+[2023-11-12T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+12-11-2023
+[2023-11-12T08:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+12-11-2023
+[2023-11-12T08:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+12-11-2023
+[2023-11-12T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+12-11-2023
+[2023-11-12T09:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+12-11-2023
+[2023-11-12T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+12-11-2023
+[2023-11-12T10:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+12-11-2023
+[2023-11-12T11:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+12-11-2023
+[2023-11-12T11:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+12-11-2023
+[2023-11-12T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+12-11-2023
+[2023-11-12T12:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+12-11-2023
+[2023-11-12T13:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+12-11-2023
+[2023-11-12T13:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+12-11-2023
+[2023-11-12T14:27:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+12-11-2023
+[2023-11-12T14:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+12-11-2023
+[2023-11-12T15:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+12-11-2023
+[2023-11-12T15:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+12-11-2023
+[2023-11-12T16:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+12-11-2023
+[2023-11-12T16:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+12-11-2023
+[2023-11-12T17:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+12-11-2023
+[2023-11-12T17:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+12-11-2023
+[2023-11-12T18:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+12-11-2023
+[2023-11-12T18:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+12-11-2023
+[2023-11-12T19:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+12-11-2023
+[2023-11-12T19:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+12-11-2023
+[2023-11-12T20:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+12-11-2023
+[2023-11-12T20:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+12-11-2023
+[2023-11-12T21:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+12-11-2023
+[2023-11-12T21:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+12-11-2023
+[2023-11-12T22:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+12-11-2023
+[2023-11-12T22:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+12-11-2023
+[2023-11-12T23:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+12-11-2023
+[2023-11-12T23:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+12-11-2023
+[2023-11-13T00:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+12-11-2023
+[2023-11-13T00:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+12-11-2023
+[2023-11-13T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+13-11-2023
+[2023-11-13T01:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+13-11-2023
+[2023-11-13T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+13-11-2023
+[2023-11-13T02:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+13-11-2023
+[2023-11-13T03:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+13-11-2023
+[2023-11-13T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+13-11-2023
+[2023-11-13T04:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+13-11-2023
+[2023-11-13T04:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+13-11-2023
+[2023-11-13T05:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+13-11-2023
+[2023-11-13T05:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+13-11-2023
+[2023-11-13T06:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+13-11-2023
+[2023-11-13T06:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+13-11-2023
+[2023-11-13T07:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+13-11-2023
+[2023-11-13T07:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+13-11-2023
+[2023-11-13T08:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+13-11-2023
+[2023-11-13T08:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+13-11-2023
+[2023-11-13T09:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+13-11-2023
+[2023-11-13T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+13-11-2023
+[2023-11-13T10:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+13-11-2023
+[2023-11-13T10:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+13-11-2023
+[2023-11-13T11:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+13-11-2023
+[2023-11-13T11:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+13-11-2023
+[2023-11-13T12:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+13-11-2023
+[2023-11-13T12:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+13-11-2023
+[2023-11-13T13:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+13-11-2023
+[2023-11-13T13:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+13-11-2023
+[2023-11-13T14:27:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+13-11-2023
+[2023-11-13T14:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+13-11-2023
+[2023-11-13T15:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+13-11-2023
+[2023-11-13T15:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+13-11-2023
+[2023-11-13T16:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+13-11-2023
+[2023-11-13T16:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+13-11-2023
+[2023-11-13T17:27:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+13-11-2023
+[2023-11-13T17:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+13-11-2023
+[2023-11-13T18:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+13-11-2023
+[2023-11-13T18:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+13-11-2023
+[2023-11-13T19:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+13-11-2023
+[2023-11-13T19:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+13-11-2023
+[2023-11-13T20:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+13-11-2023
+[2023-11-13T20:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+13-11-2023
+[2023-11-13T21:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+13-11-2023
+[2023-11-13T21:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+13-11-2023
+[2023-11-13T22:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+13-11-2023
+[2023-11-13T22:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+13-11-2023
+[2023-11-13T23:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+13-11-2023
+[2023-11-13T23:36:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+13-11-2023
+[2023-11-14T00:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+13-11-2023
+[2023-11-14T00:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+13-11-2023
+[2023-11-14T01:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+14-11-2023
+[2023-11-14T01:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+14-11-2023
+[2023-11-14T02:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+14-11-2023
+[2023-11-14T02:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+14-11-2023
+[2023-11-14T03:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+14-11-2023
+[2023-11-14T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+14-11-2023
+[2023-11-14T04:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+14-11-2023
+[2023-11-14T04:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+14-11-2023
+[2023-11-14T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+14-11-2023
+[2023-11-14T05:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+14-11-2023
+[2023-11-14T06:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+14-11-2023
+[2023-11-14T06:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+14-11-2023
+[2023-11-14T07:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+14-11-2023
+[2023-11-14T07:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+14-11-2023
+[2023-11-14T08:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+14-11-2023
+[2023-11-14T08:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+14-11-2023
+[2023-11-14T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+14-11-2023
+[2023-11-14T09:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+14-11-2023
+[2023-11-14T10:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+14-11-2023
+[2023-11-14T10:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+14-11-2023
+[2023-11-14T11:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+14-11-2023
+[2023-11-14T11:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+14-11-2023
+[2023-11-14T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+14-11-2023
+[2023-11-14T12:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+14-11-2023
+[2023-11-14T13:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+14-11-2023
+[2023-11-14T13:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+14-11-2023
+[2023-11-14T14:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+14-11-2023
+[2023-11-14T14:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+14-11-2023
+[2023-11-14T15:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+14-11-2023
+[2023-11-14T15:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+14-11-2023
+[2023-11-14T16:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+14-11-2023
+[2023-11-14T16:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+14-11-2023
+[2023-11-14T17:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+14-11-2023
+[2023-11-14T17:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+14-11-2023
+[2023-11-14T18:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+14-11-2023
+[2023-11-14T18:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+14-11-2023
+[2023-11-14T19:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+14-11-2023
+[2023-11-14T19:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+14-11-2023
+[2023-11-14T20:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+14-11-2023
+[2023-11-14T20:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+14-11-2023
+[2023-11-14T21:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+14-11-2023
+[2023-11-14T21:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+14-11-2023
+[2023-11-14T22:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+14-11-2023
+[2023-11-14T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+14-11-2023
+[2023-11-14T23:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+14-11-2023
+[2023-11-14T23:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+14-11-2023
+[2023-11-15T00:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+14-11-2023
+[2023-11-15T00:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+14-11-2023
+[2023-11-15T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+15-11-2023
+[2023-11-15T01:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+15-11-2023
+[2023-11-15T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+15-11-2023
+[2023-11-15T02:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+15-11-2023
+[2023-11-15T03:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+15-11-2023
+[2023-11-15T03:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+15-11-2023
+[2023-11-15T04:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+15-11-2023
+[2023-11-15T04:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+15-11-2023
+[2023-11-15T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+15-11-2023
+[2023-11-15T05:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+15-11-2023
+[2023-11-15T06:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+15-11-2023
+[2023-11-15T06:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+15-11-2023
+[2023-11-15T07:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+15-11-2023
+[2023-11-15T07:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+15-11-2023
+[2023-11-15T08:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+15-11-2023
+[2023-11-15T08:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+15-11-2023
+[2023-11-15T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+15-11-2023
+[2023-11-15T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+15-11-2023
+[2023-11-15T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+15-11-2023
+[2023-11-15T10:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+15-11-2023
+[2023-11-15T11:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+15-11-2023
+[2023-11-15T11:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+15-11-2023
+[2023-11-15T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+15-11-2023
+[2023-11-15T12:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+15-11-2023
+[2023-11-15T13:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+15-11-2023
+[2023-11-15T13:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+15-11-2023
+[2023-11-15T14:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+15-11-2023
+[2023-11-15T14:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+15-11-2023
+[2023-11-15T15:27:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+15-11-2023
+[2023-11-15T15:36:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+15-11-2023
+[2023-11-15T16:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+15-11-2023
+[2023-11-15T16:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+15-11-2023
+[2023-11-15T17:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+15-11-2023
+[2023-11-15T17:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+15-11-2023
+[2023-11-15T18:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+15-11-2023
+[2023-11-15T18:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+15-11-2023
+[2023-11-15T19:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+15-11-2023
+[2023-11-15T19:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+15-11-2023
+[2023-11-15T20:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+15-11-2023
+[2023-11-15T20:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+15-11-2023
+[2023-11-15T21:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+15-11-2023
+[2023-11-15T21:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+15-11-2023
+[2023-11-15T22:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+15-11-2023
+[2023-11-15T22:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+15-11-2023
+[2023-11-15T23:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+15-11-2023
+[2023-11-15T23:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+15-11-2023
+[2023-11-16T00:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+15-11-2023
+[2023-11-16T00:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+15-11-2023
+[2023-11-16T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+16-11-2023
+[2023-11-16T01:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+16-11-2023
+[2023-11-16T02:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+16-11-2023
+[2023-11-16T02:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+16-11-2023
+[2023-11-16T03:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+16-11-2023
+[2023-11-16T03:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+16-11-2023
+[2023-11-16T04:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+16-11-2023
+[2023-11-16T04:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+16-11-2023
+[2023-11-16T05:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+16-11-2023
+[2023-11-16T05:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+16-11-2023
+[2023-11-16T06:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+16-11-2023
+[2023-11-16T06:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+16-11-2023
+[2023-11-16T07:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+16-11-2023
+[2023-11-16T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+16-11-2023
+[2023-11-16T08:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+16-11-2023
+[2023-11-16T08:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+16-11-2023
+[2023-11-16T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+16-11-2023
+[2023-11-16T09:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+16-11-2023
+[2023-11-16T10:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+16-11-2023
+[2023-11-16T10:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+16-11-2023
+[2023-11-16T11:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+16-11-2023
+[2023-11-16T11:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+16-11-2023
+[2023-11-16T12:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+16-11-2023
+[2023-11-16T12:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+16-11-2023
+[2023-11-16T13:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+16-11-2023
+[2023-11-16T13:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+16-11-2023
+[2023-11-16T14:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+16-11-2023
+[2023-11-16T14:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+16-11-2023
+[2023-11-16T15:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+16-11-2023
+[2023-11-16T15:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+16-11-2023
+[2023-11-16T16:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+16-11-2023
+[2023-11-16T16:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+16-11-2023
+[2023-11-16T17:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+16-11-2023
+[2023-11-16T17:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+16-11-2023
+[2023-11-16T18:27:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+16-11-2023
+[2023-11-16T18:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+16-11-2023
+[2023-11-16T19:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+16-11-2023
+[2023-11-16T19:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+16-11-2023
+[2023-11-16T20:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+16-11-2023
+[2023-11-16T20:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+16-11-2023
+[2023-11-16T21:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+16-11-2023
+[2023-11-16T21:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+16-11-2023
+[2023-11-16T22:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+16-11-2023
+[2023-11-16T22:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+16-11-2023
+[2023-11-16T23:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+16-11-2023
+[2023-11-16T23:36:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+16-11-2023
+[2023-11-17T00:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+16-11-2023
+[2023-11-17T00:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+16-11-2023
+[2023-11-17T01:27:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+17-11-2023
+[2023-11-17T01:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+17-11-2023
+[2023-11-17T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+17-11-2023
+[2023-11-17T02:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+17-11-2023
+[2023-11-17T03:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+17-11-2023
+[2023-11-17T03:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+17-11-2023
+[2023-11-17T04:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+17-11-2023
+[2023-11-17T04:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+17-11-2023
+[2023-11-17T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+17-11-2023
+[2023-11-17T05:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+17-11-2023
+[2023-11-17T06:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+17-11-2023
+[2023-11-17T06:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+17-11-2023
+[2023-11-17T07:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+17-11-2023
+[2023-11-17T07:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+17-11-2023
+[2023-11-17T08:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+17-11-2023
+[2023-11-17T08:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+17-11-2023
+[2023-11-17T09:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+17-11-2023
+[2023-11-17T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+17-11-2023
+[2023-11-17T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+17-11-2023
+[2023-11-17T10:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+17-11-2023
+[2023-11-17T11:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+17-11-2023
+[2023-11-17T11:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+17-11-2023
+[2023-11-17T12:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+17-11-2023
+[2023-11-17T12:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+17-11-2023
+[2023-11-17T13:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+17-11-2023
+[2023-11-17T13:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+17-11-2023
+[2023-11-17T14:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+17-11-2023
+[2023-11-17T14:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+17-11-2023
+[2023-11-17T15:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+17-11-2023
+[2023-11-17T15:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+17-11-2023
+[2023-11-17T16:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+17-11-2023
+[2023-11-17T16:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+17-11-2023
+[2023-11-17T17:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+16
+30
+17-11-2023
+[2023-11-17T17:36:00.011Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+17
+0
+17-11-2023
+[2023-11-17T18:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+17
+30
+17-11-2023
+[2023-11-17T18:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+18
+0
+17-11-2023
+[2023-11-17T19:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+18
+30
+17-11-2023
+[2023-11-17T19:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+19
+0
+17-11-2023
+[2023-11-17T20:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+19
+30
+17-11-2023
+[2023-11-17T20:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+20
+0
+17-11-2023
+[2023-11-17T21:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+20
+30
+17-11-2023
+[2023-11-17T21:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 0]
+21
+0
+17-11-2023
+[2023-11-17T22:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
+21
+30
+17-11-2023
+[2023-11-17T22:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
+22
+0
+17-11-2023
+[2023-11-17T23:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
+22
+30
+17-11-2023
+[2023-11-17T23:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
+23
+0
+17-11-2023
+[2023-11-18T00:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
+23
+30
+17-11-2023
+[2023-11-18T00:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
+24
+0
+17-11-2023
+[2023-11-18T01:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+0
+30
+18-11-2023
+[2023-11-18T01:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+1
+0
+18-11-2023
+[2023-11-18T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+1
+30
+18-11-2023
+[2023-11-18T02:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+2
+0
+18-11-2023
+[2023-11-18T03:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+2
+30
+18-11-2023
+[2023-11-18T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+3
+0
+18-11-2023
+[2023-11-18T04:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+3
+30
+18-11-2023
+[2023-11-18T04:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+4
+0
+18-11-2023
+[2023-11-18T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+4
+30
+18-11-2023
+[2023-11-18T05:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+5
+0
+18-11-2023
+[2023-11-18T06:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+5
+30
+18-11-2023
+[2023-11-18T06:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+6
+0
+18-11-2023
+[2023-11-18T07:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+6
+30
+18-11-2023
+[2023-11-18T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+7
+0
+18-11-2023
+[2023-11-18T08:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+7
+30
+18-11-2023
+[2023-11-18T08:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+8
+0
+18-11-2023
+[2023-11-18T09:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+8
+30
+18-11-2023
+[2023-11-18T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+9
+0
+18-11-2023
+[2023-11-18T10:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+9
+30
+18-11-2023
+[2023-11-18T10:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+10
+0
+18-11-2023
+[2023-11-18T11:27:00.002Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+10
+30
+18-11-2023
+[2023-11-18T11:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+11
+0
+18-11-2023
+[2023-11-18T12:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+11
+30
+18-11-2023
+[2023-11-18T12:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+12
+0
+18-11-2023
+[2023-11-18T13:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+12
+30
+18-11-2023
+[2023-11-18T13:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+13
+0
+18-11-2023
+[2023-11-18T14:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+13
+30
+18-11-2023
+[2023-11-18T14:36:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+14
+0
+18-11-2023
+[2023-11-18T15:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+14
+30
+18-11-2023
+[2023-11-18T15:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+15
+0
+18-11-2023
+[2023-11-18T16:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+15
+30
+18-11-2023
+[2023-11-18T16:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+16
+0
+18-11-2023
+[2023-11-18T17:22:36.796Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-18T17:22:36.797Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-18T17:22:36.798Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-18T17:22:36.801Z][DBHandler] Connection closed
+[2023-11-18T17:22:36.802Z][SERVER-WORKER] Backend Closed.

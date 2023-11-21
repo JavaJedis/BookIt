@@ -1,12 +1,14 @@
 // Import Libraries
 const db_handler = require("./db_handler");
-const axios = require('axios');
+let axios = require('axios');
 const utils = require("./utils");
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client();
 const notification_manager = require('./notification_manager');
 
 
 //Global Definition
-const MODULE_NAME = "USER-MANAGER";
+MODULE_NAME = "USER-MANAGER";
 
 
 /**
@@ -23,7 +25,7 @@ async function userLogin(req, res) {
             _id: response.data.email,
             type: 'user',
             booking_ids: [],
-            devToken
+            devToken: devToken
         }
         const result = await db_handler.userLogin(userInfo);
         utils.consoleMsg(MODULE_NAME, `${response.data.email} logged in with device token ${devToken}`);
@@ -125,7 +127,6 @@ async function userAuth(req, res, next) {
     if (!token) {
         token = req.query.token
     }
-
     try {
         const response = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}&key=${process.env.GOOGLE_OAUTH_TOKEN}`);
         const userEmail = response.data.email;
@@ -155,28 +156,38 @@ function createAdmin(req, res) {
     }
 
     //Here call db_handler to change data
-
-    db_handler.addAdmin(email).then(
-        result => {
-            if (result) {
-                res.status(201);
-                res.type('json');
-                res.send(JSON.stringify(
-                    {
-                        status: "ok",
-                        data: "admin created"
+    axios.get(req.body.token).then(
+        axiosemail => {
+            db_handler.addAdmin(email, axiosemail.data.email).then(
+                result => {
+                    if (result) {
+                        res.status(201);
+                        res.type('json');
+                        res.send(JSON.stringify(
+                            {
+                                status: "ok",
+                                data: "admin created"
+                            }
+                        ));
+                    } else {
+                        utils.onFailure(res,
+                            {
+                                statusCode: 500,
+                                message: "operation failed"
+                            });
                     }
-                ));
-            } else {
-                utils.onFailure(res,
+                }
+            ).catch((err) => {
+                utils.onFailure(
+                    res, 
                     {
-                        statusCode: 500,
-                        message: "operation failed"
-                    });
-            }
+                        statusCode: 409, 
+                        message: err.message
+                    }
+                );
+            });
         }
     );
-
 }
 
 function removeAdmin(req, res) {
@@ -191,25 +202,37 @@ function removeAdmin(req, res) {
         return;
     }
 
-    db_handler.delAdmin(email).then(
-        result => {
-
-            if (result) {
-                res.status(200);
-                res.type('json');
-                res.send(JSON.stringify(
-                    {
-                        status: "ok",
-                        data: "admin removed"
+    axios.get(req.body.token).then(
+        axiosemail => {
+            db_handler.delAdmin(email, axiosemail.data.email).then(
+                result => {
+        
+                    if (result) {
+                        res.status(200);
+                        res.type('json');
+                        res.send(JSON.stringify(
+                            {
+                                status: "ok",
+                                data: "admin removed"
+                            }
+                        ));
+                    } else {
+                        utils.onFailure(res,
+                            {
+                                statusCode: 500,
+                                message: "operation failed"
+                            });
                     }
-                ));
-            } else {
-                utils.onFailure(res,
+                }
+            ).catch(err => {
+                utils.onFailure(
+                    res, 
                     {
-                        statusCode: 500,
-                        message: "operation failed"
-                    });
-            }
+                        statusCode: 409, 
+                        message: err.message
+                    }
+                );
+            });
         }
     );
 
@@ -228,8 +251,6 @@ function listAdmins(req, res) {
                 }));
         }
     );
-
-
 }
 
 function addBuildingAdmin(req, res) {
@@ -330,7 +351,7 @@ function getAdminBuildings(req, res) {
                         data: result
                     }
                 ));
-                return
+                return;
             }
 
             utils.onFailure(res,
@@ -338,14 +359,18 @@ function getAdminBuildings(req, res) {
                     statusCode: 500,
                     message: "operation failed"
                 });
-
-            return;
+        }
+    ).catch(
+        err => {
+            utils.onFailure(
+                res, 
+                {
+                    statusCode: err.code, 
+                    message: err.message
+                }
+            );
         }
     );
-
-
-
-
 
 }
 // Interface exports
@@ -362,5 +387,6 @@ module.exports = {
     addBuildingAdmin,
     removeBuildingAdmin,
     getAdminBuildings,
-    listAdmins
+    listAdmins, 
+    axios: axios
 };

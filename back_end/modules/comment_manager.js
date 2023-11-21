@@ -4,10 +4,10 @@ const utils = require('./utils');
 
 
 //Global Definitions
-const MODULE_NAME = 'COMMENT-MANAGER';
-const MAX_BUILDING_CODE_LEN = 4;
-const MAX_ROOM_NUM = 4;
-const MAX_COMMENT_LEN = 600;
+MODULE_NAME = 'COMMENT-MANAGER';
+MAX_BUILDING_CODE_LEN = 4;
+MAX_ROOM_NUM = 4;
+MAX_COMMENT_LEN = 600;
 
 
 //Show necessary info when required
@@ -40,26 +40,27 @@ function sendStudyRoomComment(req, res) {
         });
     }*/
 
-    console.log(req.body);
     const data = {
         building: req.params.building_code, 
         room: req.params.room_no, 
         comment: req.body.comment
-    }
-    if (commentUploader(data)) {
-        res.status(201);
-        res.type('json');
-        res.send(JSON.stringify(
-            {
-                status: "ok",
-                data: "comment posted"
-            }
-        ));
-        return;
-    }
-    utils.onFailure(res, {
-        statusCode: 404, 
-        message: "Not Found"
+    } 
+    commentUploader(data).then(
+        () => {
+            res.status(201);
+            res.type('json');
+            res.send(JSON.stringify(
+                {
+                    status: "ok",
+                    data: "comment posted"
+                }
+            ));
+        }
+    ).catch (err => {
+        utils.onFailure(res, {
+            statusCode: 404, 
+            message: "Not found"
+        });
     });
 }
 
@@ -70,26 +71,26 @@ function sendStudyRoomComment(req, res) {
  *                studyroom comment
  * @returns 
  */
+function studyRoomCommentReqCheck(req) {
 
-/*function studyRoomCommentReqCheck(req) {
-
-    
+    /*
     Check whether the body and its members are null
     or empty.
-    
+    */
     if (req.body == null) {
         console.log("fuck");
         return false;
     }
     var reqBody = req.body;
+    var usrToken = reqBody.token;
     var buildingCode = req.params.building_code;
     var roomNum = req.params.room_num;
     var cmtData = reqBody.comment;
-    
+    /*
     if (usrToken == null || usrToken == "") {
         return false;
     }
-    
+    */
 
     if (buildingCode == null || buildingCode == ""
         || buildingCode.length > MAX_BUILDING_CODE_LEN) {
@@ -109,7 +110,6 @@ function sendStudyRoomComment(req, res) {
     return true;
 
 }
-*/
 
 
 //Export functions
