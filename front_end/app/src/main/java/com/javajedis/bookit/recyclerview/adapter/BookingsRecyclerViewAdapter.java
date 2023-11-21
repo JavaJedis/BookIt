@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.R;
+import com.javajedis.bookit.model.TimeSlotsModel;
 import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
