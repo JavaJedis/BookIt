@@ -52,6 +52,10 @@ public class BookingsRecyclerViewAdapter extends RecyclerView.Adapter<BookingsRe
         return bookingsModels.size();
     }
 
+    public BookingsModel getItemAtPosition(int position) {
+        return bookingsModels.get(position);
+    }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView room;
