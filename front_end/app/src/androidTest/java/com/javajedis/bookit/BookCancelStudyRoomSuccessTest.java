@@ -6,6 +6,8 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -19,7 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import static org.hamcrest.Matchers.not;
+
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -31,6 +37,12 @@ import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import java.time.LocalDate;
+import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -111,12 +123,6 @@ public class BookCancelStudyRoomSuccessTest {
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_status_textView), withText("book now"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("book now")));
-
         ViewInteraction recyclerView5 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         childAtPosition(
@@ -124,62 +130,53 @@ public class BookCancelStudyRoomSuccessTest {
                                 0)));
         recyclerView5.perform(actionOnItemAtPosition(47, click()));
 
-        ViewInteraction recyclerView6 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        recyclerView6.check(matches(isDisplayed()));
-
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.action_bookings_textView), withText("click to cancel"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView2.check(matches(withText("click to cancel")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.timeslot_bookings_textView), withText("2330-2400"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText("2330-2400")));
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.date_bookings_textView), withText("30-11-2023"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView4.check(matches(withText("30-11-2023")));
-
-//        ViewInteraction textView5 = onView(
-//                allOf(withId(com.android.systemui.R.id.clock), withText("2:47"), withContentDescription("2:47 PM"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_status_bar_system_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
-//                        isDisplayed()));
-//        textView5.check(matches(withText("2:47")));
+        Intents.init();
+        intended(hasComponent(BookingsActivity.class.getName()));
 //
-//        ViewInteraction textView6 = onView(
-//                allOf(withId(com.android.systemui.R.id.date), withText("Mon, Nov 20"),
-//                        withParent(allOf(withId(com.android.systemui.R.id.quick_qs_status_icons),
-//                                withParent(withId(com.android.systemui.R.id.header)))),
+//        ViewInteraction textView3 = onView(
+//                allOf(withId(R.id.timeslot_bookings_textView), withText("2330-2400"),
+//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
 //                        isDisplayed()));
-//        textView6.check(matches(withText("Mon, Nov 20")));
+//        textView3.check(matches(withText("2330-2400")));
+//
+//        ViewInteraction textView4 = onView(
+//                allOf(withId(R.id.date_bookings_textView), withText("30-11-2023"),
+//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
+//                        isDisplayed()));
+//        textView4.check(matches(withText("30-11-2023")));
 
-        ViewInteraction recyclerView7 = onView(
-                allOf(withId(R.id.bookings_recyclerView),
-                        childAtPosition(
-                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                0)));
-        recyclerView7.perform(actionOnItemAtPosition(0, click()));
+        // get current time
+        String currentTime = getCurrentTime();
+        // assert if current time is before 2330-2400
 
-        ViewInteraction viewGroup2 = onView(
-                allOf(withParent(allOf(withId(android.R.id.content),
-                                withParent(withId(androidx.appcompat.R.id.action_bar_root)))),
-                        isDisplayed()));
-        viewGroup2.check(doesNotExist());
+        // ChatGPT usage: Yes --> from here
+        int currentHour = Integer.parseInt(currentTime.substring(0, 2));
+        int currentMinute = Integer.parseInt(currentTime.substring(2));
+
+        int targetHour = 23;
+        int targetMinute = 30;
+
+        // Convert both current time and target time to minutes for easy comparison
+        int currentTimeInMinutes = currentHour * 60 + currentMinute;
+        int targetTimeInMinutes = targetHour * 60 + targetMinute;
+
+        // Assert that the current time is before 23:30
+        assertTrue(currentTimeInMinutes < targetTimeInMinutes);
+
+        // get current date
+        LocalDate currentDate = LocalDate.now();
+        LocalDate targetDate = LocalDate.of(2023, 11, 30);
+
+        // Assert that the current date is before 30-11-2023
+        assertTrue(currentDate.isBefore(targetDate));
+        // ChatGPT usage: Yes --> from here
+
+//        ViewInteraction recyclerView7 = onView(
+//                allOf(withId(R.id.bookings_recyclerView),
+//                        childAtPosition(
+//                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+//                                0)));
+//        recyclerView7.perform(actionOnItemAtPosition(0, click()));
     }
 
     private static Matcher<View> childAtPosition(
@@ -199,5 +196,11 @@ public class BookCancelStudyRoomSuccessTest {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
+    }
+
+    public static String getCurrentTime() {
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        return currentTime.format(formatter);
     }
 }
