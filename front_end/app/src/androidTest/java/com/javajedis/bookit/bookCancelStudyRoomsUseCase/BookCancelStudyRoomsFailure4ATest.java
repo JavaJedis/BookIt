@@ -100,7 +100,7 @@ public class BookCancelStudyRoomsFailure4ATest {
         // ChatGPT usage: Yes --> from here
         // get current date
         LocalDate currentDate = LocalDate.now();
-        LocalDate targetDate = LocalDate.of(2023, 11, 30);
+        LocalDate targetDate = LocalDate.of(2023, 11, 21);
 
         if (currentDate.isAfter(targetDate)) {
             // Assert that the current date is after 30-11-2023
@@ -111,8 +111,8 @@ public class BookCancelStudyRoomsFailure4ATest {
             int currentHour = Integer.parseInt(currentTime.substring(0, 2));
             int currentMinute = Integer.parseInt(currentTime.substring(2));
 
-            int targetHour = 22; // TODO: confirm this later
-            int targetMinute = 30; // TODO: confirm this later
+            int targetHour = 0;
+            int targetMinute = 30;
 
             // Convert both current time and target time to minutes for easy comparison
             int currentTimeInMinutes = currentHour * 60 + currentMinute;
