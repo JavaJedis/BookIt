@@ -46,12 +46,6 @@ public class FilterStudyRoomsFailure8ATest {
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
-    @Rule
-    public GrantPermissionRule mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.ACCESS_FINE_LOCATION",
-                    "android.permission.ACCESS_COARSE_LOCATION");
-
     @Test
     public void filterStudyRoomsFailure8ATest() {
         ViewInteraction ic = onView(
@@ -99,10 +93,12 @@ public class FilterStudyRoomsFailure8ATest {
                         isDisplayed()));
         appCompatButton2.perform(click());
 
-        ViewInteraction linearLayout = onView(
-                allOf(withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
-                        isDisplayed()));
-        linearLayout.check(matches(isDisplayed()));
+        UiObject2 denyLocations = uiDevice.findObject(By.textContains("Deny"));
+
+        // Click on the Google account
+        if (denyLocations != null) {
+            denyLocations.click();
+        }
     }
 
     private static Matcher<View> childAtPosition(

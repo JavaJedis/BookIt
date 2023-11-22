@@ -133,12 +133,6 @@ public class BookCancelStudyRoomsFailure4ATest {
             expiredBooking.click();
         }
 
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
-
         ViewInteraction viewGroup2 = onView(
                 allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),

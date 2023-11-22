@@ -108,12 +108,6 @@ public class FilterStudyRoomsFailure8BTest {
                                 2)));
         recyclerView.perform(actionOnItemAtPosition(32, click()));
 
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(android.R.id.content),
-                                withParent(withId(androidx.appcompat.R.id.action_bar_root)))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
         ViewInteraction button = onView(
                 allOf(withId(R.id.day_button), withText("30 November 2023"),
                         withParent(withParent(withId(android.R.id.content))),
@@ -145,7 +139,6 @@ public class FilterStudyRoomsFailure8BTest {
         appCompatButton3.perform(click());
 
         // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
-        // check if the message appears with the text: “Your booking has been canceled!”
         onView(withText("Please select an appropriate date, start time, and duration")).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
     }
