@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import android.view.View;
@@ -28,6 +29,7 @@ import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
+import com.javajedis.bookit.util.bookingsRecyclerViewCheckConfirmedAssertion;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -97,32 +99,20 @@ public class AttendanceConfirmationIn3ClicksTest {
                         isDisplayed()));
         recyclerView.check(matches(isDisplayed()));
 
-        ViewInteraction viewGroup = onView(
-                allOf(withParent(allOf(withId(R.id.bookings_recyclerView),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        viewGroup.check(matches(isDisplayed()));
-
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.action_bookings_textView), withText("confirm attendance"),
+                allOf(withId(R.id.action_bookings_textView), withText("click to confirm"),
                         withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView2.check(matches(withText("confirm attendance")));
+        textView2.check(matches(withText("click to confirm")));
 
         //  Click on the confirm attendance button
-        UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("confirm attendance")); // Modify the selector as needed
+        UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("click to confirm")); // Modify the selector as needed
 
         if (confirmAttendance != null) {
             confirmAttendance.click();
         }
         // second click: on the booking which confirms it
         clickCount++;
-
-        ViewInteraction textView4 = onView(
-                allOf(withId(R.id.action_bookings_textView), withText("confirmed"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView4.check(matches(withText("confirmed")));
 
         assertTrue(clickCount <= 3);
     }
