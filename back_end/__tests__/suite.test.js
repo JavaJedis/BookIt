@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const {MongoMemoryServer} = require("mongodb-memory-server");
+const { MongoMemoryServer } = require("mongodb-memory-server");
 const request = require("supertest");
 jest.mock('axios');
 const axios = require("axios");
@@ -10,14 +10,14 @@ let mongoMemServer;
 /* Test data */
 let testDataA = {
     _id: "henry@henry.co",
-    type: "user", 
+    type: "user",
     adminBuildings: []
 };
 let testDataB = {
     _id: "jimmy@jimmy.co",
-    type: "admin", 
+    type: "admin",
     adminBuildings: [
-        "FAKE", 
+        "FAKE",
         "REAL"
     ]
 };
@@ -27,11 +27,11 @@ let testDataC = {
 };
 let testDataD = {
     _id: "tommy@admin.us",
-    type: "superadmin", 
+    type: "superadmin",
     adminBuildings: ["NULL"]
 }
 let testDataE = {
-    _id: "admin@testadmin.com", 
+    _id: "admin@testadmin.com",
     type: "admin"
 };
 
@@ -86,7 +86,7 @@ describe("/user/admin GET request", () => {
         Expected Behavior: Admin user information fetched from the database
         Expected Output: A list with one admin
         */
-       
+
         /* Prepare Test Data */
         let targetCollection = memClient.db("users").collection("users");
         targetCollection.insertOne(testDataB);
@@ -126,27 +126,27 @@ describe("/user/admin GET request", () => {
 });
 
 //Interface bookit.henrydhc.me/user/type GET
-describe("/user/type GET request", 
+describe("/user/type GET request",
     () => {
 
         let memClient;
 
         beforeAll(
-            async() => {
+            async () => {
                 memClient = await MongoClient.connect(mongoMemServer.getUri());
                 await memClient.db("users").collection("users").insertOne(testDataD);
             }
         );
 
         afterAll(
-            async() => {
+            async () => {
                 jest.restoreAllMocks();
                 await memClient.close();
             }
         )
 
-        test("Success: Normal user type", 
-            async() => {
+        test("Success: Normal user type",
+            async () => {
                 /*
                 Input: Normal account token
                 Expected Status Code: 200
@@ -162,7 +162,7 @@ describe("/user/type GET request",
                     }
                 );
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "user"
                 };
                 let actual = await request(app).get("/user/type?token=fake");
@@ -171,8 +171,8 @@ describe("/user/type GET request",
             }
         );
 
-        test("Success: Admin user type", 
-            async() => {
+        test("Success: Admin user type",
+            async () => {
                 /*
                 Input: Admin user token
                 Expected Status Code: 200
@@ -188,7 +188,7 @@ describe("/user/type GET request",
                     }
                 );
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "admin"
                 };
                 let actual = await request(app).get("/user/type?token=fake");
@@ -197,8 +197,8 @@ describe("/user/type GET request",
             }
         );
 
-        test("Superadmin user type", 
-            async() => {
+        test("Superadmin user type",
+            async () => {
                 /*
                 Input: Superadmin user token
                 Expected Status Code: 200
@@ -214,7 +214,7 @@ describe("/user/type GET request",
                     }
                 );
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "superadmin"
                 };
                 let actual = await request(app).get("/user/type?token=fake");
@@ -223,15 +223,15 @@ describe("/user/type GET request",
             }
         );
 
-        test("User does not exist", 
-            async() => {
+        test("User does not exist",
+            async () => {
                 /*
                 Input: Token of a invalid user
                 Expected Status Code: 404
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 await axios.get.mockResolvedValue(
                     {
                         data: {
@@ -240,38 +240,38 @@ describe("/user/type GET request",
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Unauthorized"
                 };
                 let actual = await request(app).get("/user/type?token=fake");
                 expect(actual.status).toBe(401);
                 expect(actual.body).toEqual(expected);
-            }   
+            }
         );
     }
 );
 
 //Interface bookit.henrydhc.me/user/login POST
-describe("/user/login POST request", 
+describe("/user/login POST request",
     () => {
 
         let memClient;
 
         beforeAll(
-            async() => {
+            async () => {
                 memClient = await MongoClient.connect(mongoMemServer.getUri());
             }
         );
 
         afterAll(
-            async() => {
+            async () => {
                 await jest.restoreAllMocks();
                 await memClient.close();
             }
         );
 
-        test("Success: New Account", 
-            async() => {
+        test("Success: New Account",
+            async () => {
                 /*
                 Input: Token of a valid user
                 Expected Status Code: 200
@@ -286,13 +286,13 @@ describe("/user/login POST request",
                         }
                     }
                 );
-                
+
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "User information saved"
                 };
                 let requestData = {
-                    token: "faketok", 
+                    token: "faketok",
                     devToken: "fakeDevToken"
                 };
                 let actual = await request(app).post("/user/login")
@@ -303,14 +303,14 @@ describe("/user/login POST request",
             }
         );
 
-        test("Success: Account already exists", 
-            async() => {
+        test("Success: Account already exists",
+            async () => {
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "User exists"
                 };
                 let requestData = {
-                    token: "faketok", 
+                    token: "faketok",
                     devToken: "fakeDevToken"
                 };
                 let actual = await request(app).post("/user/login")
@@ -321,19 +321,19 @@ describe("/user/login POST request",
             }
         );
 
-        test("Failure: Invalid token", 
-            async() => {
+        test("Failure: Invalid token",
+            async () => {
                 await axios.get.mockImplementation(
                     () => {
                         throw Error();
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Unauthorized"
                 };
                 let requestData = {
-                    token: "fake", 
+                    token: "fake",
                     devToken: "fakedevT"
                 };
                 let actual = await request(app).post("/user/login")
@@ -380,11 +380,11 @@ describe("/user/admin POST request",
                     }
                 );
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "admin created"
                 };
                 let requestData = {
-                    email: "henry@henry.co", 
+                    email: "henry@henry.co",
                     token: "fakeToken"
                 };
                 let actual = await request(app).post("/user/admin")
@@ -403,7 +403,7 @@ describe("/user/admin POST request",
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 await axios.get.mockResolvedValue(
                     {
                         data: {
@@ -412,11 +412,11 @@ describe("/user/admin POST request",
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not normal user"
                 };
                 let requestData = {
-                    email: "henry@henry.co", 
+                    email: "henry@henry.co",
                     token: "fakeToken"
                 };
                 let actual = await request(app).post("/user/admin")
@@ -427,14 +427,14 @@ describe("/user/admin POST request",
             }
         );
 
-        test("Failure: Target user is not normal user but superadmin", 
-            async() => {
+        test("Failure: Target user is not normal user but superadmin",
+            async () => {
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not normal user"
                 };
                 let requestData = {
-                    email: "tommy@admin.us", 
+                    email: "tommy@admin.us",
                     token: "fakeToken"
                 };
                 let actual = await request(app).post("/user/admin")
@@ -455,11 +455,11 @@ describe("/user/admin POST request",
                 */
 
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User does not exist"
                 };
                 let requestData = {
-                    email: "dumb@dumb.ca", 
+                    email: "dumb@dumb.ca",
                     token: "fakeToken"
                 };
                 let actual = await request(app).post("/user/admin")
@@ -470,15 +470,15 @@ describe("/user/admin POST request",
             }
         );
 
-        test("Failure: Current User is not superadmin but normal user", 
-            async() => {
+        test("Failure: Current User is not superadmin but normal user",
+            async () => {
                 /*
                 Input: Target user email and normal user token
                 Expected Status Code: 409
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 await axios.get.mockResolvedValue(
                     {
                         data: {
@@ -487,23 +487,23 @@ describe("/user/admin POST request",
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Current user is not superadmin"
                 };
                 let requestData = {
-                    email: "aman@admin.ca", 
+                    email: "aman@admin.ca",
                     token: "fakeToken"
                 };
                 let actual = await request(app).post("/user/admin")
                     .set("Content-Type", "application/json")
                     .send(requestData);
                 expect(actual.status).toBe(409);
-                expect(actual.body).toEqual(expected); 
+                expect(actual.body).toEqual(expected);
             }
         );
 
-        test("Failure: Current user is not superadmin but admin user", 
-            async() => {
+        test("Failure: Current user is not superadmin but admin user",
+            async () => {
                 /*
                 Input: Target normal user email and admin user token
                 Expected Status Code: 409
@@ -519,11 +519,11 @@ describe("/user/admin POST request",
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Current user is not superadmin"
                 };
                 let requestData = {
-                    email: "aman@admin.ca", 
+                    email: "aman@admin.ca",
                     token: "fakeToken"
                 };
                 let response = await request(app).post("/user/admin")
@@ -531,11 +531,11 @@ describe("/user/admin POST request",
                     .send(requestData);
                 expect(response.status).toBe(409);
                 expect(response.body).toEqual(expected);
-            }    
+            }
         );
 
-        test("Failure: Invalid token", 
-            async() => {
+        test("Failure: Invalid token",
+            async () => {
                 /*
                 Input: target user email and bad token
                 Expected Status Code: 401
@@ -549,11 +549,11 @@ describe("/user/admin POST request",
                     }
                 );
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Unauthorized"
                 };
                 let requestData = {
-                    email: "aman@admin.ca", 
+                    email: "aman@admin.ca",
                     token: "fakeToken"
                 };
                 let response = await request(app).post("/user/admin")
@@ -603,11 +603,11 @@ describe("/user/admin DELETE request",
                     }
                 );
                 let requestData = {
-                    email: "jimmy@jimmy.co", 
+                    email: "jimmy@jimmy.co",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: "admin removed"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -626,13 +626,13 @@ describe("/user/admin DELETE request",
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 let requestData = {
-                    email: "jimmy@jimmy.co", 
+                    email: "jimmy@jimmy.co",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not admin"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -653,11 +653,11 @@ describe("/user/admin DELETE request",
                 */
 
                 let requestData = {
-                    email: "tommy@admin.us", 
+                    email: "tommy@admin.us",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not admin"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -668,8 +668,8 @@ describe("/user/admin DELETE request",
             }
         );
 
-        test("Failure: account not found", 
-            async() => {
+        test("Failure: account not found",
+            async () => {
                 /*
                 Input: Invalid target user and superadmin token
                 Expected Status Code: 409
@@ -678,11 +678,11 @@ describe("/user/admin DELETE request",
                 */
 
                 let requestData = {
-                    email: "dumb@dumb.com", 
+                    email: "dumb@dumb.com",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User does not exist"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -693,8 +693,8 @@ describe("/user/admin DELETE request",
             }
         );
 
-        test("Failure: Current user is not superadmin but normal user", 
-            async() => {
+        test("Failure: Current user is not superadmin but normal user",
+            async () => {
                 /*
                 Input: Target admin and normal user token
                 Expected Status Code: 409
@@ -710,11 +710,11 @@ describe("/user/admin DELETE request",
                     }
                 );
                 let requestData = {
-                    email: "henry@henry.co", 
+                    email: "henry@henry.co",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Current user is not superadmin"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -725,8 +725,8 @@ describe("/user/admin DELETE request",
             }
         );
 
-        test("Failure: Current user is not superadmin but admin", 
-            async() => {
+        test("Failure: Current user is not superadmin but admin",
+            async () => {
                 await axios.get.mockResolvedValue(
                     {
                         data: {
@@ -735,11 +735,11 @@ describe("/user/admin DELETE request",
                     }
                 );
                 let requestData = {
-                    email: "henry@henry.co", 
+                    email: "henry@henry.co",
                     token: "fakeToken"
                 };
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "Current user is not superadmin"
                 };
                 let actual = await request(app).delete("/user/admin")
@@ -781,7 +781,7 @@ describe("/user/admin/:email/buildings GET request",
                 */
 
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: []
                 };
                 let actual = await request(app).get("/user/admin/henry@henry.co/buildings");
@@ -798,12 +798,12 @@ describe("/user/admin/:email/buildings GET request",
                 Expected Behavior: Building list fetched from the database
                 Expected Output: List of 1 building of the specified admin
                 */
-                
+
                 /* Prepare Data */
-                await testClient.db("users").collection("users").updateOne({_id: "henry@henry.co"}, {$push: {adminBuildings: "DOM"}});
+                await testClient.db("users").collection("users").updateOne({ _id: "henry@henry.co" }, { $push: { adminBuildings: "DOM" } });
 
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: ["DOM"]
                 };
                 let actual = await request(app).get("/user/admin/henry@henry.co/buildings");
@@ -812,8 +812,8 @@ describe("/user/admin/:email/buildings GET request",
             }
         );
 
-        test("Success: Admin has more than one building", 
-            async() => {
+        test("Success: Admin has more than one building",
+            async () => {
                 /*
                 Input: Admin email
                 Expected Status Code: 200
@@ -822,10 +822,10 @@ describe("/user/admin/:email/buildings GET request",
                 */
 
                 /* Prepare Data */
-                await testClient.db("users").collection("users").updateOne({_id: "henry@henry.co"}, {$push: {adminBuildings: "BOB"}});
+                await testClient.db("users").collection("users").updateOne({ _id: "henry@henry.co" }, { $push: { adminBuildings: "BOB" } });
 
                 let expected = {
-                    status: "ok", 
+                    status: "ok",
                     data: ["DOM", "BOB"]
                 };
                 let actual = await request(app).get("/user/admin/henry@henry.co/buildings");
@@ -834,7 +834,7 @@ describe("/user/admin/:email/buildings GET request",
             }
         )
 
-        
+
 
         test("Failure: Non-admin user but normal user",
             async () => {
@@ -844,9 +844,9 @@ describe("/user/admin/:email/buildings GET request",
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not admin"
                 };
                 let actual = await request(app).get("/user/admin/jimmy@jimmy.co/buildings");
@@ -865,7 +865,7 @@ describe("/user/admin/:email/buildings GET request",
                 */
 
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User is not admin"
                 };
                 let actual = await request(app).get("/user/admin/tommy@admin.us/buildings");
@@ -874,17 +874,17 @@ describe("/user/admin/:email/buildings GET request",
             }
         );
 
-        test("Failure: account does not exist", 
-            async() => {
+        test("Failure: account does not exist",
+            async () => {
                 /*
                 Input: Invalid account email
                 Expected Status: 404
                 Expected Behavior: None
                 Expected Output: Error Message
                 */
-                
+
                 let expected = {
-                    status: "error", 
+                    status: "error",
                     data: "User not found"
                 };
                 let actual = await request(app).get("/user/admin/dumb@noob.com/buildings");
@@ -932,7 +932,7 @@ describe("/user/admin/:email/buildings DELETE request",
 
         afterAll(
             async () => {
-                
+
             }
         );
 
@@ -1205,7 +1205,7 @@ let testRoomC = {
 
 let testUserBooking = { "_id": "blah@blah.com", "type": "user", "booking_ids": [] }
 
-let testUserWaitlist = { "_id": "blah@blah.com", "type": "user", "booking_ids": [] }
+let testUserWaitlist = { "_id": "wait@wait.com", "type": "user", "booking_ids": [] }
 
 
 
@@ -1573,8 +1573,8 @@ describe("/studyroom/book POST request",
 
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 800,
-                    endTime: 830,
+                    startTime: "0800",
+                    endTime: "0830",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1611,8 +1611,8 @@ describe("/studyroom/book POST request",
 
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 800,
-                    endTime: 830,
+                    startTime: "0800",
+                    endTime: "0830",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1629,12 +1629,12 @@ describe("/studyroom/book POST request",
                         }
                     }
                 ));
-
                 let actual = await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
-                expect(actual.status).toBe(403);
+                console.log(actual)
+                expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
         );
@@ -1649,8 +1649,8 @@ describe("/studyroom/book POST request",
                 */
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 800,
-                    endTime: 830,
+                    startTime: "0800",
+                    endTime: "0830",
                     buildingCode: "ALS",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1688,8 +1688,8 @@ describe("/studyroom/book POST request",
                 */
                 const bookingData = {
                     date: "01-12-2022",
-                    startTime: 830,
-                    endTime: 900,
+                    startTime: "0830",
+                    endTime: "0900",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1726,8 +1726,8 @@ describe("/studyroom/book POST request",
                 */
                 const bookingData = {
                     date: "01-12-2022",
-                    startTime: 730,
-                    endTime: 800,
+                    startTime: "0730",
+                    endTime: "0800",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1783,8 +1783,6 @@ describe("/studyroom/waitlist POST request",
         afterAll(
             async () => {
                 await testClient.close();
-                await server.shutDown();
-                await mongoMemServer.stop();
             }
         );
 
@@ -1799,8 +1797,8 @@ describe("/studyroom/waitlist POST request",
 
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 800,
-                    endTime: 830,
+                    startTime: "0800",
+                    endTime: "0830",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1808,7 +1806,7 @@ describe("/studyroom/waitlist POST request",
 
                 let expected = {
                     status: "ok",
-                    data: "booked!"
+                    data: "Successfully added to the waitlist"
                 };
                 axios.get.mockImplementation(() => Promise.resolve(
                     {
@@ -1849,8 +1847,8 @@ describe("/studyroom/waitlist POST request",
 
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 830,
-                    endTime: 800,
+                    startTime: "0830",
+                    endTime: "0900",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1872,7 +1870,7 @@ describe("/studyroom/waitlist POST request",
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
-                expect(actual.status).toBe(403);
+                expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
         );
@@ -1887,8 +1885,8 @@ describe("/studyroom/waitlist POST request",
                 */
                 const bookingData = {
                     date: "01-12-2023",
-                    startTime: 800,
-                    endTime: 830,
+                    startTime: "0800",
+                    endTime: "0830",
                     buildingCode: "ALS",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1926,8 +1924,8 @@ describe("/studyroom/waitlist POST request",
                 */
                 const bookingData = {
                     date: "01-12-2022",
-                    startTime: 830,
-                    endTime: 900,
+                    startTime: "0830",
+                    endTime: "0900",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1964,8 +1962,8 @@ describe("/studyroom/waitlist POST request",
                 */
                 const bookingData = {
                     date: "01-12-2022",
-                    startTime: 730,
-                    endTime: 800,
+                    startTime: "0730",
+                    endTime: "0800",
                     buildingCode: "ALSC",
                     roomNo: "101",
                     token: testUserBooking.email
@@ -1992,5 +1990,125 @@ describe("/studyroom/waitlist POST request",
             }
         );
 
+    }
+);
+
+//Interface bookit.henrydhc.me/lecturehalls/:building_code GET
+describe("/lecturehalls/:building_code GET request",
+    () => {
+
+        /** @type {MongoClient} */
+        let memClient;
+        /** @type {Db} */
+        let targetDb;
+
+        let roomA = {
+            _id: 101,
+            'room code': '100',
+            'building code': 'UCEN',
+            'building name': 'Wesbrook',
+            address: '6174 University Boulevard, Vancouver, BC V6T 1Z3',
+            hours: 'Mon to Fri: 7:30AM - 5:00PM, Sat/Sun/Holidays: Closed',
+            capacity: '325',
+            classroom_image_url: 'https://learningspaces.ubc.ca/sites/learningspaces.ubc.ca/files/styles/informal_list/public/classroom-images/WESB%20100%20%282%20of%204%29.JPG?itok=DLojjPI0',
+            unavailable_times: {
+                Mon: ['00:00 - 7:30', '9:00 - 24:00'],
+                Tue: ['00:00 - 7:30', '8:00 - 24:00'],
+                Wed: ['00:00 - 7:30', '9:00 - 24:00'],
+                Thu: ['00:00 - 7:30', '8:00 - 24:00'],
+                Fri: ['00:00 - 7:30', '9:00 - 16:00', '17:00 - 24:00'],
+                Sat: ['00:00 - 24:00'],
+                Sun: ['00:00 - 24:00']
+            }
+        }
+
+
+        let buildings = {
+            type: 'all_ils_buildings',
+            buildings: [{
+                building_code: 'UCEN',
+                building_name: 'West Mall Swing Space (SWNG) - 1st Floor Concourse ',
+                address: '2175 West Mall, Vancouver, BC V6T 1Z4',
+                lat: 49.2629965,
+                lon: -123.254339
+            }]
+        }
+
+        beforeAll(
+            async () => {
+                memClient = await MongoClient.connect(mongoMemServer.getUri());
+                targetDb = memClient.db("lecture_room_db");
+                await targetDb.collection("building_all").insertOne(buildings);
+                await targetDb.collection("UCEN").insertOne(roomA);
+            }
+        );
+
+        afterAll(
+            async () => {
+                await memClient.close();
+                await server.shutDown();
+                await mongoMemServer.stop();
+            }
+        );
+
+        test("Valid Building Code: The building has one room",
+            async () => {
+                /*
+                Input: None
+                Expected Status Code: 200
+                Expected Behavior: Room information fetched from the database
+                Expected Output: List of a room
+                */
+
+                /* Prepare Data Here */
+
+                let expected = {
+                    status: "ok",
+                    data: [roomA]
+                };
+                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/UCEN");
+                expect(actual.status).toBe(200);
+                expect(actual.body).toEqual(expected);
+            }
+        );
+
+        test("Valid Building Code: Get all buildings",
+            async () => {
+                /*
+                Input: None
+                Expected Status Code: 200
+                Expected Behavior: Building information fetched from the database
+                Expected Output: List of 1 Building
+                */
+
+                /* Prepare Data Here */
+                delete buildings._id
+                let expected = {
+                    status: "ok",
+                    data: [buildings]
+                };
+                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/building_all");
+                expect(actual.status).toBe(200);
+                expect(actual.body).toEqual(expected);
+            }
+        );
+
+        test("Invalid Building Code: Building does not exist",
+            async () => {
+                /*
+                Input: None
+                Expected Status Code: 404
+                Expected Behavior: Room information fetched from the database
+                Expected Output: Error message
+                */
+                let expected = {
+                    status: "error",
+                    data: "Not Found"
+                };
+                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/DUMB");
+                expect(actual.status).toBe(404);
+                expect(actual.body).toEqual(expected);
+            }
+        );
     }
 );

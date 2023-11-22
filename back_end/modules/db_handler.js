@@ -10,8 +10,8 @@ const { log } = require('console');
 
 
 //Global Definitions
-let DB_URL = `mongodb://localhost:27017`;
-//let DB_URL = `mongodb://localhost:25565`;
+// let DB_URL = `mongodb://localhost:27017`;
+let DB_URL = `mongodb://localhost:25565`;
 const MODULE_NAME = "DBHandler";
 /** @type {MongoClient} */
 var client;
@@ -512,13 +512,13 @@ async function commentUploader(comment) {
     const room = comment.room;
     const comment_new = comment.comment;
     const db = client.db('study_room_db');
-    
-    if (!await db.listCollections({ name: building}).hasNext()) {
+
+    if (!await db.listCollections({ name: building }).hasNext()) {
         throw new Error();
     }
 
-    console.log(await db.collection(building).countDocuments({_id: room}));
-    if (await db.collection(building).countDocuments({_id: room}) <= 0) {
+    console.log(await db.collection(building).countDocuments({ _id: room }));
+    if (await db.collection(building).countDocuments({ _id: room }) <= 0) {
         throw new Error();
     }
 
