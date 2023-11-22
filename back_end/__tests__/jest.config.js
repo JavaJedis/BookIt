@@ -13,8 +13,8 @@ const config = {
     globalSetup: "./setup.js",
     globalTeardown: "./teardown.js",
     moduleDirectories: [
-        "/node_modules",
-        "/modules"
+        "./node_modules",
+        "./modules"
     ]
 }
 
