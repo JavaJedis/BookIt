@@ -118,8 +118,8 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                 break;
         }
 
-        dynamiBuildingIntent.putExtra("buildingName", showingBuildingNames.get(position));
-        dynamiBuildingIntent.putExtra("buildingCode", showingBuildingCodes.get(position));
+        dynamiBuildingIntent.putExtra("buildingName", adapter.getBuildingNames().get(position));
+        dynamiBuildingIntent.putExtra("buildingCode", adapter.getBuildingNames().get(position));
 
         startActivity(dynamiBuildingIntent);
     }
