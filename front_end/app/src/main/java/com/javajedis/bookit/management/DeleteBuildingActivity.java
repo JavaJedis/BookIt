@@ -39,8 +39,6 @@ import okhttp3.Response;
 public class DeleteBuildingActivity extends AppCompatActivity implements RecyclerViewInterface {
     private final String TAG = "DeleteBuildingActivity";
 
-    private ArrayList<String> allBuildings = new ArrayList<>();
-
     private final Set<String> allBuildingSet = new HashSet<>();
 
     private String selectedBuilding;
@@ -140,7 +138,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
             String buildingCode = object.getString("building_code");
             allBuildingSet.add(buildingCode);
         }
-        allBuildings = new ArrayList<>(allBuildingSet);
+        ArrayList<String> allBuildings = new ArrayList<>(allBuildingSet);
         Collections.sort(allBuildings);
 
         // Create a new adapter and set it to the RecyclerView
