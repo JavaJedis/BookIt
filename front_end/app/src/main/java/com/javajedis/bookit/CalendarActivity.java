@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.javajedis.bookit.recyclerview.adapter.CalendarRecyclerViewAdapter;
 
@@ -22,10 +20,13 @@ import java.util.ArrayList;
 public class CalendarActivity extends AppCompatActivity implements CalendarRecyclerViewAdapter.OnItemListener{
 
     private TextView monthYearText;
+
     private RecyclerView calendarRecyclerView;
+
     private LocalDate selectedDate;
 
     private String buildingCode;
+
     private String roomNumber;
 
     private Boolean fromFilter;
@@ -51,20 +52,10 @@ public class CalendarActivity extends AppCompatActivity implements CalendarRecyc
         setMonthView();
 
         Button previousButton = findViewById(R.id.previous_button);
-        previousButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                previousMonthAction();
-            }
-        });
+        previousButton.setOnClickListener(view -> previousMonthAction());
 
         Button nextButton = findViewById(R.id.next_button);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nextMonthAction();
-            }
-        });
+        nextButton.setOnClickListener(view -> nextMonthAction());
     }
 
     private void setMonthView() {
@@ -151,7 +142,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarRecyc
     @Override
     public void onItemClick(int position, String dayText) {
         if (!dayText.equals("") && !dayText.equals("X")) {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
+//            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
 //            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
             if (fromFilter) {

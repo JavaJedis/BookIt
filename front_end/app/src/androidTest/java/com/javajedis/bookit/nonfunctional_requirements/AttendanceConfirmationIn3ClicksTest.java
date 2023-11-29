@@ -1,10 +1,8 @@
-package com.javajedis.bookit.filterStudyRoomsUseCase;
-
+package com.javajedis.bookit.nonfunctional_requirements;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -12,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -42,8 +40,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class FilterStudyRoomsFailure8BTest {
-
+public class AttendanceConfirmationIn3ClicksTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
@@ -55,7 +52,8 @@ public class FilterStudyRoomsFailure8BTest {
                     "android.permission.ACCESS_COARSE_LOCATION");
 
     @Test
-    public void filterStudyRoomsFailure8BTest() {
+    public void attendanceConfirmationIn3ClicksTest() {
+        int clickCount = 0;
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
@@ -82,65 +80,39 @@ public class FilterStudyRoomsFailure8BTest {
         }
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.filter_button), withText("filter study rooms"),
+                allOf(withId(R.id.bookings_button), withText("bookings"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                8),
+                                3),
                         isDisplayed()));
         appCompatButton.perform(click());
-
-        ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.day_button), withText("day"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatButton2.perform(click());
+        // first click: on “bookings” button in the MainActivity
+        clickCount++;
 
         ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.calendarRecyclerView),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                2)));
-        recyclerView.perform(actionOnItemAtPosition(32, click()));
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.day_button), withText("30 November 2023"),
+                allOf(withId(R.id.bookings_recyclerView),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        button.check(matches(isDisplayed()));
+        recyclerView.check(matches(isDisplayed()));
 
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.start_time_button), withText("start time"),
-                        withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.action_bookings_textView), withText("click to confirm"),
+                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        textView2.check(matches(withText("click to confirm")));
 
-        ViewInteraction button3 = onView(
-                allOf(withId(R.id.hours_button), withText("duration"),
-                        withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
-                        isDisplayed()));
-        button3.check(matches(isDisplayed()));
+        //  Click on the confirm attendance button
+        UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("click to confirm")); // Modify the selector as needed
 
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.filter_bottom_button), withText("filter"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                4),
-                        isDisplayed()));
-        appCompatButton3.perform(click());
+        if (confirmAttendance != null) {
+            confirmAttendance.click();
+        }
+        // second click: on the booking which confirms it
+        clickCount++;
 
-        // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
-        onView(withText("Please select an appropriate date, start time, and duration")).inRoot(new ToastMatcher())
-                .check(matches(isDisplayed()));
+        assertTrue(clickCount <= 3);
     }
 
     private static Matcher<View> childAtPosition(

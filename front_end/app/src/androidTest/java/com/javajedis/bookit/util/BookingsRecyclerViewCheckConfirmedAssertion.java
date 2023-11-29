@@ -13,10 +13,10 @@ import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.recyclerview.adapter.BookingsRecyclerViewAdapter;
 
 // ChatGPT usage: Yes
-public class bookingsRecyclerViewCheckConfirmedAssertion implements ViewAssertion {
+public class BookingsRecyclerViewCheckConfirmedAssertion implements ViewAssertion {
     private final int position;
 
-    public bookingsRecyclerViewCheckConfirmedAssertion(int position) {
+    public BookingsRecyclerViewCheckConfirmedAssertion(int position) {
         this.position = position;
     }
 

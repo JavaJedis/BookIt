@@ -1,5 +1,4 @@
-package com.javajedis.bookit.bookCancelStudyRoomsUseCase;
-
+package com.javajedis.bookit.book_cancel_study_rooms_use_case;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -10,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.javajedis.bookit.ListTimeSlotsActivity.getCurrentTime;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -28,31 +27,34 @@ import androidx.test.uiautomator.UiObject2;
 
 import com.javajedis.bookit.MainActivity;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.util.ToastMatcher;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.LocalDate;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import com.javajedis.bookit.util.ToastMatcher;
+import com.javajedis.bookit.util.TimeSlotsRecyclerViewStatusBookNowAssertion;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class BookCancelStudyRoomsFailure2ATest {
-
+public class BookCancelStudyRoomSuccessTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void bookStudyRoomFailure2ATest() {
+    public void bookCancelStudyRoomSuccessTest() {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
-                                Matchers.allOf(ViewMatchers.withId(R.id.sign_in_button),
+                                allOf(withId(R.id.sign_in_button),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
@@ -74,6 +76,7 @@ public class BookCancelStudyRoomsFailure2ATest {
             googleAccount.click();
         }
 
+        // open search activity
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.search_button), withText("search"),
                         childAtPosition(
@@ -83,7 +86,7 @@ public class BookCancelStudyRoomsFailure2ATest {
                                 1),
                         isDisplayed()));
         appCompatButton.perform(click());
-
+        // choose study rooms in search activity
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.study_rooms_button), withText("study rooms"),
                         childAtPosition(
@@ -94,7 +97,7 @@ public class BookCancelStudyRoomsFailure2ATest {
                                 1),
                         isDisplayed()));
         appCompatButton2.perform(click());
-
+        // choose ESC building
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.building_recyclerView),
                         childAtPosition(
@@ -108,7 +111,7 @@ public class BookCancelStudyRoomsFailure2ATest {
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
         recyclerView2.perform(actionOnItemAtPosition(3, click()));
-
+        // click book now
         ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.book_now_button), withText("book now"),
                         childAtPosition(
@@ -119,6 +122,7 @@ public class BookCancelStudyRoomsFailure2ATest {
                         isDisplayed()));
         appCompatButton3.perform(click());
 
+        // choose November 30th
         ViewInteraction recyclerView3 = onView(
                 allOf(withId(R.id.calendarRecyclerView),
                         childAtPosition(
@@ -126,26 +130,67 @@ public class BookCancelStudyRoomsFailure2ATest {
                                 2)));
         recyclerView3.perform(actionOnItemAtPosition(32, click()));
 
+        // check time slots are displayed on screen
         ViewInteraction recyclerView4 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
 
-//        ViewInteraction textView = onView(
-//                allOf(withId(R.id.timeslot_status_textView), withText("get on wait-list"),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView.check(matches(withText("get on wait-list")));
+        onView(withId(R.id.timeslots_recycler_view)).check(new TimeSlotsRecyclerViewStatusBookNowAssertion(47));
 
+        // click the last time slots 23:30 - 24:00
         ViewInteraction recyclerView5 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        recyclerView5.perform(actionOnItemAtPosition(42, click()));
+        recyclerView5.perform(actionOnItemAtPosition(47, click()));
+
+        // assert if current time is before 2330-2400
+        // ChatGPT usage: Yes --> from here
+        // get current date
+        LocalDate currentDate = LocalDate.now();
+        LocalDate targetDate = LocalDate.of(2023, 11, 30);
+
+        if (currentDate.isBefore(targetDate)) {
+            // Assert that the current date is before 30-11-2023
+            assertTrue(currentDate.isBefore(targetDate));
+        } else if (currentDate.isEqual(targetDate)){
+            // Same dateAssert that the current time is before 23:30
+            String currentTime = getCurrentTime();
+            int currentHour = Integer.parseInt(currentTime.substring(0, 2));
+            int currentMinute = Integer.parseInt(currentTime.substring(2));
+
+            int targetHour = 23;
+            int targetMinute = 30;
+
+            // Convert both current time and target time to minutes for easy comparison
+            int currentTimeInMinutes = currentHour * 60 + currentMinute;
+            int targetTimeInMinutes = targetHour * 60 + targetMinute;
+
+            assertTrue(currentTimeInMinutes < targetTimeInMinutes);
+        } else {
+            // Test fails
+            fail("current time is after booking starting time for newly booked session");
+        }
+
+        // ChatGPT usage: Yes --> from here
+//        onView(withId(R.id.bookings_recyclerView)).check(new bookingsRecyclerViewItemCountAssertion(0));
+
+        uiDevice.waitForIdle();
+
+        // Click on the first bookings in the bookings page
+        UiObject2 firstBooking = uiDevice.findObject(By.textContains("click to cancel")); // Modify the selector as needed
+
+        // Click on the firstBooking
+        if (firstBooking != null) {
+            firstBooking.click();
+        }
+
         // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
-        onView(withText("You have been added to the wait-list!")).inRoot(new ToastMatcher())
+        // check if the message appears with the text: “Your booking has been canceled!”
+        onView(withText("Your booking has been cancelled!")).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
     }
 

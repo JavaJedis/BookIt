@@ -1,5 +1,4 @@
-package com.javajedis.bookit.filterStudyRoomsUseCase;
-
+package com.javajedis.bookit.nonfunctional_requirements;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -14,6 +13,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class FilterStudyRoomsSuccessTest {
-
+public class SearchFilterShowsResultsIn1SecondTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
@@ -108,14 +108,14 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.start_time_button), withText("start time"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
         ViewInteraction button3 = onView(
                 allOf(withId(R.id.hours_button), withText("duration"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button3.check(matches(isDisplayed()));
 
@@ -172,9 +172,9 @@ public class FilterStudyRoomsSuccessTest {
         appCompatButton3.perform(click());
 
         ViewInteraction linearLayout3 = onView(
-                allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
+                allOf(IsInstanceOf.instanceOf(android.widget.LinearLayout.class),
                         withParent(allOf(withId(android.R.id.content),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class)))),
                         isDisplayed()));
         linearLayout3.check(matches(isDisplayed()));
 
@@ -202,7 +202,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button5 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 PM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button5.check(matches(isDisplayed()));
 
@@ -241,7 +241,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button6 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 AM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button6.check(matches(isDisplayed()));
 
@@ -256,10 +256,6 @@ public class FilterStudyRoomsSuccessTest {
                         isDisplayed()));
         appCompatButton7.perform(click());
 
-//        ViewInteraction frameLayout = onView(
-//                allOf(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class), isDisplayed()));
-//        frameLayout.check(matches(isDisplayed()));
-
         DataInteraction appCompatTextView = onData(anything())
                 .inAdapterView(allOf(withClassName(is("com.android.internal.app.AlertController$RecycleListView")),
                         childAtPosition(
@@ -271,7 +267,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button7 = onView(
                 allOf(withId(R.id.hours_button), withText("2 hours"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         button7.check(matches(isDisplayed()));
 
@@ -283,68 +279,21 @@ public class FilterStudyRoomsSuccessTest {
                                         0),
                                 4),
                         isDisplayed()));
+
+        // before button click, record start time
+        Long startTime = System.currentTimeMillis();
         appCompatButton8.perform(click());
-
-//        ViewInteraction recyclerView2 = onView(
-//                allOf(withId(R.id.study_rooms_filter_recycler_view),
-//                        withParent(withParent(withId(android.R.id.content))),
-//                        isDisplayed()));
-//        recyclerView2.check(matches(isDisplayed()));
-
-        // TODO: may be not work, need to be tested
-//        ViewInteraction recyclerView3 = onView(
-//                allOf(withId(R.id.study_rooms_filter_recycler_view),
-//                        childAtPosition(
-//                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-//                                0)));
-//        recyclerView3.perform(actionOnItemAtPosition(0, click()));
 
         UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("ESC"));
 
+        // object found result showed
         if (confirmAttendance != null) {
-            confirmAttendance.click();
+            Long endTime = System.currentTimeMillis();
+            int millisecondInOneSec = 1000;
+            assertTrue((endTime-startTime) < millisecondInOneSec);
+        } else {
+            fail();
         }
-
-        ViewInteraction appCompatButton9 = onView(
-                allOf(withId(R.id.book_now_button), withText("book now"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                7),
-                        isDisplayed()));
-        appCompatButton9.perform(click());
-
-        ViewInteraction recyclerView4 = onView(
-                allOf(withId(R.id.calendarRecyclerView),
-                        childAtPosition(
-                                withClassName(is("android.widget.LinearLayout")),
-                                2)));
-        recyclerView4.perform(actionOnItemAtPosition(32, click()));
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("0000-0030"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView.check(matches(withText("0000-0030")));
-
-        ViewInteraction textView3 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("0030-0100"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView3.check(matches(withText("0030-0100")));
-
-        ViewInteraction textView5 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("0100-0130"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView5.check(matches(withText("0100-0130")));
-
-        ViewInteraction textView7 = onView(
-                allOf(withId(R.id.timeslot_name_textView), withText("0130-0200"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-                        isDisplayed()));
-        textView7.check(matches(withText("0130-0200")));
     }
 
     private static Matcher<View> childAtPosition(
