@@ -108,14 +108,14 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.start_time_button), withText("start time"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
         ViewInteraction button3 = onView(
                 allOf(withId(R.id.hours_button), withText("duration"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button3.check(matches(isDisplayed()));
 
@@ -202,7 +202,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button5 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 PM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button5.check(matches(isDisplayed()));
 
@@ -241,7 +241,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button6 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 AM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button6.check(matches(isDisplayed()));
 
@@ -256,10 +256,6 @@ public class FilterStudyRoomsSuccessTest {
                         isDisplayed()));
         appCompatButton7.perform(click());
 
-//        ViewInteraction frameLayout = onView(
-//                allOf(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class), isDisplayed()));
-//        frameLayout.check(matches(isDisplayed()));
-
         DataInteraction appCompatTextView = onData(anything())
                 .inAdapterView(allOf(withClassName(is("com.android.internal.app.AlertController$RecycleListView")),
                         childAtPosition(
@@ -271,7 +267,7 @@ public class FilterStudyRoomsSuccessTest {
         ViewInteraction button7 = onView(
                 allOf(withId(R.id.hours_button), withText("2 hours"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button7.check(matches(isDisplayed()));
 
@@ -284,20 +280,6 @@ public class FilterStudyRoomsSuccessTest {
                                 4),
                         isDisplayed()));
         appCompatButton8.perform(click());
-
-//        ViewInteraction recyclerView2 = onView(
-//                allOf(withId(R.id.study_rooms_filter_recycler_view),
-//                        withParent(withParent(withId(android.R.id.content))),
-//                        isDisplayed()));
-//        recyclerView2.check(matches(isDisplayed()));
-
-        // TODO: may be not work, need to be tested
-//        ViewInteraction recyclerView3 = onView(
-//                allOf(withId(R.id.study_rooms_filter_recycler_view),
-//                        childAtPosition(
-//                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-//                                0)));
-//        recyclerView3.perform(actionOnItemAtPosition(0, click()));
 
         UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("ESC"));
 

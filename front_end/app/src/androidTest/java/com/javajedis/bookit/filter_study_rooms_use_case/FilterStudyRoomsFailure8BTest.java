@@ -117,14 +117,14 @@ public class FilterStudyRoomsFailure8BTest {
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.start_time_button), withText("start time"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
         ViewInteraction button3 = onView(
                 allOf(withId(R.id.hours_button), withText("duration"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button3.check(matches(isDisplayed()));
 

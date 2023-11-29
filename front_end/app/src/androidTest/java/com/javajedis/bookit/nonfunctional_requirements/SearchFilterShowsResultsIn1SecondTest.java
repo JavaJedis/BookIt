@@ -108,14 +108,14 @@ public class SearchFilterShowsResultsIn1SecondTest {
         ViewInteraction button2 = onView(
                 allOf(withId(R.id.start_time_button), withText("start time"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button2.check(matches(isDisplayed()));
 
         ViewInteraction button3 = onView(
                 allOf(withId(R.id.hours_button), withText("duration"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button3.check(matches(isDisplayed()));
 
@@ -202,7 +202,7 @@ public class SearchFilterShowsResultsIn1SecondTest {
         ViewInteraction button5 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 PM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button5.check(matches(isDisplayed()));
 
@@ -241,7 +241,7 @@ public class SearchFilterShowsResultsIn1SecondTest {
         ViewInteraction button6 = onView(
                 allOf(withId(R.id.start_time_button), withText("12:00 AM"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button6.check(matches(isDisplayed()));
 
@@ -267,7 +267,7 @@ public class SearchFilterShowsResultsIn1SecondTest {
         ViewInteraction button7 = onView(
                 allOf(withId(R.id.hours_button), withText("2 hours"),
                         withParent(allOf(withId(R.id.linearLayout),
-                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(ViewGroup.class)))),
                         isDisplayed()));
         button7.check(matches(isDisplayed()));
 
