@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -53,8 +53,13 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
     private ArrayList<String> showingBuildingNames;
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
-    TextView guideText;
+    private TextView guideText;
     private BuildingsRecyclerViewAdapter adapter;
+    private Button informalLearningSpaceButton;
+    private Button lectureHallButton;
+    private Button studyRoomButton;
+    private RecyclerView recyclerView;
+    private long lastToastTime;
 
 //    private boolean showFullName = false;
 
@@ -82,17 +87,17 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
         });
 
         adapter = new BuildingsRecyclerViewAdapter(SearchActivity.this,SearchActivity.this);
-        RecyclerView recyclerView = findViewById(R.id.building_recyclerView);
+        recyclerView = findViewById(R.id.building_recyclerView);
 
         guideText = findViewById(R.id.guide_text);
         // change the request setting when clicking the button
-        Button informalLearningSpaceButton = findViewById(R.id.ils_button);
-        Button lectureHallButton = findViewById(R.id.lecture_halls_button);
-        Button studyRoomButton = findViewById(R.id.study_rooms_button);
+        informalLearningSpaceButton = findViewById(R.id.ils_button);
+        lectureHallButton = findViewById(R.id.lecture_halls_button);
+        studyRoomButton = findViewById(R.id.study_rooms_button);
 
-        setButtonListener(informalLearningSpaceButton, "ils", recyclerView);
-        setButtonListener(lectureHallButton, "lecturehalls", recyclerView);
-        setButtonListener(studyRoomButton, "studyrooms", recyclerView);
+        setButtonListener(informalLearningSpaceButton, "ils");
+        setButtonListener(lectureHallButton, "lecturehalls");
+        setButtonListener(studyRoomButton, "studyrooms");
     }
     @Override
     public void onItemClick(int position) {
@@ -126,56 +131,68 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             }
         }
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No such building", Toast.LENGTH_SHORT).show();
+            long currentTime = System.currentTimeMillis();
+            // avoid showing text repeatedly
+            if (currentTime - lastToastTime >= Constant.TOAST_MIN_DURATION_MILLI_SECOND) {
+                Toast.makeText(this, "No such building", Toast.LENGTH_SHORT).show();
+                lastToastTime = System.currentTimeMillis();
+            }
         } else {
             adapter.setFilterList(filteredList);
         }
     }
-    private void setButtonListener(Button button, String spaceType, RecyclerView recyclerView) {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Getting locations of " + spaceType +  " buildings");
-                guideText.setText("");
-                requestBuildingType = spaceType;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // decide which list to show
-                        switch (spaceType) {
-                            case "":
-                                showingBuildingCodes = new ArrayList<>();
-                                showingBuildingNames = new ArrayList<>();
-                                break;
-                            case "ils":
-                                showingBuildingCodes = informalLearningSpaceBuildingCodes;
-                                showingBuildingNames = informalLearningSpaceBuildingNames;
-                                break;
-                            case "lecturehalls":
-                                showingBuildingCodes = lectureHallBuildingCodes;
-                                showingBuildingNames = lectureHallBuildingNames;
-                                break;
-                            case "studyrooms":
-                                showingBuildingCodes = studyRoomBuildingCodes;
-                                showingBuildingNames = lectureHallBuildingNames;
-                                break;
-                            default:
-                                showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingCodes));
-                                showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
-                                break;
-                        }
-//                        if (showFullName) {
-//                            showingBuildingList = showingBuildingNames;
-//                        } else {
-                            showingBuildingList = showingBuildingCodes;
-//                        }
+    private void setButtonListener(Button button, String spaceType) {
+        button.setOnClickListener(view -> {
+            Log.d(TAG, "Getting locations of " + spaceType +  " buildings");
+            guideText.setText("");
+            requestBuildingType = spaceType;
+            runOnUiThread(() -> {
+                // decide which list to show
+                switch (spaceType) {
+                    case "":
+                        showingBuildingCodes = new ArrayList<>();
+                        showingBuildingNames = new ArrayList<>();
 
-                        adapter.setBuildingNames(showingBuildingList);
-                        recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
-                    }
-                });
-            }
+                        informalLearningSpaceButton.setBackgroundResource(R.drawable.bottom_button);
+                        lectureHallButton.setBackgroundResource(R.drawable.top_button);
+                        studyRoomButton.setBackgroundResource(R.drawable.top_button);
+                        break;
+                    case "ils":
+                        showingBuildingCodes = informalLearningSpaceBuildingCodes;
+                        showingBuildingNames = informalLearningSpaceBuildingNames;
+                        // setting button background
+                        informalLearningSpaceButton.setBackgroundResource(R.drawable.bottom_button);
+                        lectureHallButton.setBackgroundResource(R.drawable.top_button);
+                        studyRoomButton.setBackgroundResource(R.drawable.top_button);
+                        break;
+                    case "lecturehalls":
+                        showingBuildingCodes = lectureHallBuildingCodes;
+                        showingBuildingNames = lectureHallBuildingNames;
+                        // setting button background
+                        informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
+                        lectureHallButton.setBackgroundResource(R.drawable.bottom_button);
+                        studyRoomButton.setBackgroundResource(R.drawable.top_button);
+                        break;
+                    case "studyrooms":
+                        showingBuildingCodes = studyRoomBuildingCodes;
+                        showingBuildingNames = lectureHallBuildingNames;
+                        // setting button background
+                        informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
+                        lectureHallButton.setBackgroundResource(R.drawable.top_button);
+                        studyRoomButton.setBackgroundResource(R.drawable.bottom_button);
+                        break;
+                    default:
+                        showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingCodes));
+                        showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
+                        break;
+                }
+
+                showingBuildingList = showingBuildingCodes;
+
+                adapter.setBuildingNames(showingBuildingList);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+            });
         });
     }
     private void initBuildingData() {
@@ -210,14 +227,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         JSONArray data = firstObject.getJSONArray("buildings");
                         // format
                         String buildings = data.toString();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    initData(spaceType, buildings);
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
-                                }
+                        runOnUiThread(() -> {
+                            try {
+                                initData(spaceType, buildings);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
                             }
                         });
                     } catch (IOException | JSONException e) {
@@ -254,6 +268,16 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                     Log.e(TAG, "Error: invalid input for initData");
                     break;
             }
+        }
+        // showing study rooms by default
+        if (Objects.equals(spaceType, Constant.DEFAULT_STUDY_SPACE_TYPE)) {
+            runOnUiThread(() -> {
+                showingBuildingList = studyRoomBuildingCodes;
+
+                adapter.setBuildingNames(showingBuildingList);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+            });
         }
     }
 }
