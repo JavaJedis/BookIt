@@ -3,7 +3,6 @@ package com.javajedis.bookit.management;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
@@ -37,12 +36,14 @@ import okhttp3.Response;
 public class AssignBuildingAdminActivity extends AppCompatActivity implements RecyclerViewInterface {
 
     private final String TAG = "AssignBuildingAdminActivity";
-    private ArrayList<String> allBuildings = new ArrayList<>();
+    private final ArrayList<String> allBuildings = new ArrayList<>();
     private ArrayList<String> showingList = new ArrayList<>();
     private BuildingSelectionRecyclerViewAdapter adapter;
     private EditText editText;
     private String newAdminEmail;
     private String selectedBuilding;
+    private long lastToastTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,17 +66,14 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
         });
 
         Button confirmAddButton = findViewById(R.id.submit_assign_admin_button);
-        confirmAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedBuilding != null) {
-                    Intent adminManagementIntent = new Intent(AssignBuildingAdminActivity.this, AdminManagementActivity.class);
-                    editText = findViewById(R.id.new_admin_email);
-                    newAdminEmail = editText.getText().toString();
-                    ServerRequests.requestAddAdmin(newAdminEmail, selectedBuilding, AssignBuildingAdminActivity.this, adminManagementIntent);
-                } else {
-                    Toast.makeText(AssignBuildingAdminActivity.this, "Must select a building assign to this admin", Toast.LENGTH_SHORT).show();
-                }
+        confirmAddButton.setOnClickListener(v -> {
+            if (selectedBuilding != null) {
+                Intent adminManagementIntent = new Intent(AssignBuildingAdminActivity.this, AdminManagementActivity.class);
+                editText = findViewById(R.id.new_admin_email);
+                newAdminEmail = editText.getText().toString();
+                ServerRequests.requestAddAdmin(newAdminEmail, selectedBuilding, AssignBuildingAdminActivity.this, adminManagementIntent);
+            } else {
+                Toast.makeText(AssignBuildingAdminActivity.this, "Must select a building assign to this admin", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -84,7 +82,7 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
     public void onItemClick(int position) {
         selectedBuilding = adapter.getSelected();
         Button confirmAddButton = findViewById(R.id.submit_assign_admin_button);
-        confirmAddButton.setEnabled(true);
+        confirmAddButton.setEnabled(adapter.getCheckedPosition() != RecyclerView.NO_POSITION);
     }
 
     private void filterList(String newText) {
@@ -95,7 +93,12 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
             }
         }
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No such building", Toast.LENGTH_SHORT).show();
+            long currentTime = System.currentTimeMillis();
+            // avoid showing text repeatedly
+            if (currentTime - lastToastTime >= Constant.TOAST_MIN_DURATION_MILLI_SECOND) {
+                Toast.makeText(this, "No such building", Toast.LENGTH_SHORT).show();
+                lastToastTime = System.currentTimeMillis();
+            }
         } else {
             adapter.setFilterList(filteredList);
         }
@@ -129,25 +132,22 @@ public class AssignBuildingAdminActivity extends AppCompatActivity implements Re
                         JSONArray data = firstObject.getJSONArray("buildings");
                         // format
                         String studyRooms = data.toString();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    JSONArray jsonArray = new JSONArray(studyRooms);
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
-                                        String userEmail = object.getString("building_code");
-                                        allBuildings.add(userEmail);
-                                    }
-                                    // setup adapter when data is ready
-                                    showingList = allBuildings;
-                                    adapter = new BuildingSelectionRecyclerViewAdapter(AssignBuildingAdminActivity.this, showingList, AssignBuildingAdminActivity.this);
-                                    RecyclerView recyclerView = findViewById(R.id.assign_building_recyclerView);
-                                    recyclerView.setAdapter(adapter);
-                                    recyclerView.setLayoutManager(new LinearLayoutManager(AssignBuildingAdminActivity.this));
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for Buildings");
+                        runOnUiThread(() -> {
+                            try {
+                                JSONArray jsonArray1 = new JSONArray(studyRooms);
+                                for (int i = 0; i < jsonArray1.length(); i++) {
+                                    JSONObject object = jsonArray1.getJSONObject(i);
+                                    String userEmail = object.getString("building_code");
+                                    allBuildings.add(userEmail);
                                 }
+                                // setup adapter when data is ready
+                                showingList = allBuildings;
+                                adapter = new BuildingSelectionRecyclerViewAdapter(AssignBuildingAdminActivity.this, showingList, AssignBuildingAdminActivity.this);
+                                RecyclerView recyclerView = findViewById(R.id.assign_building_recyclerView);
+                                recyclerView.setAdapter(adapter);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(AssignBuildingAdminActivity.this));
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Error setting locations for Buildings");
                             }
                         });
                     } catch (IOException | JSONException e) {

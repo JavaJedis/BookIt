@@ -3,7 +3,6 @@ package com.javajedis.bookit.management;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -46,6 +45,8 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
 
     private String selectedBuilding;
 
+    private BuildingSelectionRecyclerViewAdapter adapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,46 +58,28 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         initBuildingData();
 
         Button deleteBuildingButton = findViewById(R.id.delete_building_button);
-        deleteBuildingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectedBuilding != null) {
-                    Intent deleteBuildingIntent = new Intent(DeleteBuildingActivity.this, DeleteBuildingActivity.class);
-                    ServerRequests.requestDeleteBuilding(selectedBuilding, DeleteBuildingActivity.this, deleteBuildingIntent);
-//                    allBuildings.remove(selectedBuilding);
-
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            adapter = new Building_Selection_RecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
-//                            RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
-//                            recyclerView.setAdapter(adapter);
-//                            recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));
-//                        }
-//                    });
-                } else {
-                    Toast.makeText(DeleteBuildingActivity.this, "Please select a building!", Toast.LENGTH_SHORT).show();
-                }
+        deleteBuildingButton.setOnClickListener(v -> {
+            if (selectedBuilding != null) {
+                Intent deleteBuildingIntent = new Intent(DeleteBuildingActivity.this, DeleteBuildingActivity.class);
+                ServerRequests.requestDeleteBuilding(selectedBuilding, DeleteBuildingActivity.this, deleteBuildingIntent);
+            } else {
+                Toast.makeText(DeleteBuildingActivity.this, "Please select a building!", Toast.LENGTH_SHORT).show();
             }
         });
 
         Button addBuildingButton = findViewById(R.id.add_building_button);
 
-        addBuildingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent addBuildingIntent = new Intent(DeleteBuildingActivity.this, AddNewBuildingActivity.class);
-                startActivity(addBuildingIntent);
-            }
+        addBuildingButton.setOnClickListener(v -> {
+            Intent addBuildingIntent = new Intent(DeleteBuildingActivity.this, AddNewBuildingActivity.class);
+            startActivity(addBuildingIntent);
         });
     }
 
     @Override
     public void onItemClick(int position) {
-        selectedBuilding = allBuildings.get(position);
-
         Button deleteBuildingButton = findViewById(R.id.delete_building_button);
-        deleteBuildingButton.setEnabled(true);
+        selectedBuilding = adapter.getSelected();
+        deleteBuildingButton.setEnabled(adapter.getCheckedPosition() != RecyclerView.NO_POSITION);
     }
 
     private void initBuildingData() {
@@ -131,15 +114,12 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
                         JSONArray data = firstObject.getJSONArray("buildings");
                         // format
                         String buildings = data.toString();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    initData(buildings);
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
-                                    e.printStackTrace();
-                                }
+                        runOnUiThread(() -> {
+                            try {
+                                initData(buildings);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Error setting locations for " + spaceType + " Buildings");
+                                e.printStackTrace();
                             }
                         });
                     } catch (IOException | JSONException e) {
@@ -164,7 +144,7 @@ public class DeleteBuildingActivity extends AppCompatActivity implements Recycle
         Collections.sort(allBuildings);
 
         // Create a new adapter and set it to the RecyclerView
-        BuildingSelectionRecyclerViewAdapter adapter = new BuildingSelectionRecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
+        adapter = new BuildingSelectionRecyclerViewAdapter(DeleteBuildingActivity.this, allBuildings, DeleteBuildingActivity.this);
         RecyclerView recyclerView = findViewById(R.id.building_names_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DeleteBuildingActivity.this));

@@ -3,7 +3,6 @@ package com.javajedis.bookit.management;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -38,8 +37,9 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
 
     private final String TAG = "AdminManagementActivity";
     private final ArrayList<String> allAdmins = new ArrayList<>();
-//    private ArrayList<String> showingAdminList;
     private AdminRecyclerViewAdapter adapter;
+    private long lastToastTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +69,9 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
         });
 
         Button addNewButton = findViewById(R.id.add_new_admin_button);
-        addNewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent assignBuildingAdminIntent = new Intent(AdminManagementActivity.this, AssignBuildingAdminActivity.class);
-                startActivity(assignBuildingAdminIntent);
-            }
+        addNewButton.setOnClickListener(v -> {
+            Intent assignBuildingAdminIntent = new Intent(AdminManagementActivity.this, AssignBuildingAdminActivity.class);
+            startActivity(assignBuildingAdminIntent);
         });
     }
 
@@ -82,7 +79,7 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
     public void onItemClick(int position) {
         Intent buildingManagementIntent = new Intent(AdminManagementActivity.this, BuildingManagementActivity.class);
 
-        buildingManagementIntent.putExtra("AdminEmail", allAdmins.get(position));
+        buildingManagementIntent.putExtra("AdminEmail", adapter.getAdminEmails().get(position));
 
         startActivity(buildingManagementIntent);
     }
@@ -95,7 +92,13 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
             }
         }
         if (filteredList.isEmpty()) {
-            Toast.makeText(this, "No such Admin", Toast.LENGTH_SHORT).show();
+            long currentTime = System.currentTimeMillis();
+            // avoid showing text repeatedly
+            if (currentTime - lastToastTime >= Constant.TOAST_MIN_DURATION_MILLI_SECOND) {
+                Toast.makeText(this, "No such Admin", Toast.LENGTH_SHORT).show();
+                lastToastTime = System.currentTimeMillis();
+            }
+
         } else {
             adapter.setFilterList(filteredList);
         }
@@ -130,15 +133,12 @@ public class AdminManagementActivity extends AppCompatActivity implements Recycl
                             String adminEmail = jsonArray.getString(i);
                             allAdmins.add(adminEmail);
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter = new AdminRecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
-                                RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
-                                adapter.setAdminEmails(allAdmins);
-                                recyclerView.setAdapter(adapter);
-                                recyclerView.setLayoutManager(new LinearLayoutManager(AdminManagementActivity.this));
-                            }
+                        runOnUiThread(() -> {
+                            adapter = new AdminRecyclerViewAdapter(AdminManagementActivity.this,AdminManagementActivity.this);
+                            RecyclerView recyclerView = findViewById(R.id.admin_user_recyclerView);
+                            adapter.setAdminEmails(allAdmins);
+                            recyclerView.setAdapter(adapter);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(AdminManagementActivity.this));
                         });
                     } catch (IOException | JSONException e) {
                         Log.e(TAG, "Error reading response: " + e.getMessage());
