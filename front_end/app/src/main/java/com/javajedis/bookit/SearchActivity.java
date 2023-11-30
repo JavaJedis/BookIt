@@ -278,6 +278,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
             });
+            requestBuildingType = Constant.DEFAULT_STUDY_SPACE_TYPE;
         }
     }
 }
