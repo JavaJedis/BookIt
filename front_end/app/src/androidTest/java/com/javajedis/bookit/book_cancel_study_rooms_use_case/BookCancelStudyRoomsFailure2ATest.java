@@ -131,12 +131,6 @@ public class BookCancelStudyRoomsFailure2ATest {
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
 
-//        ViewInteraction textView = onView(
-//                allOf(withId(R.id.timeslot_status_textView), withText("get on wait-list"),
-//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView.check(matches(withText("get on wait-list")));
-
         ViewInteraction recyclerView5 = onView(
                 allOf(withId(R.id.timeslots_recycler_view),
                         childAtPosition(
@@ -144,8 +138,8 @@ public class BookCancelStudyRoomsFailure2ATest {
                                 0)));
         recyclerView5.perform(actionOnItemAtPosition(10, click()));
         // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
-//        onView(withText("You have been added to the wait-list!")).inRoot(new ToastMatcher())
-//                .check(matches(isDisplayed()));
+        onView(withText("You have been added to the wait-list!")).inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(

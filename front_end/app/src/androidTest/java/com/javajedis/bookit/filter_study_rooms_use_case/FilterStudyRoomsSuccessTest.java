@@ -297,36 +297,36 @@ public class FilterStudyRoomsSuccessTest {
                         isDisplayed()));
         appCompatButton9.perform(click());
 
-//        ViewInteraction recyclerView4 = onView(
-//                allOf(withId(R.id.calendarRecyclerView),
-//                        childAtPosition(
-//                                withClassName(is("android.widget.LinearLayout")),
-//                                2)));
-//        recyclerView4.perform(actionOnItemAtPosition(32, click()));
-//
-//        ViewInteraction textView = onView(
-//                allOf(withId(R.id.timeslot_name_textView), withText("0000-0030"),
-//                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView.check(matches(withText("0000-0030")));
-//
-//        ViewInteraction textView3 = onView(
-//                allOf(withId(R.id.timeslot_name_textView), withText("0030-0100"),
-//                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView3.check(matches(withText("0030-0100")));
-//
-//        ViewInteraction textView5 = onView(
-//                allOf(withId(R.id.timeslot_name_textView), withText("0100-0130"),
-//                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView5.check(matches(withText("0100-0130")));
-//
-//        ViewInteraction textView7 = onView(
-//                allOf(withId(R.id.timeslot_name_textView), withText("0130-0200"),
-//                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
-//                        isDisplayed()));
-//        textView7.check(matches(withText("0130-0200")));
+        ViewInteraction recyclerView4 = onView(
+                allOf(withId(R.id.calendarRecyclerView),
+                        childAtPosition(
+                                withClassName(is("android.widget.LinearLayout")),
+                                2)));
+        recyclerView4.perform(actionOnItemAtPosition(32, click()));
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.timeslot_name_textView), withText("0000-0030"),
+                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
+                        isDisplayed()));
+        textView.check(matches(withText("0000-0030")));
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.timeslot_name_textView), withText("0030-0100"),
+                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
+                        isDisplayed()));
+        textView3.check(matches(withText("0030-0100")));
+
+        ViewInteraction textView5 = onView(
+                allOf(withId(R.id.timeslot_name_textView), withText("0100-0130"),
+                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
+                        isDisplayed()));
+        textView5.check(matches(withText("0100-0130")));
+
+        ViewInteraction textView7 = onView(
+                allOf(withId(R.id.timeslot_name_textView), withText("0130-0200"),
+                        withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
+                        isDisplayed()));
+        textView7.check(matches(withText("0130-0200")));
     }
 
     private static Matcher<View> childAtPosition(
