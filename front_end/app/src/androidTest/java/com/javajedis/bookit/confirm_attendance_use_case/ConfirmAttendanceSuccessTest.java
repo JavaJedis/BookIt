@@ -108,10 +108,10 @@ public class ConfirmAttendanceSuccessTest {
         }
 
         ViewInteraction textView4 = onView(
-                allOf(withId(R.id.action_bookings_textView), withText("confirmed"),
+                allOf(withId(R.id.action_bookings_textView), withText("Your booking has been confirmed!"),
                         withParent(withParent(IsInstanceOf.instanceOf(android.widget.FrameLayout.class))),
                         isDisplayed()));
-        textView4.check(matches(withText("confirmed")));
+        textView4.check(matches(withText("Your booking has been confirmed!")));
     }
 
     private static Matcher<View> childAtPosition(
