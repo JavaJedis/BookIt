@@ -72,16 +72,16 @@ sroom_manager.initScheduler();
 
 
 // Express https listener
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "test") {
+    server = app.listen(80, () => {
+        utils.serverLog(MODULE_NAME, `Server is running on http://localhost:${PORT}`);
+    });
+} else {
     server = https.createServer({
         key: fs.readFileSync("/home/dev/bookit_backend/certs/private.pem"),
         cert: fs.readFileSync("/home/dev/bookit_backend/certs/fullchain.crt")
     }, app).listen(PORT, () => {
         utils.serverLog(MODULE_NAME, `Server is running on https://localhost:${PORT}`);
-    });
-} else {
-    server = app.listen(80, () => {
-        console.log(`Server running at http://localhost:${PORT}/`);
     });
 }
 
