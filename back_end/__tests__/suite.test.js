@@ -65,14 +65,15 @@ describe("/user/admin GET request", () => {
 
     /**@type {MongoClient} */
     let memClient;
+    let instace;
 
     beforeAll(async () => {
-        const port = 25565;
+        const instance = {
+            port: 25565
+        }
         mongoMemServer = await MongoMemoryServer.create(
             {
-                instance: {
-                    port,
-                }
+                instance
             }
         );
         memClient = await MongoClient.connect(mongoMemServer.getUri());
@@ -178,12 +179,11 @@ describe("/user/type GET request",
                     status: "ok",
                     data: "user"
                 };
-                let email = "aman@admin.ca"
+                let data =
+                    { email: "aman@admin.ca" }
                 await axios.get.mockResolvedValue(
                     {
-                        data: {
-                            email,
-                        }
+                        data,
                     }
                 );
                 let actual = await request(app).get("/user/type?token=fake");
@@ -2314,7 +2314,7 @@ describe("/studyrooms/:building_code/:room_no/slots GET request",
                     }
                 }
             ));
-            let booking = await request(app)
+            await request(app)
                 .post("/studyroom/book")
                 .set('Content-Type', 'application/json')
                 .send(bookingData);

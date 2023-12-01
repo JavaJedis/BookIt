@@ -999,12 +999,13 @@ function timeConvertor(time) {
 }
 
 async function getCoordinates(address) {
+    const query = {
+        q: address,
+        key: process.env.OPEN_CAGE_API_TOKEN
+    }
     try {
         const response = await axios.get(`https://api.opencagedata.com/geocode/v1/json`, {
-            params: {
-                q: address,
-                key: process.env.OPEN_CAGE_API_TOKEN
-            }
+            params: query,
         });
 
         if (response.data.results.length > 0) {
