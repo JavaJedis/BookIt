@@ -31,7 +31,6 @@ import com.javajedis.bookit.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
@@ -57,7 +56,7 @@ public class AttendanceConfirmationIn3ClicksTest {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
-                                Matchers.allOf(ViewMatchers.withId(R.id.sign_in_button),
+                                allOf(ViewMatchers.withId(R.id.sign_in_button),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
