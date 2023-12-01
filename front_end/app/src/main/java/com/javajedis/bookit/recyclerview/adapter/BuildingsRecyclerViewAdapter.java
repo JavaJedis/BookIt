@@ -41,6 +41,11 @@ public class BuildingsRecyclerViewAdapter extends RecyclerView.Adapter<Buildings
     public void setBuildingNames(ArrayList<String> buildingNames) {
         this.buildingNames = buildingNames;
     }
+
+    public ArrayList<String> getBuildingNames() {
+        return buildingNames;
+    }
+
     @NonNull
     @Override
     public BuildingsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

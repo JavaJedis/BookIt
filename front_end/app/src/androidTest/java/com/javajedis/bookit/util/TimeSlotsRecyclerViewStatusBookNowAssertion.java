@@ -12,10 +12,10 @@ import androidx.test.espresso.ViewAssertion;
 import com.javajedis.bookit.model.TimeSlotsModel;
 import com.javajedis.bookit.recyclerview.adapter.TimeSlotsRecyclerViewAdapter;
 // ChatGPT usage: Yes
-public class timeSlotsRecyclerViewItemCountAssertion implements ViewAssertion {
+public class TimeSlotsRecyclerViewStatusBookNowAssertion implements ViewAssertion {
     private final int position;
 
-    public timeSlotsRecyclerViewItemCountAssertion(int position) {
+    public TimeSlotsRecyclerViewStatusBookNowAssertion(int position) {
         this.position = position;
     }
 

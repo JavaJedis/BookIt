@@ -1,8 +1,10 @@
-package com.javajedis.bookit.confirmAttendanceUseCase;
+package com.javajedis.bookit.book_cancel_study_rooms_use_case;
+
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -20,7 +22,6 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
-import androidx.test.rule.GrantPermissionRule;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject2;
@@ -33,26 +34,20 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class ConfirmAttendanceFailure3ATest {
+public class BookCancelStudyRoomsFailure2ATest {
+
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
-    @Rule
-    public GrantPermissionRule mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.ACCESS_FINE_LOCATION",
-                    "android.permission.ACCESS_COARSE_LOCATION");
-
     @Test
-    public void confirmAttendanceFailure3ATest() {
+    public void bookStudyRoomFailure2ATest() {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
@@ -79,33 +74,78 @@ public class ConfirmAttendanceFailure3ATest {
         }
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.bookings_button), withText("bookings"),
+                allOf(withId(R.id.search_button), withText("search"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                3),
+                                1),
                         isDisplayed()));
         appCompatButton.perform(click());
 
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(R.id.study_rooms_button), withText("study rooms"),
+                        childAtPosition(
+                                allOf(withId(R.id.linearLayout),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                3)),
+                                1),
+                        isDisplayed()));
+        appCompatButton2.perform(click());
+
         ViewInteraction recyclerView = onView(
-                allOf(withId(R.id.bookings_recyclerView),
+                allOf(withId(R.id.building_recyclerView),
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                2)));
+        recyclerView.perform(actionOnItemAtPosition(1, click()));
+
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.room_names_recyclerview),
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                0)));
+        recyclerView2.perform(actionOnItemAtPosition(3, click()));
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.book_now_button), withText("book now"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        appCompatButton3.perform(click());
+
+        ViewInteraction recyclerView3 = onView(
+                allOf(withId(R.id.calendarRecyclerView),
+                        childAtPosition(
+                                withClassName(is("android.widget.LinearLayout")),
+                                2)));
+        recyclerView3.perform(actionOnItemAtPosition(32, click()));
+
+        ViewInteraction recyclerView4 = onView(
+                allOf(withId(R.id.timeslots_recycler_view),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        recyclerView.check(matches(isDisplayed()));
+        recyclerView4.check(matches(isDisplayed()));
 
-        //  Click on the confirm attendance button
-        UiObject2 confirmAttendance = uiDevice.findObject(By.textContains("click to confirm")); // Modify the selector as needed
+//        ViewInteraction textView = onView(
+//                allOf(withId(R.id.timeslot_status_textView), withText("get on wait-list"),
+//                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.FrameLayout.class))),
+//                        isDisplayed()));
+//        textView.check(matches(withText("get on wait-list")));
 
-        if (confirmAttendance != null) {
-            confirmAttendance.click();
-        }
-
+        ViewInteraction recyclerView5 = onView(
+                allOf(withId(R.id.timeslots_recycler_view),
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                0)));
+        recyclerView5.perform(actionOnItemAtPosition(42, click()));
         // From: https://www.qaautomated.com/2016/01/how-to-test-toast-message-using-espresso.html
-        // check if the message appears with the text: “You are too far away from your booking!”
-        onView(withText("You are too far away from your booking!")).inRoot(new ToastMatcher())
+        onView(withText("You have been added to the wait-list!")).inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
-
     }
 
     private static Matcher<View> childAtPosition(

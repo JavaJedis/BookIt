@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,7 +18,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.javajedis.bookit.databinding.ActivityExploreBinding;
 
@@ -69,38 +68,39 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
 
         Button ilsButton = findViewById(R.id.ils_button);
-        ilsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Setting locations of ILS buildings");
-                String getUrl = "https://bookit.henrydhc.me/ils/building_all";
-                getLocations(getUrl);
-            }
-        });
 
         Button lectureHallsButton = findViewById(R.id.lecture_halls_button);
-        lectureHallsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Setting locations of Lecture Hall buildings");
-//                try {
-//                    setLocations(CLASSROOM_BUILDINGS);
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-                String getUrl = "https://bookit.henrydhc.me/lecturehalls/building_all";
-                getLocations(getUrl);
-            }
-        });
 
         Button studyRoomsButton = findViewById(R.id.study_rooms_button);
-        studyRoomsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Setting locations of Study Room buildings");
-                String getUrl = "https://bookit.henrydhc.me/studyrooms/building_all";
-                getLocations(getUrl);
-            }
+
+        ilsButton.setOnClickListener(view -> {
+            Log.d(TAG, "Setting locations of ILS buildings");
+            String getUrl = "https://bookit.henrydhc.me/ils/building_all";
+            getLocations(getUrl);
+
+            ilsButton.setBackgroundResource(R.drawable.bottom_button);
+            lectureHallsButton.setBackgroundResource(R.drawable.top_button);
+            studyRoomsButton.setBackgroundResource(R.drawable.top_button);
+        });
+
+        lectureHallsButton.setOnClickListener(view -> {
+            Log.d(TAG, "Setting locations of Lecture Hall buildings");
+            String getUrl = "https://bookit.henrydhc.me/lecturehalls/building_all";
+            getLocations(getUrl);
+
+            ilsButton.setBackgroundResource(R.drawable.top_button);
+            lectureHallsButton.setBackgroundResource(R.drawable.bottom_button);
+            studyRoomsButton.setBackgroundResource(R.drawable.top_button);
+        });
+
+        studyRoomsButton.setOnClickListener(view -> {
+            Log.d(TAG, "Setting locations of Study Room buildings");
+            String getUrl = "https://bookit.henrydhc.me/studyrooms/building_all";
+            getLocations(getUrl);
+
+            ilsButton.setBackgroundResource(R.drawable.top_button);
+            lectureHallsButton.setBackgroundResource(R.drawable.top_button);
+            studyRoomsButton.setBackgroundResource(R.drawable.bottom_button);
         });
     }
 
@@ -114,7 +114,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         float zoomLevel = 14.0f;
 
@@ -160,6 +160,7 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
             } else {
                 // Permission denied, handle it (e.g., show a message)
                 // You can show a message to the user or take other actions here
+                Toast.makeText(this,"Location Permission Denied, please try again!", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -209,29 +210,26 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
         Intent buildingInfoIntent = new Intent(ExploreActivity.this, DynamicBuildingActivity.class);
         // from https://youtu.be/m6zcM6Q2qZU?si=gn7pNdr4ZeUKDgyl
         String finalType = type;
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(@NonNull Marker marker) {
-                String buildingName = marker.getTitle();
+        mMap.setOnMarkerClickListener(marker -> {
+            String buildingName = marker.getTitle();
 
-                // find building name in jsonArray
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject obj = jsonArray.getJSONObject(i);
-                        String name = obj.getString("building_name");
-                        if (name.equals(buildingName)) {
-                            buildingInfoIntent.putExtra("buildingCode", obj.getString("building_code"));
-                        }
-                    } catch (JSONException e) {
-                        Log.d(TAG, "Error when trying to find building name in jsonArray");
+            // find building name in jsonArray
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    String name = obj.getString("building_name");
+                    if (name.equals(buildingName)) {
+                        buildingInfoIntent.putExtra("buildingCode", obj.getString("building_code"));
                     }
+                } catch (JSONException e) {
+                    Log.d(TAG, "Error when trying to find building name in jsonArray");
                 }
-
-                buildingInfoIntent.putExtra("buildingName", buildingName);
-                buildingInfoIntent.putExtra("type", finalType);
-                startActivity(buildingInfoIntent);
-                return false;
             }
+
+            buildingInfoIntent.putExtra("buildingName", buildingName);
+            buildingInfoIntent.putExtra("type", finalType);
+            startActivity(buildingInfoIntent);
+            return false;
         });
     }
 
@@ -270,14 +268,11 @@ public class ExploreActivity extends FragmentActivity implements OnMapReadyCallb
                         buildings = data.toString();
                         System.out.println(buildings);
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    setLocations(buildings, buildingType);
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Error setting locations for ILS Buildings");
-                                }
+                        runOnUiThread(() -> {
+                            try {
+                                setLocations(buildings, buildingType);
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Error setting locations for ILS Buildings");
                             }
                         });
                     } catch (IOException | JSONException e) {

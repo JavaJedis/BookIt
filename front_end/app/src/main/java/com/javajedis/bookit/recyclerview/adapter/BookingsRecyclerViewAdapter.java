@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.javajedis.bookit.model.BookingsModel;
 import com.javajedis.bookit.R;
-import com.javajedis.bookit.model.TimeSlotsModel;
 import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
@@ -60,6 +59,7 @@ public class BookingsRecyclerViewAdapter extends RecyclerView.Adapter<BookingsRe
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView room;
+
         ImageView image;
 
         TextView timeSlot;
@@ -77,15 +77,12 @@ public class BookingsRecyclerViewAdapter extends RecyclerView.Adapter<BookingsRe
             date = itemView.findViewById(R.id.date_bookings_textView);
             action = itemView.findViewById(R.id.action_bookings_textView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClick(position);
-                        }
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onItemClick(position);
                     }
                 }
             });

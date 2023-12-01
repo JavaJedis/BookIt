@@ -14,7 +14,7 @@ import com.javajedis.bookit.recyclerview.RecyclerViewInterface;
 
 import java.util.ArrayList;
 
-public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<BuildingsRecyclerViewAdapter.MyViewHolder>{
+public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecyclerViewAdapter.MyViewHolder>{
     ArrayList<String> adminEmails;
     Context context;
 
@@ -40,19 +40,24 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<BuildingsRecy
     public void setAdminEmails(ArrayList<String> adminEmails) {
         this.adminEmails = adminEmails;
     }
+
+    public ArrayList<String> getAdminEmails() {
+        return adminEmails;
+    }
+
     @NonNull
     @Override
-    public BuildingsRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdminRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // responsible for appearance
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.building_recycler_view_row, parent, false);
-        return new BuildingsRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
+        View view = inflater.inflate(R.layout.admin_management_recycler_view_row, parent, false);
+        return new AdminRecyclerViewAdapter.MyViewHolder(view, recyclerViewInterface);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BuildingsRecyclerViewAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // assign values to each row
-        holder.buildingNames.setText(adminEmails.get(position));
+        holder.adminName.setText(adminEmails.get(position));
     }
 
     @Override
@@ -61,22 +66,19 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<BuildingsRecy
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView buildingNames;
+        TextView adminName;
 
         public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
-            buildingNames = itemView.findViewById(R.id.admin_user_row_textView);
+            adminName = itemView.findViewById(R.id.admin_user_row_textView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClick(position);
-                        }
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onItemClick(position);
                     }
                 }
             });

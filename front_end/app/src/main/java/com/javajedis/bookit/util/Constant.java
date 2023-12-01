@@ -20,4 +20,8 @@ public class Constant {
     public static final String FILTER_NO_MATCHING_TEXT = "Sorry, there is no available room fitting all the requirements.";
 
     public static final String FILTER_ERROR_TEXT = "Oops! Error connecting with server! Please check your network and try again later.";
+
+    public static final String DEFAULT_STUDY_SPACE_TYPE = "studyrooms";
+
+    public static final long TOAST_MIN_DURATION_MILLI_SECOND = 5000;
 }
