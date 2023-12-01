@@ -51,7 +51,7 @@ public class BookCancelStudyRoomsFailure2ATest {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
-                                Matchers.allOf(ViewMatchers.withId(R.id.sign_in_button),
+                                Matchers(ViewMatchers(R.id.sign_in_button),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
