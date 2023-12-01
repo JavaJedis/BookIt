@@ -41,7 +41,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
             "IRC", "LASR", "LIFE", "LSK", "MATH", "MATX", "MCLD", "MCML", "ORCH", "OSB1", "PHRM", "PCN",
             "SCRF", "SOWK", "SPPH", "SWNG", "UCEN", "WESB"};
 
-    private final String[] allBuildingNames = allBuildingCodes;
     private final ArrayList<String> informalLearningSpaceBuildingCodes = new ArrayList<>();
     private final ArrayList<String> informalLearningSpaceBuildingNames = new ArrayList<>();
     private final ArrayList<String> lectureHallBuildingCodes = new ArrayList<>();
@@ -50,7 +49,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
 
     private final ArrayList<String> studyRoomBuildingNames = new ArrayList<>();
     private ArrayList<String> showingBuildingCodes;
-    private ArrayList<String> showingBuildingNames;
     private ArrayList<String> showingBuildingList;
     private String requestBuildingType = "";
     private TextView guideText;
@@ -151,7 +149,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                 switch (spaceType) {
                     case "":
                         showingBuildingCodes = new ArrayList<>();
-                        showingBuildingNames = new ArrayList<>();
 
                         informalLearningSpaceButton.setBackgroundResource(R.drawable.bottom_button);
                         lectureHallButton.setBackgroundResource(R.drawable.top_button);
@@ -159,7 +156,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         break;
                     case "ils":
                         showingBuildingCodes = informalLearningSpaceBuildingCodes;
-                        showingBuildingNames = informalLearningSpaceBuildingNames;
                         // setting button background
                         informalLearningSpaceButton.setBackgroundResource(R.drawable.bottom_button);
                         lectureHallButton.setBackgroundResource(R.drawable.top_button);
@@ -167,7 +163,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         break;
                     case "lecturehalls":
                         showingBuildingCodes = lectureHallBuildingCodes;
-                        showingBuildingNames = lectureHallBuildingNames;
                         // setting button background
                         informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
                         lectureHallButton.setBackgroundResource(R.drawable.bottom_button);
@@ -175,7 +170,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         break;
                     case "studyrooms":
                         showingBuildingCodes = studyRoomBuildingCodes;
-                        showingBuildingNames = studyRoomBuildingNames;
                         // setting button background
                         informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
                         lectureHallButton.setBackgroundResource(R.drawable.top_button);
@@ -183,7 +177,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         break;
                     default:
                         showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingCodes));
-                        showingBuildingCodes = new ArrayList<>(Arrays.asList(allBuildingNames));
+                        informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
+                        lectureHallButton.setBackgroundResource(R.drawable.top_button);
+                        studyRoomButton.setBackgroundResource(R.drawable.top_button);
                         break;
                 }
 
