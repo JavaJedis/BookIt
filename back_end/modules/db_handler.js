@@ -20,7 +20,7 @@ function dbh_init() {
 
     utils.consoleMsg(MODULE_NAME, "Initializing Database Handler");   //For Production
 
-    client = new MongoClient(DB_URL);
+    client = new MongoClient("mongodb://127.0.0.1:25565");
     client.connect().then(
         () => {
             utils.serverLog(MODULE_NAME, "Connected to database");
