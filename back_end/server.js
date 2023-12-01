@@ -81,7 +81,7 @@ if (process.env.NODE_ENV === "production") {
     });
 } else {
     server = app.listen(80, () => {
-        utils.serverLog(MODULE_NAME, `Server is running on http://localhost:${PORT}`);
+        console.log(`Server running at http://localhost:${PORT}/`);
     });
 }
 
