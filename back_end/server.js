@@ -35,6 +35,8 @@ app.use(bodyParser.json());
 
 
 // API endpoints
+
+// User Endpoints
 app.get('/user/type', user_manager.userType);
 app.post('/user/login', user_manager.userLogin);
 app.get('/user/bookings', user_manager.userBookings);
