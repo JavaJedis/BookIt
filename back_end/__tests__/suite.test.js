@@ -65,10 +65,10 @@ describe("/user/admin GET request", () => {
 
     /**@type {MongoClient} */
     let memClient;
-    let instace;
+    let instance;
 
     beforeAll(async () => {
-        const instance = {
+        instance = {
             port: 25565
         }
         mongoMemServer = await MongoMemoryServer.create(
@@ -201,11 +201,13 @@ describe("/user/type GET request",
                 Expected Output: "admin"
                 */
 
+                const data = {
+                    email: "jimmy@jimmy.co"
+                }
+
                 await axios.get.mockResolvedValue(
                     {
-                        data: {
-                            email: "jimmy@jimmy.co"
-                        }
+                        data,
                     }
                 );
                 let expected = {
@@ -2743,7 +2745,7 @@ describe("/user/bookings/:id DELETE request",
                         }
                     }
                 ));
-                let booking = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -2803,7 +2805,7 @@ describe("/user/bookings/:id DELETE request",
                         }
                     }
                 ));
-                let booking = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -2898,7 +2900,7 @@ describe("/user/bookings/:id PUT request (confirm booking)",
                         }
                     }
                 ));
-                let booking = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -2946,7 +2948,7 @@ describe("/user/bookings/:id PUT request (confirm booking)",
                         }
                     }
                 ));
-                let booking = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -2993,7 +2995,7 @@ describe("/user/bookings/:id PUT request (confirm booking)",
                         }
                     }
                 ));
-                let booking = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
