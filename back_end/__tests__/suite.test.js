@@ -4,7 +4,7 @@ const request = require("supertest");
 jest.mock('axios');
 const axios = require("axios");
 let server = require("../server");
-const app = "https://bookit.henrydhc.me";
+const app = "https://localhost:80";
 let mongoMemServer;
 
 const today = new Date();
@@ -1570,7 +1570,7 @@ describe("/ils/:building_code GET request",
                     status: "ok",
                     data: [roomA]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/ils/UCEN");
+                let actual = await request(app).get("/ils/UCEN");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -1591,7 +1591,7 @@ describe("/ils/:building_code GET request",
                     status: "ok",
                     data: [buildings]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/ils/building_all");
+                let actual = await request(app).get("/ils/building_all");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -1610,7 +1610,7 @@ describe("/ils/:building_code GET request",
                     status: "error",
                     data: "Not Found"
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/ils/DUMB");
+                let actual = await request(app).get("/ils/DUMB");
                 expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
@@ -1910,7 +1910,7 @@ describe("/studyrooms/:building_code GET request",
                     status: "ok",
                     data: [roomA]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/GAME");
+                let actual = await request(app).get("/studyrooms/GAME");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -1932,7 +1932,7 @@ describe("/studyrooms/:building_code GET request",
                     status: "ok",
                     data: [roomA, roomB]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/GAME");
+                let actual = await request(app).get("/studyrooms/GAME");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -1951,7 +1951,7 @@ describe("/studyrooms/:building_code GET request",
                     status: "error",
                     data: "Failed to list study rooms"
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/DUMB");
+                let actual = await request(app).get("/studyrooms/DUMB");
                 expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
@@ -1998,7 +1998,7 @@ describe("/studyrooms/:building_code/:room_no/comments GET request",
                         "I earn my pocket money here"
                     ]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/GAME/202/comments");
+                let actual = await request(app).get("/studyrooms/GAME/202/comments");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -2059,7 +2059,7 @@ describe("/studyrooms/:building_code/:room_no/comments GET request",
                     status: "error",
                     data: "not found"
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/GAM/101/comments");
+                let actual = await request(app).get("/studyrooms/GAM/101/comments");
                 expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
@@ -2078,7 +2078,7 @@ describe("/studyrooms/:building_code/:room_no/comments GET request",
                     status: "error",
                     data: "not found"
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/studyrooms/GAME/104/comments");
+                let actual = await request(app).get("/studyrooms/GAME/104/comments");
                 expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
@@ -2670,8 +2670,8 @@ describe("/studyroom/book POST request",
             }
         );
 
-        test("Booking with invalid time", 
-            async() => {
+        test("Booking with invalid time",
+            async () => {
 
             }
         );
@@ -3353,7 +3353,7 @@ describe("/lecturehalls/:building_code GET request",
                     status: "ok",
                     data: [roomA]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/UCEN");
+                let actual = await request(app).get("/lecturehalls/UCEN");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -3374,7 +3374,7 @@ describe("/lecturehalls/:building_code GET request",
                     status: "ok",
                     data: [buildings]
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/building_all");
+                let actual = await request(app).get("/lecturehalls/building_all");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
             }
@@ -3392,7 +3392,7 @@ describe("/lecturehalls/:building_code GET request",
                     status: "error",
                     data: "Not Found"
                 };
-                let actual = await request("https://bookit.henrydhc.me").get("/lecturehalls/DUMB");
+                let actual = await request(app).get("/lecturehalls/DUMB");
                 expect(actual.status).toBe(404);
                 expect(actual.body).toEqual(expected);
             }
