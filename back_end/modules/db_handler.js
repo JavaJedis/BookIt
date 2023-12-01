@@ -707,7 +707,7 @@ async function delBuildingAdmin(email, building) {
 
     try {
         const result = await collection.updateOne({ _id: email }, { $pull: { adminBuildings: building } });
-        return result.acknowledged && result.modifiedCount == 1;
+        return result.acknowledged && result.modifiedCount === 1;
     } catch (err) {
         return false;
     }
@@ -739,12 +739,12 @@ async function addBuilding(buildingData) {
     const buildingCollection = client.db("study_room_db").collection("building_all")
     const buildings = await buildingCollection.find().toArray()
 
+    const coordinates = await getCoordinates(buildingData.building_address)
     buildingData.lat = parseFloat(coordinates.lat)
     buildingData.lon = parseFloat(coordinates.lon)
-
-    const coordinates = await getCoordinates(buildingData.building_address)
+    let change;
     try {
-        const change = { buildings: buildingData }
+        change = { buildings: buildingData }
         await buildingCollection.updateOne({ _id: buildings[0]._id }, { $push: change });
         return "Successfully added"
     } catch (err) {
