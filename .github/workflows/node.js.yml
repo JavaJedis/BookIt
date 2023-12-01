@@ -37,6 +37,6 @@ jobs:
       run: env
 
     - name: Run command with sudo
-      run: sudo -E your_command_here
+      run: sudo -E npm test suite
       working-directory: back_end
 
