@@ -55,4 +55,7 @@ dependencies {
     implementation ("androidx.tracing:tracing:1.2.0")
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.6.0-alpha02")
     androidTestImplementation("androidx.test.uiautomator:uiautomator:2.3.0-alpha05")
+    implementation("com.google.firebase:firebase-inappmessaging:20.4.0")
+    implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation ("com.google.firebase:firebase-messaging-directboot:23.3.1")
 }
