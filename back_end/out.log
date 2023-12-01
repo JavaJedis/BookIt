@@ -1,197 +1,158 @@
-[2023-11-21T00:36:03.126Z][SERVER-WORKER] Starting Backend Server
-[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] ==========COMMENT MANAGER==========
-[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] Setting building code limit to 4 characters.
-[2023-11-21T00:36:03.345Z][COMMENT-MANAGER] Setting room number limit to 4 characters.
-[2023-11-21T00:36:03.346Z][COMMENT-MANAGER] Setting comment limit to 600 characters.
-[2023-11-21T00:36:03.346Z][COMMENT-MANAGER] ===================================
-[2023-11-21T00:36:03.348Z][DBHandler] Initializing Database Handler
-[2023-11-21T00:36:03.420Z][NOTIFICATION-MANAGER] Notification Service Enabled.
-[2023-11-21T00:36:03.423Z][STUDYROOM-MANAGER] Study Room Scheduler Service Enabled
-[2023-11-21T00:36:03.447Z][SERVER-WORKER] Server is running on https://localhost:443
-[2023-11-21T00:36:03.469Z][DBHandler] Connected to database
-[2023-11-21T00:37:27.150Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:38:33.096Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:39:23.534Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:42:00.274Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:43:04.843Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:44:42.240Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:45:44.886Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-21T00:46:45.618Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-0T23:36:44.909Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-20T23:36:44.913Z][DBHandler] Connection closed
-[2023-11-20T23:36:44.913Z][SERVER-WORKER] Backend Closed.
-0]
-20-11-2023
-[2023-11-20T22:40:00.335Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T22:40:00.347Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T22:40:00.357Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T22:40:13.260Z][SERVER-WORKER] Shutting down backend service...
-[2023-11-20T22:40:13.261Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
-[2023-11-20T22:40:13.262Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-20T22:40:13.265Z][DBHandler] Connection closed
-[2023-11-20T22:40:13.265Z][SERVER-WORKER] Backend Closed.
-KhTuPygS-pNWvlelMKZwsqU4WHUBWb2h92JTrKK1_JvNsTwnDKXweg785dOtar
-[2023-11-20T18:14:59.214Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:15:54.714Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:16:33.724Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:18:25.821Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:19:01.872Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
-[2023-11-20T18:20:24.139Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:22:31.461Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:24:03.844Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
-20-11-2023
-[2023-11-20T18:27:26.647Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:28:17.885Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:29:20.845Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
-20-11-2023
-[2023-11-20T18:36:11.116Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:37:02.665Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:37:44.090Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:38:33.622Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T18:38:33.637Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T18:38:33.647Z][STUDYROOM-MANAGER] Error: Not Found
-[2023-11-20T18:42:16.960Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:43:38.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:44:21.741Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:46:40.940Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:47:19.113Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:52:39.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T18:53:47.663Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:02:17.013Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:03:33.330Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:08:25.971Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:13:42.116Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:14:39.363Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:22:47.307Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:25:33.730Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:27:00.016Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
-20-11-2023
-[2023-11-20T19:35:50.999Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T19:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
-20-11-2023
-[2023-11-20T20:02:27.390Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:09:26.049Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:10:04.084Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:11:02.053Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:16:52.182Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:18:42.460Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:19:17.777Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
-[2023-11-20T20:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
-20-11-2023
-[2023-11-20T20:28:39.127Z][SERVER-WORKER] Shutting down backend service...
-[2023-11-20T20:28:39.128Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
-[2023-11-20T20:28:39.128Z][NOTIFICATION-MANAGER] Notification Service Disabled
-[2023-11-20T20:28:39.132Z][DBHandler] Connection closed
-[2023-11-20T20:28:39.132Z][SERVER-WORKER] Backend Closed.
-gged in with device token cfUF0XaQSxCM98aUAr2Yjn:APA91bEBZ1uCTBd7vb_HtDk3q6uyKMVCIv3JjyEF_l989C27JaQhckSMM9ylBi8FZYb7zT2s-0H47rKPTLkq-xYR-6OiayNavT_zzU03tjXvntCDxd3ArnDYSYH7FePJ-alVMBmpHGjJ
-[2023-11-07T22:20:38.567Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token cfUF0XaQSxCM98aUAr2Yjn:APA91bEBZ1uCTBd7vb_HtDk3q6uyKMVCIv3JjyEF_l989C27JaQhckSMM9ylBi8FZYb7zT2s-0H47rKPTLkq-xYR-6OiayNavT_zzU03tjXvntCDxd3ArnDYSYH7FePJ-alVMBmpHGjJ
-[2023-11-07T22:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [21, 30]
-21
-30
-07-11-2023
-[2023-11-07T22:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 0]
-22
-0
-07-11-2023
-[2023-11-07T23:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [22, 30]
-22
-30
-07-11-2023
-[2023-11-07T23:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 0]
-23
-0
-07-11-2023
-[2023-11-08T00:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [23, 30]
-23
-30
-07-11-2023
-[2023-11-08T00:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [24, 0]
-24
-0
-07-11-2023
-[2023-11-08T01:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
-0
-30
-08-11-2023
-[2023-11-08T01:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
-1
-0
-08-11-2023
-[2023-11-08T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
-1
-30
-08-11-2023
-[2023-11-08T02:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
-2
-0
-08-11-2023
-[2023-11-08T03:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
-2
-30
-08-11-2023
-[2023-11-08T03:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
-3
-0
-08-11-2023
-[2023-11-08T04:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
-3
-30
-08-11-2023
-[2023-11-08T04:36:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
-4
-0
-08-11-2023
-[2023-11-08T05:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
-4
-30
-08-11-2023
-[2023-11-08T05:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
-5
-0
-08-11-2023
-[2023-11-08T06:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
-5
-30
-08-11-2023
-[2023-11-08T06:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
-6
-0
-08-11-2023
-[2023-11-08T07:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
-6
-30
-08-11-2023
-[2023-11-08T07:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
-7
-0
-08-11-2023
-[2023-11-08T08:27:00.009Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
-7
-30
-08-11-2023
-[2023-11-08T08:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
-8
-0
-08-11-2023
-[2023-11-08T09:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
-8
-30
-08-11-2023
-[2023-11-08T09:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
-9
-0
-08-11-2023
-[2023-11-08T10:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
-9
-30
-08-11-2023
-[2023-11-08T10:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
-10
-0
-08-11-2023
-[2023-11-08T11:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+[2023-11-29T22:52:24.624Z][SERVER-WORKER] Starting Backend Server
+[2023-11-29T22:52:24.840Z][COMMENT-MANAGER] ==========COMMENT MANAGER==========
+[2023-11-29T22:52:24.840Z][COMMENT-MANAGER] Setting building code limit to 4 characters.
+[2023-11-29T22:52:24.841Z][COMMENT-MANAGER] Setting room number limit to 4 characters.
+[2023-11-29T22:52:24.841Z][COMMENT-MANAGER] Setting comment limit to 600 characters.
+[2023-11-29T22:52:24.841Z][COMMENT-MANAGER] ===================================
+[2023-11-29T22:52:24.844Z][DBHandler] Initializing Database Handler
+[2023-11-29T22:52:24.903Z][NOTIFICATION-MANAGER] Notification Service Enabled.
+[2023-11-29T22:52:24.908Z][STUDYROOM-MANAGER] Study Room Scheduler Service Enabled
+[2023-11-29T22:52:24.932Z][SERVER-WORKER] Server is running on https://localhost:443
+[2023-11-29T22:52:24.952Z][DBHandler] Connected to database
+[2023-11-29T22:57:51.849Z][COMMENT-MANAGER] tonyli990322@gmail.com logged in with device token undefined
+[2023-11-29T22:58:03.636Z][COMMENT-MANAGER] tonyli990322@gmail.com logged in with device token undefined
+[2023-11-29T22:58:08.146Z][COMMENT-MANAGER] jedisjava@gmail.com logged in with device token undefined
+[2023-11-29T22:58:12.867Z][COMMENT-MANAGER] jedisjava@gmail.com logged in with device token undefined
+[2023-11-29T22:58:17.033Z][COMMENT-MANAGER] tonyli990322@gmail.com logged in with device token undefined
+[2023-11-29T23:07:53.006Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-29T23:07:53.007Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-29T23:07:53.008Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-29T23:07:53.012Z][DBHandler] Connection closed
+[2023-11-29T23:07:53.012Z][SERVER-WORKER] Backend Closed.
+ token undefined
+[2023-11-22T00:14:09.230Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:16:11.538Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:17:46.749Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:18:28.143Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:19:33.790Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:20:06.875Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:20:40.054Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-22T00:21:41.840Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-22T00:21:41.841Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-22T00:21:41.841Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-22T00:21:41.847Z][DBHandler] Connection closed
+[2023-11-22T00:21:41.847Z][SERVER-WORKER] Backend Closed.
+0.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [0, 30]
+21-11-2023
+[2023-11-21T01:27:46.339Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:28:57.159Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:29:40.334Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:31:40.786Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:32:06.646Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:32:29.697Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:32:51.687Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:32:59.885Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:33:04.683Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:33:10.189Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:34:11.425Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 0]
+21-11-2023
+[2023-11-21T01:36:48.533Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:37:02.290Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:38:19.849Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:42:12.061Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:46:22.592Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:47:19.432Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:48:27.814Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:50:04.998Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:51:00.144Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:52:24.540Z][COMMENT-MANAGER] amanprakashpython@gmail.com logged in with device token undefined
+[2023-11-21T01:53:16.003Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T01:56:10.047Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T02:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [1, 30]
+21-11-2023
+[2023-11-21T02:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 0]
+21-11-2023
+[2023-11-21T03:27:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [2, 30]
+21-11-2023
+[2023-11-21T03:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 0]
+21-11-2023
+[2023-11-21T04:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [3, 30]
+21-11-2023
+[2023-11-21T04:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 0]
+21-11-2023
+[2023-11-21T05:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [4, 30]
+21-11-2023
+[2023-11-21T05:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 0]
+21-11-2023
+[2023-11-21T06:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [5, 30]
+21-11-2023
+[2023-11-21T06:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 0]
+21-11-2023
+[2023-11-21T07:27:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [6, 30]
+21-11-2023
+[2023-11-21T07:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 0]
+21-11-2023
+[2023-11-21T08:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [7, 30]
+21-11-2023
+[2023-11-21T08:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 0]
+21-11-2023
+[2023-11-21T09:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [8, 30]
+21-11-2023
+[2023-11-21T09:36:00.010Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 0]
+21-11-2023
+[2023-11-21T10:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [9, 30]
+21-11-2023
+[2023-11-21T10:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 0]
+21-11-2023
+[2023-11-21T11:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [10, 30]
+21-11-2023
+[2023-11-21T11:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 0]
+21-11-2023
+[2023-11-21T12:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [11, 30]
+21-11-2023
+[2023-11-21T12:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 0]
+21-11-2023
+[2023-11-21T13:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [12, 30]
+21-11-2023
+[2023-11-21T13:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 0]
+21-11-2023
+[2023-11-21T14:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [13, 30]
+21-11-2023
+[2023-11-21T14:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 0]
+21-11-2023
+[2023-11-21T15:02:05.187Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:03:05.638Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:06:18.704Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:08:48.449Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:09:32.109Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:12:45.463Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:14:49.176Z][COMMENT-MANAGER] amanprakashburnett@gmail.com logged in with device token undefined
+[2023-11-21T15:27:00.013Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [14, 30]
+21-11-2023
+[2023-11-21T15:36:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 0]
+21-11-2023
+[2023-11-21T16:27:00.008Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [15, 30]
+21-11-2023
+[2023-11-21T16:36:00.007Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 0]
+21-11-2023
+[2023-11-21T17:27:00.005Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [16, 30]
+21-11-2023
+[2023-11-21T17:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 0]
+21-11-2023
+[2023-11-21T18:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [17, 30]
+21-11-2023
+[2023-11-21T18:36:00.006Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 0]
+21-11-2023
+[2023-11-21T19:27:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [18, 30]
+21-11-2023
+[2023-11-21T19:36:00.004Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 0]
+21-11-2023
+[2023-11-21T20:27:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [19, 30]
+21-11-2023
+[2023-11-21T20:36:00.003Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 0]
+21-11-2023
+[2023-11-21T21:23:58.122Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-21T21:23:58.133Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-21T21:23:58.142Z][STUDYROOM-MANAGER] Error: Not Found
+[2023-11-21T21:27:00.012Z][NOTIFICATION-MANAGER] Send reminders for bookings @ [20, 30]
+21-11-2023
+[2023-11-21T21:34:08.042Z][SERVER-WORKER] Shutting down backend service...
+[2023-11-21T21:34:08.043Z][STUDYROOM-MANAGER] Study Room Scheduler Service Disbaled
+[2023-11-21T21:34:08.043Z][NOTIFICATION-MANAGER] Notification Service Disabled
+[2023-11-21T21:34:08.047Z][DBHandler] Connection closed
+[2023-11-21T21:34:08.047Z][SERVER-WORKER] Backend Closed.
+@ [10, 30]
 10
 30
 08-11-2023

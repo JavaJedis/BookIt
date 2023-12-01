@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 // From https://droidbyme.medium.com/android-recyclerview-with-single-and-multiple-selection-5d50c0c4c739
 public class BuildingSelectionRecyclerViewAdapter extends RecyclerView.Adapter<BuildingSelectionRecyclerViewAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
     private ArrayList<String> buildings;
-    private int checkedPosition = -1; // no default selection
+    private int checkedPosition = RecyclerView.NO_POSITION; // no default selection
 
     private final RecyclerViewInterface recyclerViewInterface;
 
@@ -42,6 +42,10 @@ public class BuildingSelectionRecyclerViewAdapter extends RecyclerView.Adapter<B
         return this.checkedPosition;
     }
 
+    public ArrayList<String> getBuildings() {
+        return buildings;
+    }
+
     @NonNull
     @Override
     public BuildingSelectionRecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -61,45 +65,43 @@ public class BuildingSelectionRecyclerViewAdapter extends RecyclerView.Adapter<B
     }
 
     public String getSelected() {
-        if (checkedPosition != -1) {
+        if (checkedPosition != RecyclerView.NO_POSITION) {
             return buildings.get(checkedPosition);
         }
         return null;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView buildingNames;
-        private ImageView checkMark;
+        private final TextView buildingNames;
+        private final ImageView checkMark;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             buildingNames = itemView.findViewById(R.id.building_name_row_textView);
             checkMark = itemView.findViewById(R.id.checkMark_imageView);
         }
         public void bind(String buildingCode) {
-            if (checkedPosition == -1) {
+            if (checkedPosition == RecyclerView.NO_POSITION) {
                 checkMark.setVisibility(View.GONE);
             } else {
-                if (checkedPosition == getAdapterPosition()) {
+                if (getAdapterPosition() == checkedPosition) {
                     checkMark.setVisibility(View.VISIBLE);
                 } else {
                     checkMark.setVisibility(View.GONE);
                 }
             }
             buildingNames.setText(buildingCode);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    checkMark.setVisibility(View.VISIBLE);
-                    if (checkedPosition != getAdapterPosition()) {
-                        notifyItemChanged(checkedPosition);
-                        checkedPosition = getAdapterPosition();
-                    }
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
+            itemView.setOnClickListener(v -> {
+                if (getAdapterPosition() == checkedPosition) {
+                    checkedPosition = RecyclerView.NO_POSITION; // unselect the building on second click
+                } else {
+                    notifyItemChanged(checkedPosition);
+                    checkedPosition = getAdapterPosition();
+                }
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
 
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClick(position);
-                        }
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onItemClick(position);
                     }
                 }
             });

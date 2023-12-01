@@ -6,16 +6,13 @@ const schedule = require('node-schedule');
 //Global definition
 const MODULE_NAME = "STUDYROOM-MANAGER";
 
-//Global variables
-var sroomSchedulerA;
-var sroomSchedulerB;
 
 //Scheduler functions
 
 function initScheduler() {
     try {
-        sroomSchedulerA = schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
-        sroomSchedulerB = schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
+        schedule.scheduleJob('sroomSchedulerA', '20 * * * *', removeExpiredBookings);
+        schedule.scheduleJob('sroomSchedulerB', '40 * * * *', removeExpiredBookings);
         utils.consoleMsg(MODULE_NAME, "Study Room Scheduler Service Enabled");
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to enable studyroom scheduler service");
@@ -90,7 +87,7 @@ async function bookStudyRooms(req, res) {
         const result = await db_handler.bookStudyRooms(bookingData);
         utils.onSuccess(res, result)
     } catch (err) {
-        res.status(404);
+        res.status(400);
         res.type("json");
         res.send(JSON.stringify(
             {
@@ -114,11 +111,7 @@ async function waitlistStudyRooms(req, res) {
         const result = await db_handler.waitlistStudyRooms(waitlistData);
         utils.onSuccess(res, result)
     } catch (err) {
-        if (!err.statusCode) {
-            res.status(404);
-        } else {
-            res.status(err.statusCode);
-        }
+        res.status(err.statusCode);
         res.type("json");
         res.send(JSON.stringify(
             {
@@ -236,7 +229,8 @@ async function createBuilding(req, res) {
     }
 
     try {
-        result = await db_handler.addBuilding(buildingData)
+        var result = await db_handler.addBuilding(buildingData);
+        console.log(result);
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -251,10 +245,10 @@ async function delBuilding(req, res) {
         });
         return
     }
-    BuildingCode = req.params.building_code
+    var BuildingCode = req.params.building_code
 
     try {
-        result = await db_handler.delBuilding(BuildingCode)
+        var result = await db_handler.delBuilding(BuildingCode)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -277,7 +271,7 @@ async function createRoom(req, res) {
     }
 
     try {
-        result = await db_handler.addRoom(roomData)
+        var result = await db_handler.addRoom(roomData)
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -293,13 +287,13 @@ async function delRoom(req, res) {
         });
         return
     }
-    roomData = {
+    var roomData = {
         buildingCode: req.params.building_code,
         roomNo: req.params.room_no
     }
 
     try {
-        result = await db_handler.delRoom(roomData)
+        var result = await db_handler.delRoom(roomData);
         utils.onSuccess(res, result)
     } catch (err) {
         utils.onFailure(res, err);
@@ -319,7 +313,7 @@ async function removeExpiredBookings() {
     var date = dateObj.getDate();
     var month = dateObj.getMonth() + 1;
     var year = dateObj.getFullYear();
-    
+
     //Process data
     if (date < 10) {
         date = `0${date}`;

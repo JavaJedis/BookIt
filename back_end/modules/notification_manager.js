@@ -3,20 +3,29 @@ const admin = require('firebase-admin');
 const utils = require('./utils');
 const db_handler = require("./db_handler");
 const schedule = require('node-schedule');
-const serviceAccount = require('./firebase/firebase_key.json')
+
+const serviceAccount = {
+    type: 'service_account',
+    project_id: process.env.FIREBASE_PROJECT_ID,
+    private_key_id: process.env.FIREBASE_KEY_ID,
+    private_key: process.env.FIREBASE_KEY.replace(/\\n/g, '\n'),
+    client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    client_id: process.env.FIREBASE_CLIENT_ID,
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url: process.env.FIREBASE_CERT_URL,
+    universe_domain: "googleapis.com"
+};
 
 
 
 //Global variables
 var app;
-var reminderJobA;
-var reminderJobB;
+
 
 //Global Definitions
-const FIREBASE_KEY_PATH = './firebase/firebase_key.json';
 const MODULE_NAME = 'NOTIFICATION-MANAGER';
-
-
 
 
 
@@ -27,13 +36,13 @@ function init() {
     //Init app
     app = admin.initializeApp(
         {
-            credential: admin.credential.cert(serviceAccount)
+            credential: admin.credential.cert(serviceAccount),
         }
     );
     //Init schedulers
     try {
-        reminderJobA = schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
-        reminderJobB = schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderA', '36 * * * *', searchAndSendReminders);
+        schedule.scheduleJob('ReminderB', '27 * * * *', searchAndSendReminders);
     } catch (err) {
         utils.consoleMsg(MODULE_NAME, "Failed to initialize scheduler.");
         utils.consoleMsg(MODULE_NAME, `ErrMsg:\n${err}`);
@@ -68,14 +77,15 @@ async function sendNotification(title, body, devToken) {
 
     const messagingService = admin.messaging(app);
     try {
+        const req = {
+            notification: {
+                title,
+                body
+            },
+            token: devToken
+        }
         await messagingService.send(
-            {
-                notification: {
-                    title: title,
-                    body: body
-                },
-                token: devToken
-            }
+            req
         );
         utils.consoleMsg(MODULE_NAME, `Notification sent to ${devToken}`);
         return true;
@@ -122,7 +132,6 @@ async function searchAndSendReminders() {
 
     var date;
     var month;
-    var year = currentDate.getFullYear();
     if (currentDate.getDate() < 10) {
         date = `${0}${currentDate.getDate()}`
     } else {
@@ -163,16 +172,15 @@ async function searchAndSendReminders() {
         const user = await db_handler.checkUser(value[nextReminderTime]);
         if (user == null || user.tokens == null) {
             return;
-            console.log("No");
         }
-        for (const [tokenIndex, devToken] of Object.entries(user.tokens)) {
-            if (devToken == null)
+        for (const devToken of Object.entries(user.tokens)) {
+            if (devToken[1] == null)
                 continue;
             let success = await sendNotification("Booking Reminder",
                 `You have a booking on room ${key} at ${hourStr}:${minStr} today.`
-                , devToken);
+                , devToken[1]);
             if (success) {
-                updateList.push(devToken);
+                updateList.push(devToken[1]);
             }
 
         }

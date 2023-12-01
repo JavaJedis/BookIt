@@ -35,33 +35,33 @@ app.use(bodyParser.json());
 
 
 // API endpoints
-app.get('/user/type', user_manager.userType);
-app.post('/user/login', user_manager.userLogin);
-app.get('/ils/:building_code', ils_manager.listIlsRooms);
-app.get('/filter', sroom_manager.filterStudyRooms);
-app.get('/studyrooms/:building_code', sroom_manager.listStudyRooms);
-app.get('/studyrooms/:building_code/:room_no/slots', sroom_manager.getSlots);
-app.get('/studyrooms/:building_code/:room_no/comments', sroom_manager.getStudyRoomComment);
-app.post('/studyrooms/:building_code/:room_no/report', user_manager.userAuth, sroom_manager.reportRoom);
-app.get('/user/bookings', user_manager.userBookings);
-app.delete('/user/bookings/:id', user_manager.cancelBooking);
+app.get('/user/type', user_manager.userType);   //Done test
+app.post('/user/login', user_manager.userLogin);    //Done test
+app.get('/ils/:building_code', ils_manager.listIlsRooms);       //Done test
+app.get('/filter', sroom_manager.filterStudyRooms); // Done test
+app.get('/studyrooms/:building_code', sroom_manager.listStudyRooms);    //Done test
+app.get('/studyrooms/:building_code/:room_no/slots', sroom_manager.getSlots);   //Done test
+app.get('/studyrooms/:building_code/:room_no/comments', sroom_manager.getStudyRoomComment);     //Done test 
+app.post('/studyrooms/:building_code/:room_no/report', user_manager.userAuth, sroom_manager.reportRoom);    //Done Test
+app.get('/user/bookings', user_manager.userBookings);  // Done test
+app.delete('/user/bookings/:id', user_manager.userAuth, user_manager.cancelBooking); // Done test
 app.put('/user/bookings/:id', user_manager.userAuth, user_manager.confirmBooking);
-app.post('/studyroom/book', user_manager.userAuth, sroom_manager.bookStudyRooms);
-app.post('/studyroom/waitlist', user_manager.userAuth, sroom_manager.waitlistStudyRooms);
-app.post('/studyrooms/:building_code/:room_no/comments', user_manager.userAuth, cmt_manager.sendStudyRoomComment);
-app.get('/lecturehalls/:building_code', lhall_manager.listLectureHalls);
+app.post('/studyroom/book', user_manager.userAuth, sroom_manager.bookStudyRooms);        //Done test
+app.post('/studyroom/waitlist', user_manager.userAuth, sroom_manager.waitlistStudyRooms);     // Done test
+app.post('/studyrooms/:building_code/:room_no/comments', user_manager.userAuth, cmt_manager.sendStudyRoomComment);  //Done test
+app.get('/lecturehalls/:building_code', lhall_manager.listLectureHalls);        //Done test
 
 //Administration Endpoints
-app.get('/user/admin', user_manager.listAdmins);
-app.post('/user/admin', user_manager.userAuth, user_manager.createAdmin);
-app.delete('/user/admin', user_manager.userAuth, user_manager.removeAdmin);
-app.get('/user/admin/:email/buildings', user_manager.getAdminBuildings);
-app.post('/user/admin/:email/buildings', user_manager.userAuth, user_manager.addBuildingAdmin);
-app.delete('/user/admin/:email/buildings', user_manager.userAuth, user_manager.removeBuildingAdmin);
-app.post('/studyrooms/building', user_manager.userAuth, sroom_manager.createBuilding)
-app.delete('/studyrooms/:building_code', user_manager.userAuth, sroom_manager.delBuilding)
+app.get('/user/admin', user_manager.listAdmins);        //Done test
+app.post('/user/admin', user_manager.userAuth, user_manager.createAdmin);       //Done test
+app.delete('/user/admin', user_manager.userAuth, user_manager.removeAdmin);     //Done test
+app.get('/user/admin/:email/buildings', user_manager.getAdminBuildings);        //Done test
+app.post('/user/admin/:email/buildings', user_manager.userAuth, user_manager.addBuildingAdmin);     //Done test
+app.delete('/user/admin/:email/buildings', user_manager.userAuth, user_manager.removeBuildingAdmin);        //Done test
+app.post('/studyrooms/building', user_manager.userAuth, sroom_manager.createBuilding)   //Done Test
+app.delete('/studyrooms/:building_code', user_manager.userAuth, sroom_manager.delBuilding)  //Done Test
 app.post('/studyrooms/:building_code/', user_manager.userAuth, sroom_manager.createRoom)
-app.delete('/studyrooms/:building_code/:room_no', user_manager.userAuth, sroom_manager.delRoom)
+app.delete('/studyrooms/:building_code/:room_no', user_manager.userAuth, sroom_manager.delRoom) //Done Test
 
 
 
@@ -72,14 +72,21 @@ sroom_manager.initScheduler();
 
 
 // Express https listener
-server = https.createServer({
-    key: fs.readFileSync("/home/dev/bookit_backend/certs/private.pem"),
-    cert: fs.readFileSync("/home/dev/bookit_backend/certs/fullchain.crt")
-}, app).listen(PORT, () => {
-    utils.serverLog(MODULE_NAME, `Server is running on https://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV === "test") {
+    server = app.listen(80, () => {
+        utils.serverLog(MODULE_NAME, `Server is running on http://localhost:80`);
+    });
+} else {
+    server = https.createServer({
+        key: fs.readFileSync("/home/dev/bookit_backend/certs/private.pem"),
+        cert: fs.readFileSync("/home/dev/bookit_backend/certs/fullchain.crt")
+    }, app).listen(PORT, () => {
+        utils.serverLog(MODULE_NAME, `Server is running on https://localhost:${PORT}`);
+    });
+}
 
-async function shutDown(){
+
+async function shutDown() {
     utils.serverLog(MODULE_NAME, "Shutting down backend service...");
     sroom_manager.deinitScheduler();
     notif_manager.deInit();

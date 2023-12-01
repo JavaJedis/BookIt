@@ -2239,11 +2239,6 @@ bson@^5.5.0:
   resolved "https://registry.npmjs.org/bson/-/bson-5.5.1.tgz"
   integrity sha512-ix0EwukN2EpC0SRWIj/7B5+A6uQMQy6KMREI9qQqvgpkV2frH63T0UDVd1SYedL6dNCmDBYB3QtXi4ISk9YT+g==
 
-bson@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/bson/-/bson-6.1.0.tgz"
-  integrity sha512-yiQ3KxvpVoRpx1oD1uPz4Jit9tAVTJgjdmjDKtUErkOoL9VNoF8Dd58qtAOL5E40exx2jvAT9sqdRSK/r+SHlA==
-
 buffer-crc32@~0.2.3:
   version "0.2.13"
   resolved "https://registry.npmjs.org/buffer-crc32/-/buffer-crc32-0.2.13.tgz"
@@ -3051,7 +3046,7 @@ gaxios@^6.0.0:
     is-stream "^2.0.0"
     node-fetch "^2.6.9"
 
-gcp-metadata@^5.2.0, gcp-metadata@^5.3.0:
+gcp-metadata@^5.3.0:
   version "5.3.0"
   resolved "https://registry.npmjs.org/gcp-metadata/-/gcp-metadata-5.3.0.tgz"
   integrity sha512-FNTkdNEnBdlqF2oatizolQqNANMrcqJt6AAYt99B3y1aLLC8Hc5IOBb+ZnnzllodEEf6xMBp6wRcBbc16fa65w==
@@ -4426,7 +4421,7 @@ mongodb@^4.13.0:
     "@aws-sdk/credential-providers" "^3.186.0"
     "@mongodb-js/saslprep" "^1.1.0"
 
-mongodb@^5.9.1:
+mongodb@^5.9.1, "mongodb@3.x.x || 4.x || 5.x":
   version "5.9.1"
   resolved "https://registry.npmjs.org/mongodb/-/mongodb-5.9.1.tgz"
   integrity sha512-NBGA8AfJxGPeB12F73xXwozt8ZpeIPmCUeWRwl9xejozTXFes/3zaep9zhzs1B/nKKsw4P3I4iPfXl3K7s6g+Q==
@@ -4436,15 +4431,6 @@ mongodb@^5.9.1:
     socks "^2.7.1"
   optionalDependencies:
     "@mongodb-js/saslprep" "^1.1.0"
-
-mongodb@^6.1.0, "mongodb@3.x.x || 4.x || 5.x":
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/mongodb/-/mongodb-6.1.0.tgz"
-  integrity sha512-AvzNY0zMkpothZ5mJAaIo2bGDjlJQqqAbn9fvtVgwIIUPEfdrqGxqNjjbuKyrgQxg2EvCmfWdjq+4uj96c0YPw==
-  dependencies:
-    "@mongodb-js/saslprep" "^1.1.0"
-    bson "^6.1.0"
-    mongodb-connection-string-url "^2.6.0"
 
 ms@^2.1.1:
   version "2.1.3"

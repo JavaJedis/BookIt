@@ -175,7 +175,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                         break;
                     case "studyrooms":
                         showingBuildingCodes = studyRoomBuildingCodes;
-                        showingBuildingNames = lectureHallBuildingNames;
+                        showingBuildingNames = studyRoomBuildingNames;
                         // setting button background
                         informalLearningSpaceButton.setBackgroundResource(R.drawable.top_button);
                         lectureHallButton.setBackgroundResource(R.drawable.top_button);
@@ -278,6 +278,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerViewInt
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
             });
+            requestBuildingType = Constant.DEFAULT_STUDY_SPACE_TYPE;
         }
     }
 }
