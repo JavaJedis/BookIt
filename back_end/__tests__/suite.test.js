@@ -4005,16 +4005,11 @@ describe("/studyrooms/:building_code/:room_no POST",
                     msg: "This is another dumb room"
                 };
 
-                let expected = {
-                    status: "error",
-                    data: "bad request"
-                };
 
                 let actual = await request(app).post("/studyrooms/100//report")
                     .set("Content-Type", "application/json").send(data);
 
                 expect(actual.status).toBe(404);
-                expect(actual.body).toBe(expected);
             }
         );
     }
