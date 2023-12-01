@@ -3,16 +3,6 @@ const admin = require('firebase-admin');
 const utils = require('./utils');
 const db_handler = require("./db_handler");
 const schedule = require('node-schedule');
-const serviceAccount = require('./firebase/firebase_key.json')
-
-
-
-//Global variables
-var app;
-
-
-//Global Definitions
-const MODULE_NAME = 'NOTIFICATION-MANAGER';
 
 const serviceAccount = {
     type: 'service_account',
@@ -27,6 +17,16 @@ const serviceAccount = {
     client_x509_cert_url: process.env.FIREBASE_CERT_URL,
     universe_domain: "googleapis.com"
 };
+
+
+
+//Global variables
+var app;
+
+
+//Global Definitions
+const MODULE_NAME = 'NOTIFICATION-MANAGER';
+
 
 
 /**
