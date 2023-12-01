@@ -33,6 +33,10 @@ jobs:
         node-version: 20.x
     - run: npm install
       working-directory: back_end
-    - run: sudo -E npm test suite
+    - name: Print environment variables
+      run: env
+
+    - name: Run command with sudo
+      run: sudo -E your_command_here
       working-directory: back_end
 
