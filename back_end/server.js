@@ -74,7 +74,7 @@ sroom_manager.initScheduler();
 // Express https listener
 if (process.env.NODE_ENV === "test") {
     server = app.listen(80, () => {
-        utils.serverLog(MODULE_NAME, `Server is running on http://localhost:${PORT}`);
+        utils.serverLog(MODULE_NAME, `Server is running on http://localhost:80`);
     });
 } else {
     server = https.createServer({
