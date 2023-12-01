@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -46,7 +45,7 @@ public class FilterStudyRoomsFailure8ATest {
         ViewInteraction ic = onView(
                 allOf(withText("Sign in"),
                         childAtPosition(
-                                allOf(ViewMatchers.withId(R.id.sign_in_button),
+                                allOf(withId(R.id.sign_in_button),
                                         childAtPosition(
                                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                                 0)),
