@@ -4,7 +4,7 @@ const request = require("supertest");
 jest.mock('axios');
 const axios = require("axios");
 let server = require("../server");
-const app = "https://localhost:80";
+const app = "http://localhost:80";
 let mongoMemServer;
 
 const today = new Date();
