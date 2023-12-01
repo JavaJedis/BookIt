@@ -57,6 +57,7 @@ function sendStudyRoomComment(req, res) {
             ));
         }
     ).catch((err) => {
+        console.log(err);
         utils.onFailure(res, {
             statusCode: 404,
             message: "Not found"

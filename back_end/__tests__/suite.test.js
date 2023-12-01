@@ -67,10 +67,11 @@ describe("/user/admin GET request", () => {
     let memClient;
 
     beforeAll(async () => {
+        const port = 25565;
         mongoMemServer = await MongoMemoryServer.create(
             {
                 instance: {
-                    port: 25565
+                    port,
                 }
             }
         );
@@ -173,18 +174,18 @@ describe("/user/type GET request",
                 Expected Behavior: Account type fetched from the database
                 Expected Output: "user"
                 */
-
-                await axios.get.mockResolvedValue(
-                    {
-                        data: {
-                            email: "aman@admin.ca"
-                        }
-                    }
-                );
                 let expected = {
                     status: "ok",
                     data: "user"
                 };
+                let email = "aman@admin.ca"
+                await axios.get.mockResolvedValue(
+                    {
+                        data: {
+                            email,
+                        }
+                    }
+                );
                 let actual = await request(app).get("/user/type?token=fake");
                 expect(actual.status).toBe(200);
                 expect(actual.body).toEqual(expected);
@@ -2206,7 +2207,7 @@ describe("/filter GET request",
                     }
                 }
             ));
-            let booking = await request(app)
+            await request(app)
                 .post("/studyroom/book")
                 .set('Content-Type', 'application/json')
                 .send(bookingData);
@@ -2814,7 +2815,7 @@ describe("/user/bookings/:id DELETE request",
                         }
                     }
                 ));
-                let waitlist = await request(app)
+                await request(app)
                     .post("/studyroom/waitlist")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -3101,7 +3102,7 @@ describe("/studyroom/waitlist POST request",
                         }
                     }
                 ));
-                let response = await request(app)
+                await request(app)
                     .post("/studyroom/book")
                     .set('Content-Type', 'application/json')
                     .send(bookingData);
@@ -4013,6 +4014,7 @@ describe("/studyrooms/:building_code/:room_no POST",
                     .set("Content-Type", "application/json").send(data);
 
                 expect(actual.status).toBe(404);
+                expect(actual.body).toBe(expected);
             }
         );
     }
