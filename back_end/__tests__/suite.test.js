@@ -1671,13 +1671,13 @@ let buildings = {
         building_address: '1958 Main Mall, Vancouver, BC V6T 1Z2',
         open_times: [
             730, 730, 730,
-            730, 730, 1000,
-            1000
+            730, 730, 730,
+            730
         ],
         close_times: [
             2130, 2130,
             2130, 2130,
-            1730, 1730,
+            2130, 2130,
             2130
         ],
         lat: 49.26654885,
@@ -1689,12 +1689,12 @@ let buildings = {
         building_address: '2055 East Mall, Vancouver, BC V6T 1Z4',
         open_times: [
             800, 800, 800, 800,
-            800, 0, 0
+            800, 800, 800
         ],
         close_times: [
             2000, 2000, 2000,
-            2000, 1800, 0,
-            0
+            2000, 2000, 2000,
+            2000
         ],
         lat: 49.26607735,
         lon: -123.25137314363899
@@ -1726,12 +1726,12 @@ let testRoomB = {
     features: ['TV with HDMI Connection', 'Whiteboard', 'Outlets'],
     open_times: [
         800, 800, 800, 800,
-        800, 0, 0
+        800, 800, 800
     ],
     close_times: [
         2000, 2000, 2000,
-        2000, 1800, 0,
-        0
+        2000, 2000, 2000,
+        2000
     ],
     building_code: 'ALSC',
     building_name: 'Abdul Ladha Science Student Centre',
@@ -1745,13 +1745,13 @@ let testRoomC = {
     features: ['Whiteboard', 'Outlets'],
     open_times: [
         730, 730, 730,
-        730, 730, 1000,
-        1000
+        730, 730, 730,
+        730
     ],
     close_times: [
         2130, 2130,
         2130, 2130,
-        1730, 1730,
+        2130, 2130,
         2130
     ],
     building_code: 'WCKL',
