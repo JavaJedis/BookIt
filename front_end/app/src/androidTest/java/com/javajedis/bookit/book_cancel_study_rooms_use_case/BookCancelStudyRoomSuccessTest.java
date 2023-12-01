@@ -137,7 +137,7 @@ public class BookCancelStudyRoomSuccessTest {
                         isDisplayed()));
         recyclerView4.check(matches(isDisplayed()));
 
-        onView(withId(R.id.timeslots_recycler_view)).check(new TimeSlotsRecyclerViewStatusBookNowAssertion(47));
+        onView(withId(R.id.timeslots_recycler_view)).check(new TimeSlotsRecyclerViewStatusBookNowAssertion(10));
 
         // click the last time slots 23:30 - 24:00
         ViewInteraction recyclerView5 = onView(
@@ -145,7 +145,7 @@ public class BookCancelStudyRoomSuccessTest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        recyclerView5.perform(actionOnItemAtPosition(47, click()));
+        recyclerView5.perform(actionOnItemAtPosition(10, click()));
 
         // assert if current time is before 2330-2400
         // ChatGPT usage: Yes --> from here
