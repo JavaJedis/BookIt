@@ -18,6 +18,7 @@ jobs:
           OPEN_CAGE_API_TOKEN: ${{ secrets.OPEN_CAGE_API_TOKEN }}
           FIREBASE_KEY: ${{ secrets.FIREBASE_KEY }}
           DB_PORT: ${{ secrets.DB_PORT }}
+          NODE_ENV: "test"
 
     steps:
     - uses: actions/checkout@v3
