@@ -7,7 +7,10 @@ let server = require("../server");
 const app = "http://localhost:80";
 let mongoMemServer;
 
-const today = new Date();
+
+var formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Vancouver' });
+var currentDate = formatter.format(new Date());
+const today = new Date(currentDate);
 let day = String(today.getDate()).padStart(2, '0');
 let month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
 let year = today.getFullYear();
