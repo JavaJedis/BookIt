@@ -2,13 +2,11 @@
 const db_handler = require("./db_handler");
 let axios = require('axios');
 const utils = require("./utils");
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client();
 const notification_manager = require('./notification_manager');
 
 
 //Global Definition
-MODULE_NAME = "USER-MANAGER";
+const MODULE_NAME = "USER-MANAGER";
 
 
 /**
@@ -25,7 +23,7 @@ async function userLogin(req, res) {
             _id: response.data.email,
             type: 'user',
             booking_ids: [],
-            devToken: devToken
+            devToken
         }
         const result = await db_handler.userLogin(userInfo);
         utils.consoleMsg(MODULE_NAME, `${response.data.email} logged in with device token ${devToken}`);
@@ -93,14 +91,9 @@ async function confirmBooking(req, res) {
 }
 
 async function cancelBooking(req, res) {
-    const token = req.query.token
     const id = req.params.id.toString(16).padStart(24, '0')
     try {
-        const response = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}&key=${process.env.GOOGLE_OAUTH_TOKEN}`);
-        const userEmail = response.data.email
-        var user = await db_handler.checkUser(userEmail)
-
-        const [booking, result] = await db_handler.cancelBooking(id, user)
+        const [booking, result] = await db_handler.cancelBooking(id, req.user)
         var startTime = (booking.startIndex * 50)
         if (startTime % 100 === 50) {
             startTime = startTime - 20
@@ -179,9 +172,9 @@ function createAdmin(req, res) {
                 }
             ).catch((err) => {
                 utils.onFailure(
-                    res, 
+                    res,
                     {
-                        statusCode: 409, 
+                        statusCode: 409,
                         message: err.message
                     }
                 );
@@ -206,7 +199,7 @@ function removeAdmin(req, res) {
         axiosemail => {
             db_handler.delAdmin(email, axiosemail.data.email).then(
                 result => {
-        
+
                     if (result) {
                         res.status(200);
                         res.type('json');
@@ -226,9 +219,9 @@ function removeAdmin(req, res) {
                 }
             ).catch(err => {
                 utils.onFailure(
-                    res, 
+                    res,
                     {
-                        statusCode: 409, 
+                        statusCode: 409,
                         message: err.message
                     }
                 );
@@ -270,7 +263,7 @@ function addBuildingAdmin(req, res) {
         result => {
 
             if (result) {
-                res.status(200);
+                res.status(201);
                 res.type('json');
                 res.send(JSON.stringify(
                     {
@@ -282,11 +275,23 @@ function addBuildingAdmin(req, res) {
                 utils.onFailure(res,
                     {
                         statusCode: 500,
-                        message: "operation failed"
+                        data: "operation failed"
                     });
             }
 
         }
+    ).catch(err => {
+        res.status(err.code);
+        res.type("json");
+        res.send(
+            JSON.stringify(
+                {
+                    status: "error",
+                    data: err.message
+                }
+            )
+        );
+    }
     );
 
 }
@@ -325,7 +330,20 @@ function removeBuildingAdmin(req, res) {
             }
 
         }
-    );
+    ).catch(
+        err => {
+            res.status(err.code);
+            res.type("json");
+            res.send(
+                JSON.stringify(
+                    {
+                        status: "error",
+                        data: err.message
+                    }
+                )
+            );
+        }
+    )
 
 }
 
@@ -363,9 +381,9 @@ function getAdminBuildings(req, res) {
     ).catch(
         err => {
             utils.onFailure(
-                res, 
+                res,
                 {
-                    statusCode: err.code, 
+                    statusCode: err.code,
                     message: err.message
                 }
             );
@@ -387,6 +405,6 @@ module.exports = {
     addBuildingAdmin,
     removeBuildingAdmin,
     getAdminBuildings,
-    listAdmins, 
-    axios: axios
+    listAdmins,
+    axios
 };

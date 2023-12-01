@@ -4,10 +4,10 @@ const utils = require('./utils');
 
 
 //Global Definitions
-MODULE_NAME = 'COMMENT-MANAGER';
-MAX_BUILDING_CODE_LEN = 4;
-MAX_ROOM_NUM = 4;
-MAX_COMMENT_LEN = 600;
+const MODULE_NAME = 'COMMENT-MANAGER';
+const MAX_BUILDING_CODE_LEN = 4;
+const MAX_ROOM_NUM = 4;
+const MAX_COMMENT_LEN = 600;
 
 
 //Show necessary info when required
@@ -41,10 +41,10 @@ function sendStudyRoomComment(req, res) {
     }*/
 
     const data = {
-        building: req.params.building_code, 
-        room: req.params.room_no, 
+        building: req.params.building_code,
+        room: req.params.room_no,
         comment: req.body.comment
-    } 
+    }
     commentUploader(data).then(
         () => {
             res.status(201);
@@ -56,9 +56,9 @@ function sendStudyRoomComment(req, res) {
                 }
             ));
         }
-    ).catch (err => {
+    ).catch((err) => {
         utils.onFailure(res, {
-            statusCode: 404, 
+            statusCode: 404,
             message: "Not found"
         });
     });
@@ -71,45 +71,45 @@ function sendStudyRoomComment(req, res) {
  *                studyroom comment
  * @returns 
  */
-function studyRoomCommentReqCheck(req) {
+// function studyRoomCommentReqCheck(req) {
 
-    /*
-    Check whether the body and its members are null
-    or empty.
-    */
-    if (req.body == null) {
-        console.log("fuck");
-        return false;
-    }
-    var reqBody = req.body;
-    var usrToken = reqBody.token;
-    var buildingCode = req.params.building_code;
-    var roomNum = req.params.room_num;
-    var cmtData = reqBody.comment;
-    /*
-    if (usrToken == null || usrToken == "") {
-        return false;
-    }
-    */
+//     /*
+//     Check whether the body and its members are null
+//     or empty.
+//     */
+//     if (req.body == null) {
+//         console.log("fuck");
+//         return false;
+//     }
+//     var reqBody = req.body;
+//     var usrToken = reqBody.token;
+//     var buildingCode = req.params.building_code;
+//     var roomNum = req.params.room_num;
+//     var cmtData = reqBody.comment;
+//     /*
+//     if (usrToken == null || usrToken == "") {
+//         return false;
+//     }
+//     */
 
-    if (buildingCode == null || buildingCode == ""
-        || buildingCode.length > MAX_BUILDING_CODE_LEN) {
-        return false;
-    }
+//     if (buildingCode == null || buildingCode == ""
+//         || buildingCode.length > MAX_BUILDING_CODE_LEN) {
+//         return false;
+//     }
 
-    if (roomNum == null || roomNum == ""
-        || roomNum.length > MAX_ROOM_NUM) {
-        return false;
-    }
+//     if (roomNum == null || roomNum == ""
+//         || roomNum.length > MAX_ROOM_NUM) {
+//         return false;
+//     }
 
-    if (cmtData == null || cmtData == ""
-        || cmtData.length > MAX_COMMENT_LEN) {
-        return false;
-    }
+//     if (cmtData == null || cmtData == ""
+//         || cmtData.length > MAX_COMMENT_LEN) {
+//         return false;
+//     }
 
-    return true;
+//     return true;
 
-}
+// }
 
 
 //Export functions
